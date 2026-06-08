@@ -4,8 +4,8 @@ import {
   WireAccordion,
   WireBadge,
   WireProgress,
+  WireStepAccordion,
   WireTabs,
-  WireTimeline,
 } from "@/components/wire-ui"
 
 export default function VectorWireframeV2() {
@@ -94,33 +94,103 @@ export default function VectorWireframeV2() {
         </div>
       </section>
 
-      {/* HOW IT WORKS — agenda timeline + downloads */}
+      {/* HOW IT WORKS — expandable session steps (video + long text) + downloads */}
       <section className="border-b border-neutral-200 py-16 md:py-24">
-        <div className="mx-auto max-w-6xl px-4">
+        <div className="mx-auto max-w-4xl px-4">
           <div className="mb-10 flex flex-col items-center gap-3 text-center">
             <WireLabel>How It Works</WireLabel>
             <WireHeading level={2}>The Session, Step by Step</WireHeading>
+            <WireText className="max-w-2xl">
+              [Each step expands to a full walkthrough — watch the short video, then follow the
+              detailed instructions at your own pace.]
+            </WireText>
           </div>
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
-            <div>
-              <div className="mb-4 flex items-center gap-2">
-                <WireBadge tone="muted">Agenda</WireBadge>
-                <span className="font-mono text-xs text-neutral-400">[~ duration]</span>
-              </div>
-              <WireTimeline
-                steps={[
-                  { title: "[Phase 1 — Frame]", body: "[What happens and why it matters.]" },
-                  { title: "[Phase 2 — Explore]", body: "[What happens and why it matters.]" },
-                  { title: "[Phase 3 — Decide]", body: "[What happens and why it matters.]" },
-                  { title: "[Phase 4 — Commit]", body: "[What happens and why it matters.]" },
-                ]}
-              />
+
+          <div className="mb-6 flex items-center gap-2">
+            <WireBadge tone="muted">Agenda</WireBadge>
+            <span className="font-mono text-xs text-neutral-400">[~ total duration]</span>
+          </div>
+
+          <WireStepAccordion
+            steps={[
+              {
+                title: "[Phase 1 — Frame the question]",
+                duration: "[~15 min · video 3 min]",
+                hasVideo: true,
+                videoLabel: "[Phase 1 walkthrough]",
+                body: (
+                  <div className="flex flex-col gap-3">
+                    <WireText className="text-sm">
+                      [Long-form description of what happens in this phase, written out in full.
+                      Explain the goal, what the facilitator says to open, and how to set the tone.]
+                    </WireText>
+                    <WireText className="text-sm">
+                      [A second paragraph with more nuance — common pitfalls, how to adapt for a
+                      larger group, and what &ldquo;done&rdquo; looks like for this phase.]
+                    </WireText>
+                    <div>
+                      <WireBadge tone="blue">Facilitator script</WireBadge>
+                      <ul className="mt-2 flex list-disc flex-col gap-1 pl-5 text-sm text-neutral-700">
+                        <li>[Prompt or talking point #1]</li>
+                        <li>[Prompt or talking point #2]</li>
+                        <li>[Prompt or talking point #3]</li>
+                      </ul>
+                    </div>
+                  </div>
+                ),
+              },
+              {
+                title: "[Phase 2 — Explore the options]",
+                duration: "[~25 min · video 4 min]",
+                hasVideo: true,
+                videoLabel: "[Phase 2 walkthrough]",
+                body: (
+                  <div className="flex flex-col gap-3">
+                    <WireText className="text-sm">
+                      [Detailed instructions for the exploration phase. Describe the exercise, the
+                      materials used, and how participants should be grouped.]
+                    </WireText>
+                    <WireText className="text-sm">
+                      [Add as much detail as needed — this accordion panel can hold long copy
+                      without crowding the rest of the page.]
+                    </WireText>
+                  </div>
+                ),
+              },
+              {
+                title: "[Phase 3 — Decide together]",
+                duration: "[~20 min · video 3 min]",
+                hasVideo: true,
+                videoLabel: "[Phase 3 walkthrough]",
+                body: (
+                  <WireText className="text-sm">
+                    [Full description of the decision-making phase, including how to surface
+                    disagreement and move the group toward a shared choice.]
+                  </WireText>
+                ),
+              },
+              {
+                title: "[Phase 4 — Commit to next steps]",
+                duration: "[~10 min · video 2 min]",
+                hasVideo: true,
+                videoLabel: "[Phase 4 walkthrough]",
+                body: (
+                  <WireText className="text-sm">
+                    [Closing instructions: capturing owners, deadlines, and how to keep momentum
+                    after the session ends.]
+                  </WireText>
+                ),
+              },
+            ]}
+          />
+
+          {/* Materials / downloads */}
+          <div className="mt-12">
+            <div className="mb-4 flex items-center gap-2">
+              <WireBadge tone="muted">Materials</WireBadge>
+              <span className="font-mono text-xs text-neutral-400">[Included downloads]</span>
             </div>
-            <div className="flex flex-col gap-3">
-              <div className="flex items-center gap-2">
-                <WireBadge tone="muted">Materials</WireBadge>
-                <span className="font-mono text-xs text-neutral-400">[Included downloads]</span>
-              </div>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               {[1, 2, 3, 4].map((i) => (
                 <div
                   key={i}

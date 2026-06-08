@@ -293,6 +293,82 @@ export function WireTimeline({
 }
 
 /* ------------------------------------------------------------------ */
+/* Step accordion (numbered, expandable, holds long text + video)      */
+/* ------------------------------------------------------------------ */
+
+export type WireStep = {
+  title: string
+  duration?: string
+  /** Long-form body. Pass a string or rich nodes (paragraphs, lists, etc.). */
+  body: React.ReactNode
+  /** When true, shows a video placeholder slot inside the expanded panel. */
+  hasVideo?: boolean
+  videoLabel?: string
+}
+
+export function WireStepAccordion({
+  steps,
+  defaultOpen = 0,
+}: {
+  steps: WireStep[]
+  defaultOpen?: number | null
+}) {
+  const [open, setOpen] = useState<number | null>(defaultOpen)
+  return (
+    <ol className="flex flex-col gap-4">
+      {steps.map((s, i) => {
+        const isOpen = open === i
+        return (
+          <li
+            key={i}
+            className="overflow-hidden rounded-md border-2 border-dashed border-neutral-300 bg-neutral-50"
+          >
+            <button
+              type="button"
+              aria-expanded={isOpen}
+              onClick={() => setOpen(isOpen ? null : i)}
+              className="flex w-full items-center gap-4 px-4 py-4 text-left sm:px-5"
+            >
+              <span className="flex size-8 shrink-0 items-center justify-center rounded-full border-2 border-blue-600 bg-blue-100 font-mono text-sm font-semibold text-blue-800">
+                {i + 1}
+              </span>
+              <span className="flex flex-1 flex-col">
+                <span className="font-semibold text-neutral-800">{s.title}</span>
+                {s.duration ? (
+                  <span className="font-mono text-xs text-neutral-400">{s.duration}</span>
+                ) : null}
+              </span>
+              <span className="font-mono text-xl text-neutral-400" aria-hidden="true">
+                {isOpen ? "−" : "+"}
+              </span>
+            </button>
+            {isOpen ? (
+              <div className="border-t border-dashed border-neutral-300 px-4 py-5 sm:px-5">
+                <div className="flex flex-col gap-5 md:flex-row md:items-start">
+                  {s.hasVideo ? (
+                    <div className="w-full shrink-0 md:w-1/2">
+                      <div className="relative flex aspect-video items-center justify-center rounded-md border-2 border-dashed border-neutral-300 bg-neutral-100">
+                        <span className="flex size-12 items-center justify-center rounded-full border-2 border-neutral-400 bg-white font-mono text-neutral-500">
+                          ▶
+                        </span>
+                        <span className="absolute bottom-2 left-2 font-mono text-xs text-neutral-400">
+                          {s.videoLabel ?? "[Step walkthrough video]"}
+                        </span>
+                      </div>
+                    </div>
+                  ) : null}
+                  <div className="flex-1 text-sm leading-relaxed text-neutral-700">{s.body}</div>
+                </div>
+              </div>
+            ) : null}
+          </li>
+        )
+      })}
+    </ol>
+  )
+}
+
+/* ------------------------------------------------------------------ */
 /* Badge + progress / meter                                            */
 /* ------------------------------------------------------------------ */
 
