@@ -264,7 +264,9 @@ export default function AboutWireframeV2() {
         title="Want to Work With Us?"
         text="[Invite the visitor to start a conversation.]"
         primary="Get in Touch"
+        primaryHref="/contact"
         secondary="Become a Partner"
+        secondaryHref="/partner"
       />
     </SiteShell>
   )

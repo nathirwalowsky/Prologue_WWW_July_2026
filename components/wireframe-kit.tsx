@@ -3,6 +3,7 @@
 // wireframe, not a finished design.
 
 import type React from "react"
+import Link from "next/link"
 import { cn } from "@/lib/utils"
 
 export function WireBox({
@@ -123,12 +124,20 @@ export function WireCTA({
   text,
   primary,
   secondary,
+  primaryHref,
+  secondaryHref,
 }: {
   title: string
   text?: string
   primary: string
   secondary?: string
+  primaryHref?: string
+  secondaryHref?: string
 }) {
+  const primaryClass =
+    "rounded-md border-2 border-white bg-white px-5 py-2.5 text-sm font-medium text-blue-700"
+  const secondaryClass =
+    "rounded-md border-2 border-white bg-transparent px-5 py-2.5 text-sm font-medium text-white"
   return (
     <section className="bg-blue-600 py-16 text-white md:py-20">
       <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 px-4 text-center">
@@ -137,13 +146,21 @@ export function WireCTA({
         </WireHeading>
         {text ? <p className="max-w-xl text-pretty leading-relaxed text-blue-100">{text}</p> : null}
         <div className="flex flex-wrap justify-center gap-4 pt-2">
-          <span className="rounded-md border-2 border-white bg-white px-5 py-2.5 text-sm font-medium text-blue-700">
-            {primary}
-          </span>
+          {primaryHref ? (
+            <Link href={primaryHref} className={primaryClass}>
+              {primary}
+            </Link>
+          ) : (
+            <span className={primaryClass}>{primary}</span>
+          )}
           {secondary ? (
-            <span className="rounded-md border-2 border-white bg-transparent px-5 py-2.5 text-sm font-medium text-white">
-              {secondary}
-            </span>
+            secondaryHref ? (
+              <Link href={secondaryHref} className={secondaryClass}>
+                {secondary}
+              </Link>
+            ) : (
+              <span className={secondaryClass}>{secondary}</span>
+            )
           ) : null}
         </div>
       </div>
