@@ -10,6 +10,30 @@ const products = [
   { href: "/product", label: "[Product Four]", desc: "[One-line description of what this product helps with.]" },
 ]
 
+const chooseGuide = [
+  {
+    situation: "[Just exploring]",
+    heading: "[New to all this?]",
+    text: "[Start with the Vector workshop to align your team and find your direction before committing to a product.]",
+    cta: "Start with Vector",
+    href: "/vector",
+  },
+  {
+    situation: "[Have a clear goal]",
+    heading: "[Know what you need?]",
+    text: "[Browse the products above and pick the one that maps to the outcome you're after. Each page goes deep on the details.]",
+    cta: "Compare products",
+    href: "/product",
+  },
+  {
+    situation: "[Still unsure]",
+    heading: "[Want a recommendation?]",
+    text: "[Tell us about your situation and we'll point you to the right product or workshop — no pressure.]",
+    cta: "Talk to us",
+    href: "/contact",
+  },
+]
+
 export default function ProductsOverview() {
   return (
     <SiteShell pageName="Products">
@@ -39,6 +63,33 @@ export default function ProductsOverview() {
                   <span className="mt-auto pt-2 font-medium text-blue-700">Learn more →</span>
                 </WireBox>
               </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* HOW TO CHOOSE — guidance to reduce decision paralysis */}
+      <section className="border-b border-neutral-200 py-16 md:py-24">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="mb-8 flex flex-col gap-3">
+            <WireLabel>How to choose</WireLabel>
+            <WireHeading level={2}>Not Sure Where to Start?</WireHeading>
+            <WireText className="max-w-2xl">
+              [A quick guide to point you in the right direction based on where you are right now.]
+            </WireText>
+          </div>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+            {chooseGuide.map((g, i) => (
+              <WireBox key={i} className="flex h-full flex-col gap-3 bg-white">
+                <span className="font-mono text-xs uppercase tracking-wide text-blue-600">
+                  {g.situation}
+                </span>
+                <WireHeading level={3}>{g.heading}</WireHeading>
+                <WireText className="text-sm">{g.text}</WireText>
+                <Link href={g.href} className="mt-auto pt-2 font-medium text-blue-700">
+                  {g.cta} →
+                </Link>
+              </WireBox>
             ))}
           </div>
         </div>
