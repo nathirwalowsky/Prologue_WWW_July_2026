@@ -9,7 +9,7 @@ import {
   WireLabel,
   WireText,
 } from "@/components/wireframe-kit"
-import { WireBadge, WireTimeline } from "@/components/wire-ui"
+import { WireBadge } from "@/components/wire-ui"
 
 const values = [
   { label: "01", title: "[Value One]", text: "[Short explanation of what this value means in practice.]" },
@@ -22,6 +22,64 @@ const aiPrinciples = [
   { title: "[Principle 1 — e.g. AI augments, never replaces, human judgment]", text: "[Explain how this shows up in the work.]" },
   { title: "[Principle 2 — e.g. Transparency about where AI is used]", text: "[Explain how this shows up in the work.]" },
   { title: "[Principle 3 — e.g. Human accountability for every output]", text: "[Explain how this shows up in the work.]" },
+]
+
+// Classic story beats, grouped into three acts.
+const storyBeats = [
+  {
+    act: "Act I",
+    actLabel: "The Ordinary World",
+    beats: [
+      {
+        n: "01",
+        beat: "The Ordinary World",
+        title: "[Where it all started]",
+        text: "[Set the scene before the story begins — the everyday reality, the status quo, the way things were for us (or for the people we now serve).]",
+      },
+      {
+        n: "02",
+        beat: "The Inciting Incident",
+        title: "[The moment everything changed]",
+        text: "[The disruption, the problem, the realization that things couldn't stay the same. This is the spark that set the whole story in motion.]",
+      },
+    ],
+  },
+  {
+    act: "Act II",
+    actLabel: "The Road of Trials",
+    beats: [
+      {
+        n: "03",
+        beat: "Crossing the Threshold",
+        title: "[Committing to a different path]",
+        text: "[The decision to step into the unknown and build something new — leaving the familiar behind.]",
+      },
+      {
+        n: "04",
+        beat: "Trials & Lessons",
+        title: "[What the journey taught us]",
+        text: "[The early clients, the mistakes, the hard-won lessons that sharpened our approach and forged our method.]",
+      },
+    ],
+  },
+  {
+    act: "Act III",
+    actLabel: "The Return",
+    beats: [
+      {
+        n: "05",
+        beat: "The Transformation",
+        title: "[Who we became]",
+        text: "[The breakthrough — the moment the philosophy came together and we became the guide we are today.]",
+      },
+      {
+        n: "06",
+        beat: "Return with the Elixir",
+        title: "[What we bring back for you]",
+        text: "[How everything we learned now serves you — the hero of your own story. We've walked the road; here's how we help you walk yours.]",
+      },
+    ],
+  },
 ]
 
 export default function AboutWireframeV2() {
@@ -37,30 +95,64 @@ export default function AboutWireframeV2() {
             [A single, human sentence that captures why Prologue exists.]
           </WireHeading>
           <WireText className="mx-auto mt-6 max-w-xl text-pretty text-lg">
-            [A short, evocative lead-in that hooks the reader and promises a story — not a list of
-            services. Set the emotional tone here.]
+            [Every great venture follows a story. Here&apos;s ours — and how it prepares us to guide
+            yours. Set the emotional tone here.]
           </WireText>
         </div>
       </section>
 
-      {/* THE BEGINNING — origin story, text-led with a pull quote */}
+      {/* THE STORY — classic hero's journey beats, grouped into three acts */}
       <section className="border-b border-neutral-200 py-16 md:py-24">
-        <div className="mx-auto max-w-3xl px-4">
-          <div className="flex flex-col gap-5">
-            <WireLabel>Chapter One</WireLabel>
-            <WireHeading level={2}>Where It Began</WireHeading>
-            <WireText>
-              [The origin story — the moment or problem that started it all. Write this as a
-              narrative, with specific detail that makes it feel real and personal.]
-            </WireText>
-            <WireText>
-              [Continue the story: what you noticed, what frustrated you, and the decision to do
-              something about it.]
+        <div className="mx-auto max-w-4xl px-4">
+          <div className="mb-12 flex flex-col gap-3 text-center md:mb-16">
+            <div className="flex justify-center">
+              <WireLabel>The Story</WireLabel>
+            </div>
+            <WireHeading level={2} className="text-balance">
+              Told in Three Acts
+            </WireHeading>
+            <WireText className="mx-auto max-w-2xl text-pretty">
+              [Our path, structured like every story worth telling — from an ordinary beginning,
+              through the trials that shaped us, to what we now bring back for you.]
             </WireText>
           </div>
 
-          {/* Pull quote to add narrative texture */}
-          <blockquote className="my-10 border-l-4 border-blue-500 pl-6">
+          <div className="flex flex-col gap-14">
+            {storyBeats.map((act) => (
+              <div key={act.act}>
+                {/* Act header */}
+                <div className="mb-6 flex items-center gap-3">
+                  <WireBadge tone="blue">{act.act}</WireBadge>
+                  <span className="font-mono text-xs uppercase tracking-wide text-neutral-400">
+                    {act.actLabel}
+                  </span>
+                  <span className="h-px flex-1 bg-neutral-200" aria-hidden="true" />
+                </div>
+
+                {/* Beats within the act */}
+                <div className="flex flex-col gap-4">
+                  {act.beats.map((b) => (
+                    <div
+                      key={b.n}
+                      className="flex gap-5 rounded-md border-2 border-dashed border-neutral-300 bg-neutral-50 p-6"
+                    >
+                      <span className="font-mono text-2xl font-semibold text-blue-300">{b.n}</span>
+                      <div className="flex flex-col gap-2">
+                        <span className="font-mono text-xs uppercase tracking-wide text-blue-600">
+                          {b.beat}
+                        </span>
+                        <WireHeading level={3}>{b.title}</WireHeading>
+                        <WireText>{b.text}</WireText>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Pull quote to punctuate the turning point */}
+          <blockquote className="mt-14 border-l-4 border-blue-500 pl-6">
             <p className="text-pretty text-xl font-medium italic leading-relaxed text-neutral-700 md:text-2xl">
               [&ldquo;A memorable line that captures the turning point or founding belief.&rdquo;]
             </p>
@@ -68,33 +160,6 @@ export default function AboutWireframeV2() {
               [Founder name · role]
             </footer>
           </blockquote>
-
-          <WireText className="max-w-2xl">
-            [Bridge paragraph that leads the reader from the beginning into how the work evolved over
-            time — setting up the journey timeline below.]
-          </WireText>
-        </div>
-      </section>
-
-      {/* THE JOURNEY — timeline to carry the narrative forward */}
-      <section className="border-b border-neutral-200 bg-neutral-50 py-16 md:py-24">
-        <div className="mx-auto max-w-3xl px-4">
-          <div className="mb-10 flex flex-col gap-3">
-            <WireLabel>The Journey</WireLabel>
-            <WireHeading level={2}>How We Got Here</WireHeading>
-            <WireText className="max-w-2xl">
-              [Walk through the key chapters of the story — each milestone is a beat in the
-              narrative, not just a date.]
-            </WireText>
-          </div>
-          <WireTimeline
-            steps={[
-              { title: "[Milestone — the spark]", body: "[What happened and why it mattered to the story.]" },
-              { title: "[Milestone — the first clients]", body: "[What we learned and how the approach sharpened.]" },
-              { title: "[Milestone — finding our method]", body: "[The moment the philosophy came together.]" },
-              { title: "[Milestone — today]", body: "[Where the story stands now and where it's heading.]" },
-            ]}
-          />
         </div>
       </section>
 
