@@ -71,6 +71,9 @@ export function SiteShell({
             <Link href="/about" className="hover:text-neutral-200">
               About
             </Link>
+            <Link href="/partner" className="hover:text-neutral-200">
+              Become a Partner
+            </Link>
             <Link href="/privacy" className="hover:text-neutral-200">
               Privacy Policy
             </Link>
