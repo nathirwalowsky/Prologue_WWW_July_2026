@@ -7,6 +7,7 @@ import {
   WireCTA,
   WireHeading,
   WireLabel,
+  WirePlaceholder,
   WireText,
 } from "@/components/wireframe-kit"
 import { WireBadge } from "@/components/wire-ui"
@@ -85,19 +86,27 @@ const storyBeats = [
 export default function AboutWireframeV2() {
   return (
     <SiteShell pageName="About">
-      {/* HERO — narrative opening, sets up the story */}
+      {/* HERO — narrative opening with a photo space */}
       <section className="border-b border-neutral-200 bg-neutral-50 py-20 md:py-28">
-        <div className="mx-auto max-w-3xl px-4 text-center">
-          <div className="mb-5 flex justify-center">
-            <WireLabel>Our Story</WireLabel>
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-14">
+            <div className="flex flex-col items-start">
+              <div className="mb-5">
+                <WireLabel>Our Story</WireLabel>
+              </div>
+              <WireHeading level={1} className="text-balance">
+                [A single, human sentence that captures why Prologue exists.]
+              </WireHeading>
+              <WireText className="mt-6 max-w-md text-pretty text-lg">
+                [Every great venture follows a story. Here&apos;s ours — and how it prepares us to
+                guide yours. Set the emotional tone here.]
+              </WireText>
+            </div>
+            <WirePlaceholder
+              label="[Team / founder photo]"
+              className="aspect-[4/5] w-full md:aspect-square"
+            />
           </div>
-          <WireHeading level={1} className="text-balance">
-            [A single, human sentence that captures why Prologue exists.]
-          </WireHeading>
-          <WireText className="mx-auto mt-6 max-w-xl text-pretty text-lg">
-            [Every great venture follows a story. Here&apos;s ours — and how it prepares us to guide
-            yours. Set the emotional tone here.]
-          </WireText>
         </div>
       </section>
 
@@ -151,15 +160,21 @@ export default function AboutWireframeV2() {
             ))}
           </div>
 
-          {/* Pull quote to punctuate the turning point */}
-          <blockquote className="mt-14 border-l-4 border-blue-500 pl-6">
-            <p className="text-pretty text-xl font-medium italic leading-relaxed text-neutral-700 md:text-2xl">
-              [&ldquo;A memorable line that captures the turning point or founding belief.&rdquo;]
-            </p>
-            <footer className="mt-3 font-mono text-xs uppercase tracking-wide text-neutral-400">
-              [Founder name · role]
-            </footer>
-          </blockquote>
+          {/* Pull quote with founder portrait to punctuate the turning point */}
+          <div className="mt-14 flex flex-col gap-6 sm:flex-row sm:items-center">
+            <WirePlaceholder
+              label="[Founder portrait]"
+              className="size-28 shrink-0 rounded-full sm:size-32"
+            />
+            <blockquote className="border-l-4 border-blue-500 pl-6">
+              <p className="text-pretty text-xl font-medium italic leading-relaxed text-neutral-700 md:text-2xl">
+                [&ldquo;A memorable line that captures the turning point or founding belief.&rdquo;]
+              </p>
+              <footer className="mt-3 font-mono text-xs uppercase tracking-wide text-neutral-400">
+                [Founder name · role]
+              </footer>
+            </blockquote>
+          </div>
         </div>
       </section>
 
