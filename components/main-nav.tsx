@@ -70,7 +70,7 @@ export function MainNav() {
                 </Link>
               ))}
               <Link
-                href="/product"
+                href="/products"
                 role="menuitem"
                 className="mt-1 border-t border-dashed border-neutral-200 px-3 py-2 text-xs font-medium text-blue-700 hover:bg-neutral-50"
               >
