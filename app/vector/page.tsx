@@ -186,30 +186,76 @@ export default function VectorWireframeV2() {
             ]}
           />
 
-          {/* Materials / downloads */}
-          <div className="mt-12">
-            <div className="mb-4 flex items-center gap-2">
-              <WireBadge tone="muted">Materials</WireBadge>
-              <span className="font-mono text-xs text-neutral-400">[Included downloads]</span>
-            </div>
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              {[1, 2, 3, 4].map((i) => (
-                <div
-                  key={i}
-                  className="flex items-center justify-between gap-4 rounded-md border-2 border-dashed border-neutral-300 bg-neutral-50 px-4 py-3"
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="font-mono text-neutral-400" aria-hidden="true">
-                      ⤓
-                    </span>
-                    <div className="flex flex-col">
-                      <WireText className="text-neutral-700">{`[Downloadable material ${i}]`}</WireText>
-                      <span className="font-mono text-xs text-neutral-400">[PDF · file size]</span>
+          {/* Materials — download files + connect online tools */}
+          <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-2">
+            {/* Download files */}
+            <div>
+              <div className="mb-4 flex items-center gap-2">
+                <WireBadge tone="muted">Download</WireBadge>
+                <span className="font-mono text-xs text-neutral-400">[Use offline / in person]</span>
+              </div>
+              <div className="flex flex-col gap-3">
+                {[
+                  { name: "[Worksheet template]", meta: "[PDF · file size]" },
+                  { name: "[Facilitator guide]", meta: "[PDF · file size]" },
+                  { name: "[Slide deck]", meta: "[PPTX · file size]" },
+                  { name: "[Printable cards]", meta: "[PDF · file size]" },
+                ].map((file, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center justify-between gap-4 rounded-md border-2 border-dashed border-neutral-300 bg-neutral-50 px-4 py-3"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="font-mono text-neutral-400" aria-hidden="true">
+                        ⤓
+                      </span>
+                      <div className="flex flex-col">
+                        <WireText className="text-neutral-700">{file.name}</WireText>
+                        <span className="font-mono text-xs text-neutral-400">{file.meta}</span>
+                      </div>
                     </div>
+                    <span className="text-sm font-medium text-blue-700">Download</span>
                   </div>
-                  <span className="text-sm font-medium text-blue-700">Download</span>
-                </div>
-              ))}
+                ))}
+              </div>
+            </div>
+
+            {/* Connect online tools — run the workshop remotely */}
+            <div>
+              <div className="mb-4 flex items-center gap-2">
+                <WireBadge tone="blue">Run it online</WireBadge>
+                <span className="font-mono text-xs text-neutral-400">[Open a live, editable copy]</span>
+              </div>
+              <div className="flex flex-col gap-3">
+                {[
+                  { tool: "[Figma / FigJam]", desc: "[Collaborative board template]", action: "Open template" },
+                  { tool: "[Miro]", desc: "[Workshop canvas with sticky notes]", action: "Open template" },
+                  { tool: "[Google Slides / Docs]", desc: "[Editable copy for your team]", action: "Make a copy" },
+                  { tool: "[Notion]", desc: "[Duplicate workspace to your account]", action: "Duplicate" },
+                ].map((conn, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center justify-between gap-4 rounded-md border-2 border-dashed border-neutral-300 bg-white px-4 py-3"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span
+                        className="flex size-9 shrink-0 items-center justify-center rounded border-2 border-dashed border-neutral-300 font-mono text-xs text-neutral-400"
+                        aria-hidden="true"
+                      >
+                        ⧉
+                      </span>
+                      <div className="flex flex-col">
+                        <WireText className="text-neutral-700">{conn.tool}</WireText>
+                        <span className="font-mono text-xs text-neutral-400">{conn.desc}</span>
+                      </div>
+                    </div>
+                    <span className="flex items-center gap-1 text-sm font-medium text-blue-700">
+                      {conn.action}
+                      <span aria-hidden="true">↗</span>
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
