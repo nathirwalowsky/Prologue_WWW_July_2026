@@ -40,7 +40,7 @@ export default function ProductsOverview() {
       <PageHeader
         label="Products"
         title="Everything We Offer"
-        description="[A short intro: our products and the Vector workshop, all in one place. Pick the path that fits where you are.]"
+        intro="[A short intro: our products and the Vector workshop, all in one place. Pick the path that fits where you are.]"
       />
 
       {/* PRODUCTS GRID */}
