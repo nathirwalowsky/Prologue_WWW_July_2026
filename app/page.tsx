@@ -15,7 +15,7 @@ export default function HomePage() {
             </span>
             <h1 className="text-balance font-sans text-5xl font-semibold leading-[1.05] tracking-tight text-foreground md:text-7xl">
               Strategic excellence{" "}
-              <span className="font-serif font-normal italic text-accent">
+              <span className="text-accent">
                 in an age of constant transformation
               </span>
             </h1>
