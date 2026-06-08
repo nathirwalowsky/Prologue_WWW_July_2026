@@ -22,8 +22,8 @@ const chooseGuide = [
     situation: "[Have a clear goal]",
     heading: "[Know what you need?]",
     text: "[Browse the products above and pick the one that maps to the outcome you're after. Each page goes deep on the details.]",
-    cta: "Compare products",
-    href: "/product",
+    cta: "Read the blog",
+    href: "/blog",
   },
   {
     situation: "[Still unsure]",
