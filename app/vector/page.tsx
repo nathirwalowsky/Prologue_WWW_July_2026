@@ -3,7 +3,7 @@
 import { SiteShell, PageHeader } from "@/components/site-shell"
 import { WireButton, WireFAQ, WireHeading, WireLabel, WireText } from "@/components/wireframe-kit"
 import { WireAccordion, WireBadge, WireStepAccordion, WireTabs } from "@/components/wire-ui"
-import { VectorReadiness } from "@/components/vector-readiness"
+import { VectorChecklist } from "@/components/vector-checklist"
 
 export default function VectorWireframeV2() {
   return (
@@ -274,18 +274,18 @@ export default function VectorWireframeV2() {
         </div>
       </section>
 
-      {/* HOW TO PREPARE — readiness self-assessment */}
+      {/* HOW TO PREPARE — downloadable facilitator checklist */}
       <section className="border-b border-neutral-200 py-16 md:py-24">
         <div className="mx-auto grid max-w-6xl grid-cols-1 items-start gap-10 px-4 md:grid-cols-2">
           <div className="flex flex-col items-start gap-5">
             <WireLabel>Preparation</WireLabel>
-            <WireHeading level={2}>Are You Ready to Facilitate?</WireHeading>
+            <WireHeading level={2}>Get Ready to Facilitate</WireHeading>
             <WireText className="max-w-md">
-              [Answer three quick questions and we&apos;ll point you to the right next step — whether
-              that&apos;s jumping straight in, brushing up first, or booking a call with us.]
+              [A simple checklist to run through before your session. Download it as a PDF to print,
+              or as Markdown to drop into your own notes.]
             </WireText>
           </div>
-          <VectorReadiness />
+          <VectorChecklist />
         </div>
       </section>
 
