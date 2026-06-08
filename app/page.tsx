@@ -13,8 +13,11 @@ export default function HomePage() {
             <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
               [Eyebrow — who you serve]
             </span>
-            <h1 className="text-balance font-sans text-4xl font-semibold leading-[1.05] tracking-tight text-foreground md:text-6xl">
-              [Brand claim / headline that names the transformation]
+            <h1 className="text-balance font-sans text-5xl font-semibold leading-[1.05] tracking-tight text-foreground md:text-7xl">
+              Strategic excellence{" "}
+              <span className="font-serif font-normal italic text-accent">
+                in an age of constant transformation
+              </span>
             </h1>
             <p className="max-w-md text-pretty font-serif text-lg leading-relaxed text-muted-foreground">
               [Subheadline explaining your value proposition in one or two clear, human sentences.]
