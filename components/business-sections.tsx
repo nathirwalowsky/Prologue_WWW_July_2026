@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { cn } from "@/lib/utils"
-import { WireHeading, WireLabel, WirePlaceholder } from "@/components/wireframe-kit"
+import { WirePlaceholder } from "@/components/wireframe-kit"
 
 type Section = {
   title: string
@@ -60,12 +60,16 @@ export function BusinessSections() {
   const active = businessSections[activeIndex]
 
   return (
-    <section className="bg-white py-16 md:py-24">
-      <div className="mx-auto max-w-6xl px-4">
+    <section className="bg-background py-20 md:py-28">
+      <div className="mx-auto max-w-6xl px-4 md:px-6">
         <div className="mb-10 flex flex-col gap-3 md:mb-14">
-          <WireLabel>Section · Interactive</WireLabel>
-          <WireHeading level={2}>Business Sections We Work On</WireHeading>
-          <p className="max-w-xl leading-relaxed text-neutral-500">
+          <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
+            What we work on
+          </span>
+          <h2 className="font-sans text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
+            Business Sections We Work On
+          </h2>
+          <p className="max-w-xl font-serif text-lg leading-relaxed text-muted-foreground">
             [Intro line] Hover or tap a topic on the left to read the full description on the right.
           </p>
         </div>
@@ -85,27 +89,27 @@ export function BusinessSections() {
                     onFocus={() => setActiveIndex(index)}
                     onClick={() => setActiveIndex(index)}
                     className={cn(
-                      "flex w-full items-center justify-between gap-4 rounded-md border-2 px-4 py-3 text-left transition-colors",
+                      "flex w-full items-center justify-between gap-4 rounded-lg border px-4 py-3.5 text-left transition-colors",
                       isActive
-                        ? "border-blue-600 bg-blue-50"
-                        : "border-dashed border-neutral-300 bg-neutral-50 hover:border-neutral-400 hover:bg-neutral-100",
+                        ? "border-primary bg-primary/5"
+                        : "border-border bg-card hover:border-accent/50 hover:bg-secondary",
                     )}
                   >
                     <span className="flex flex-col">
                       <span
                         className={cn(
-                          "font-semibold",
-                          isActive ? "text-blue-800" : "text-neutral-800",
+                          "font-sans font-semibold",
+                          isActive ? "text-primary" : "text-foreground",
                         )}
                       >
                         {section.title}
                       </span>
-                      <span className="text-sm text-neutral-500">{section.short}</span>
+                      <span className="text-sm text-muted-foreground">{section.short}</span>
                     </span>
                     <span
                       className={cn(
-                        "shrink-0 font-mono text-lg",
-                        isActive ? "text-blue-600" : "text-neutral-400",
+                        "shrink-0 font-mono text-lg transition-colors",
+                        isActive ? "text-primary" : "text-muted-foreground",
                       )}
                       aria-hidden="true"
                     >
@@ -120,21 +124,22 @@ export function BusinessSections() {
           {/* RIGHT: long description for the active item */}
           <div
             role="tabpanel"
-            className="flex flex-col gap-5 rounded-md border-2 border-dashed border-neutral-400 bg-neutral-50 p-6 md:p-8"
+            className="flex flex-col gap-5 rounded-xl border border-border bg-card p-6 md:p-8"
           >
-            <WireLabel>Detail panel</WireLabel>
-            <WireHeading level={3} className="text-neutral-800">
+            <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
+              Detail
+            </span>
+            <h3 className="font-sans text-2xl font-semibold tracking-tight text-foreground">
               {active.title}
-            </WireHeading>
-            <p className="leading-relaxed text-neutral-600">{active.description}</p>
+            </h3>
+            <p className="font-serif text-lg leading-relaxed text-muted-foreground">
+              {active.description}
+            </p>
 
-            <WirePlaceholder
-              label="[Supporting visual / icon]"
-              className="mt-2 h-40 w-full"
-            />
+            <WirePlaceholder label="[Supporting visual / icon]" className="mt-2 h-40 w-full" />
 
             <div className="mt-auto">
-              <span className="inline-flex items-center gap-2 font-medium text-blue-700">
+              <span className="inline-flex items-center gap-2 font-medium text-primary">
                 {"[Learn more about " + active.title + "]"} <span aria-hidden="true">→</span>
               </span>
             </div>

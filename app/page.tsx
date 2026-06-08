@@ -1,74 +1,90 @@
 import { BusinessSections } from "@/components/business-sections"
 import { SiteShell } from "@/components/site-shell"
-import {
-  WireBox,
-  WireButton,
-  WireCTA,
-  WireFAQ,
-  WireHeading,
-  WireLabel,
-  WireText,
-} from "@/components/wireframe-kit"
-import { WireTabs, WireBadge } from "@/components/wire-ui"
 
-export default function HomeWireframeV2() {
+export default function HomePage() {
   return (
     <SiteShell pageName="Home">
-      {/* HERO — copy left, conceptual "before → after" framing right (no metrics) */}
-      <section className="border-b border-neutral-200 bg-neutral-100">
-        <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 px-4 py-16 md:grid-cols-2 md:py-24">
+      {/* HERO */}
+      <section className="border-b border-border bg-secondary">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-4 py-20 md:grid-cols-[1.1fr_0.9fr] md:px-6 md:py-28">
           <div className="flex flex-col items-start gap-6">
-            <WireLabel>Hero</WireLabel>
-            <WireHeading level={1} className="text-balance">
-              [Brand Claim / Headline]
-            </WireHeading>
-            <WireText className="max-w-md text-pretty">
-              [Subheadline explaining your value proposition in one or two clear sentences.]
-            </WireText>
-            <div className="flex flex-wrap gap-4 pt-2">
-              <WireButton variant="primary">Vector Workshop</WireButton>
-              <WireButton variant="secondary">[Button #2 — Action]</WireButton>
+            <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
+              [Eyebrow — who you serve]
+            </span>
+            <h1 className="text-balance font-sans text-4xl font-semibold leading-[1.05] tracking-tight text-foreground md:text-6xl">
+              [Brand claim / headline that names the transformation]
+            </h1>
+            <p className="max-w-md text-pretty font-serif text-lg leading-relaxed text-muted-foreground">
+              [Subheadline explaining your value proposition in one or two clear, human sentences.]
+            </p>
+            <div className="flex flex-wrap items-center gap-3 pt-2">
+              <a
+                href="/vector"
+                className="inline-flex items-center rounded-md bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+              >
+                Vector Workshop
+              </a>
+              <a
+                href="/contact"
+                className="inline-flex items-center rounded-md border border-border bg-background px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-secondary"
+              >
+                [Secondary action]
+              </a>
             </div>
           </div>
 
-          {/* Conceptual shift card — frames the transformation, not numbers */}
-          <WireBox className="flex flex-col gap-5 bg-white">
-            <WireLabel>The shift</WireLabel>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-[1fr_auto_1fr] sm:items-stretch">
-              <div className="flex flex-col gap-2 rounded-md border-2 border-dashed border-neutral-300 bg-neutral-50 p-4">
-                <span className="font-mono text-xs uppercase tracking-wide text-neutral-400">Before</span>
-                <WireText className="text-sm">[Where the business feels stuck today]</WireText>
+          {/* Conceptual before → after shift */}
+          <div className="flex flex-col gap-5 rounded-xl border border-border bg-card p-6 shadow-sm md:p-8">
+            <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
+              The shift
+            </span>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_auto_1fr] sm:items-stretch">
+              <div className="flex flex-col gap-2 rounded-lg border border-border bg-secondary p-4">
+                <span className="font-mono text-xs uppercase tracking-wide text-muted-foreground">
+                  Before
+                </span>
+                <p className="font-serif text-sm leading-relaxed text-foreground">
+                  [Where the business feels stuck today]
+                </p>
               </div>
               <div className="flex items-center justify-center">
-                <span className="font-mono text-2xl text-blue-400" aria-hidden="true">
+                <span className="font-mono text-2xl text-accent" aria-hidden="true">
                   →
                 </span>
               </div>
-              <div className="flex flex-col gap-2 rounded-md border-2 border-blue-300 bg-blue-50 p-4">
-                <span className="font-mono text-xs uppercase tracking-wide text-blue-500">After</span>
-                <WireText className="text-sm">[The breakthrough state they reach with us]</WireText>
+              <div className="flex flex-col gap-2 rounded-lg border border-primary/30 bg-primary/5 p-4">
+                <span className="font-mono text-xs uppercase tracking-wide text-primary">
+                  After
+                </span>
+                <p className="font-serif text-sm leading-relaxed text-foreground">
+                  [The breakthrough state they reach with us]
+                </p>
               </div>
             </div>
-            <WireText className="text-sm text-neutral-500">
+            <p className="font-serif text-sm leading-relaxed text-muted-foreground">
               [One sentence describing the kind of clarity or momentum this unlocks.]
-            </WireText>
-          </WireBox>
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* BUSINESS SECTIONS — interactive left list + right description */}
+      {/* BUSINESS SECTIONS — interactive */}
       <BusinessSections />
 
-      {/* BREAKTHROUGHS — conceptual outcomes, no fabricated metrics */}
-      <section className="border-y border-neutral-200 bg-neutral-50 py-16 md:py-24">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="mb-10 flex flex-col items-center gap-3 text-center">
-            <WireLabel>Breakthroughs</WireLabel>
-            <WireHeading level={2}>What You Could Unlock</WireHeading>
-            <WireText className="max-w-xl">
-              [Framing sentence: the conceptual breakthroughs a client can potentially achieve — not
-              promises of specific numbers, but shifts in clarity, capability, and direction.]
-            </WireText>
+      {/* BREAKTHROUGHS */}
+      <section className="border-y border-border bg-secondary py-20 md:py-28">
+        <div className="mx-auto max-w-6xl px-4 md:px-6">
+          <div className="mb-12 flex flex-col items-center gap-3 text-center">
+            <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
+              Breakthroughs
+            </span>
+            <h2 className="font-sans text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
+              What You Could Unlock
+            </h2>
+            <p className="max-w-xl font-serif text-lg leading-relaxed text-muted-foreground">
+              [Framing sentence: the conceptual breakthroughs a client can achieve — shifts in
+              clarity, capability, and direction.]
+            </p>
           </div>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {[
@@ -76,142 +92,193 @@ export default function HomeWireframeV2() {
               { tag: "Momentum", title: "[Breakthrough #2]" },
               { tag: "Direction", title: "[Breakthrough #3]" },
             ].map((b, i) => (
-              <WireBox key={i} className="flex flex-col gap-3 bg-white">
-                <WireBadge tone="blue">{b.tag}</WireBadge>
-                <WireHeading level={4}>{b.title}</WireHeading>
-                <WireText className="text-sm">
+              <article
+                key={i}
+                className="flex flex-col gap-4 rounded-xl border border-border bg-card p-6"
+              >
+                <span className="w-fit rounded-full bg-accent/10 px-3 py-1 font-mono text-xs uppercase tracking-wide text-accent">
+                  {b.tag}
+                </span>
+                <h3 className="font-sans text-lg font-semibold text-foreground">{b.title}</h3>
+                <p className="font-serif text-sm leading-relaxed text-muted-foreground">
                   [Short description of the conceptual shift and why it matters for the client.]
-                </WireText>
-              </WireBox>
+                </p>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* TESTIMONIALS — structured cards, initials avatar instead of photo placeholder */}
-      <section className="py-16 md:py-24">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="mb-10 flex flex-col items-center gap-3 text-center">
-            <WireLabel>Social proof</WireLabel>
-            <WireHeading level={2}>What Our Clients Say</WireHeading>
+      {/* TESTIMONIALS */}
+      <section className="py-20 md:py-28">
+        <div className="mx-auto max-w-6xl px-4 md:px-6">
+          <div className="mb-12 flex flex-col items-center gap-3 text-center">
+            <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
+              Social proof
+            </span>
+            <h2 className="font-sans text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
+              What Our Clients Say
+            </h2>
           </div>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {[1, 2, 3].map((i) => (
-              <WireBox key={i} className="flex flex-col gap-4 bg-neutral-50">
-                <WireText className="italic">
-                  &quot;[Client quote about working with Prologue Agency]&quot;
-                </WireText>
-                <div className="mt-auto flex items-center gap-3 border-t border-dashed border-neutral-300 pt-4">
-                  <span className="flex size-10 shrink-0 items-center justify-center rounded-full border-2 border-dashed border-neutral-300 bg-neutral-100 font-mono text-xs text-neutral-500">
+              <figure
+                key={i}
+                className="flex flex-col gap-5 rounded-xl border border-border bg-card p-6"
+              >
+                <blockquote className="font-serif text-lg leading-relaxed text-foreground">
+                  &ldquo;[Client quote about working with Prologue Agency]&rdquo;
+                </blockquote>
+                <figcaption className="mt-auto flex items-center gap-3 border-t border-border pt-4">
+                  <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-secondary font-mono text-xs text-muted-foreground">
                     [AB]
                   </span>
-                  <div>
-                    <p className="font-semibold text-neutral-800">— Client Name</p>
-                    <p className="text-sm text-neutral-500">Position, Company</p>
-                  </div>
-                </div>
-              </WireBox>
+                  <span className="flex flex-col">
+                    <span className="text-sm font-semibold text-foreground">[Client Name]</span>
+                    <span className="text-xs text-muted-foreground">[Position, Company]</span>
+                  </span>
+                </figcaption>
+              </figure>
             ))}
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <WireCTA
-        title="Ready to Transform Your Business?"
-        text="[Supporting text encouraging action]"
-        primary="Schedule Vector Workshop"
-        secondary="Build Strategy"
-      />
-
-      {/* PHILOSOPHY — tabs (progressive disclosure) instead of a graphic */}
-      <section className="border-b border-neutral-200 py-16 md:py-24">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="mb-10 flex flex-col items-start gap-3">
-            <WireLabel>Philosophy</WireLabel>
-            <WireHeading level={2}>Prologue Agency Philosophy</WireHeading>
-            <WireText className="max-w-xl">
-              [Short text explaining your philosophy and approach to business transformation.]
-            </WireText>
-          </div>
-          <WireTabs
-            tabs={[
-              {
-                label: "Way of Work",
-                content: (
-                  <WireText>
-                    [Explanation of how the team works with clients day to day — process, cadence,
-                    collaboration model.]
-                  </WireText>
-                ),
-              },
-              {
-                label: "Why It Matters",
-                content: (
-                  <WireText>
-                    [The reasoning and beliefs behind the approach and why it produces durable
-                    results.]
-                  </WireText>
-                ),
-              },
-              {
-                label: "Values",
-                content: (
-                  <WireText>
-                    [Core values that guide decisions and engagements with clients.]
-                  </WireText>
-                ),
-              },
-              {
-                label: "AI Manifest",
-                content: (
-                  <WireText>
-                    [Stance on how AI is used responsibly within the agency&apos;s work.]
-                  </WireText>
-                ),
-              },
-            ]}
-          />
-          <div className="mt-6">
-            <WireButton variant="primary">Learn More About Us</WireButton>
+      <section className="bg-primary py-20 text-primary-foreground md:py-24">
+        <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 px-4 text-center md:px-6">
+          <h2 className="text-balance font-sans text-3xl font-semibold tracking-tight md:text-4xl">
+            Ready to Transform Your Business?
+          </h2>
+          <p className="max-w-xl text-pretty font-serif text-lg leading-relaxed text-primary-foreground/80">
+            [Supporting text encouraging the visitor to take the next step.]
+          </p>
+          <div className="flex flex-wrap justify-center gap-3 pt-2">
+            <a
+              href="/vector"
+              className="inline-flex items-center rounded-md bg-background px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-background/90"
+            >
+              Schedule Vector Workshop
+            </a>
+            <a
+              href="/contact"
+              className="inline-flex items-center rounded-md border border-primary-foreground/40 px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary-foreground/10"
+            >
+              Get in Touch
+            </a>
           </div>
         </div>
       </section>
 
-      {/* BLOG — structured list rows with metadata instead of image cards */}
-      <section className="bg-neutral-50 py-16 md:py-24">
-        <div className="mx-auto max-w-6xl px-4">
+      {/* PHILOSOPHY */}
+      <section className="border-b border-border py-20 md:py-28">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-4 md:grid-cols-[0.8fr_1.2fr] md:px-6">
+          <div className="flex flex-col gap-3">
+            <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
+              Philosophy
+            </span>
+            <h2 className="font-sans text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
+              How We Think
+            </h2>
+            <p className="font-serif text-lg leading-relaxed text-muted-foreground">
+              [Short text explaining your philosophy and approach to business transformation.]
+            </p>
+            <a
+              href="/about"
+              className="mt-2 inline-flex w-fit items-center gap-2 font-medium text-primary hover:underline"
+            >
+              Learn more about us <span aria-hidden="true">→</span>
+            </a>
+          </div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {[
+              { title: "Way of Work", body: "[How the team works with clients day to day.]" },
+              { title: "Why It Matters", body: "[The reasoning behind the approach.]" },
+              { title: "Values", body: "[Core values that guide engagements.]" },
+              { title: "AI Manifest", body: "[Our stance on responsible AI in the work.]" },
+            ].map((p, i) => (
+              <article
+                key={i}
+                className="flex flex-col gap-2 rounded-xl border border-border bg-card p-5"
+              >
+                <h3 className="font-sans text-base font-semibold text-foreground">{p.title}</h3>
+                <p className="font-serif text-sm leading-relaxed text-muted-foreground">{p.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* BLOG */}
+      <section className="bg-secondary py-20 md:py-28">
+        <div className="mx-auto max-w-6xl px-4 md:px-6">
           <div className="mb-10 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div className="flex flex-col gap-3">
-              <WireLabel>Blog</WireLabel>
-              <WireHeading level={2}>Latest from Our Blog</WireHeading>
+              <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">Blog</span>
+              <h2 className="font-sans text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
+                Latest from Our Blog
+              </h2>
             </div>
-            <span className="font-medium text-blue-700">[View all posts →]</span>
+            <a href="/blog" className="font-medium text-primary hover:underline">
+              View all posts →
+            </a>
           </div>
           <div className="flex flex-col gap-4">
             {[1, 2, 3].map((i) => (
-              <WireBox
+              <a
                 key={i}
-                className="flex flex-col gap-3 bg-white md:flex-row md:items-center md:justify-between"
+                href="/blog"
+                className="group flex flex-col gap-4 rounded-xl border border-border bg-card p-6 transition-colors hover:border-primary/40 md:flex-row md:items-center md:justify-between"
               >
                 <div className="flex flex-col gap-2">
                   <div className="flex flex-wrap items-center gap-2">
-                    <WireBadge tone="blue">[Category]</WireBadge>
-                    <span className="font-mono text-xs text-neutral-400">[Date]</span>
-                    <span className="font-mono text-xs text-neutral-400">[· 5 min read]</span>
+                    <span className="rounded-full bg-accent/10 px-3 py-1 font-mono text-xs uppercase tracking-wide text-accent">
+                      [Category]
+                    </span>
+                    <span className="font-mono text-xs text-muted-foreground">[Date · 5 min read]</span>
                   </div>
-                  <WireHeading level={4}>Blog Post Title {i}</WireHeading>
-                  <WireText className="text-sm">[Brief excerpt from the blog post...]</WireText>
+                  <h3 className="font-sans text-xl font-semibold text-foreground">
+                    [Blog post title {i}]
+                  </h3>
+                  <p className="font-serif text-sm leading-relaxed text-muted-foreground">
+                    [Brief excerpt from the blog post that hints at the value inside...]
+                  </p>
                 </div>
-                <span className="shrink-0 font-medium text-blue-700">Read More →</span>
-              </WireBox>
+                <span className="shrink-0 font-medium text-primary transition-transform group-hover:translate-x-0.5">
+                  Read more →
+                </span>
+              </a>
             ))}
           </div>
         </div>
       </section>
 
       {/* FAQ */}
-      <WireFAQ />
+      <section className="py-20 md:py-28">
+        <div className="mx-auto max-w-3xl px-4 md:px-6">
+          <div className="mb-10 flex flex-col items-center gap-3 text-center">
+            <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">FAQ</span>
+            <h2 className="font-sans text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
+              Frequently Asked Questions
+            </h2>
+          </div>
+          <div className="flex flex-col gap-3">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <div
+                key={i}
+                className="flex items-center justify-between gap-4 rounded-lg border border-border bg-card px-5 py-4"
+              >
+                <p className="font-sans font-medium text-foreground">
+                  [FAQ question {i + 1}]
+                </p>
+                <span className="font-mono text-xl text-muted-foreground" aria-hidden="true">
+                  +
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </SiteShell>
   )
 }

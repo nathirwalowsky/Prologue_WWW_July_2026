@@ -24,9 +24,9 @@ export function MainNav() {
   const [open, setOpen] = useState(false)
 
   return (
-    <nav className="hidden items-center gap-6 text-sm text-neutral-500 md:flex">
+    <nav className="hidden items-center gap-7 text-sm text-muted-foreground md:flex">
       {/* Home */}
-      <Link href="/" className="hover:text-neutral-900">
+      <Link href="/" className="transition-colors hover:text-foreground">
         Home
       </Link>
 
@@ -41,7 +41,7 @@ export function MainNav() {
           aria-haspopup="menu"
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
-          className="flex items-center gap-1 hover:text-neutral-900"
+          className="flex items-center gap-1 transition-colors hover:text-foreground"
         >
           Product
           <span
@@ -53,26 +53,23 @@ export function MainNav() {
         </button>
 
         {open ? (
-          <div
-            role="menu"
-            className="absolute left-0 top-full z-20 w-72 pt-3"
-          >
-            <div className="flex flex-col gap-1 rounded-md border-2 border-dashed border-neutral-300 bg-white p-2 shadow-sm">
+          <div role="menu" className="absolute left-0 top-full z-20 w-72 pt-3">
+            <div className="flex flex-col gap-1 rounded-lg border border-border bg-popover p-2 shadow-lg">
               {products.map((p, i) => (
                 <Link
                   key={i}
                   href={p.href}
                   role="menuitem"
-                  className="flex flex-col rounded-md px-3 py-2 hover:bg-neutral-50"
+                  className="flex flex-col rounded-md px-3 py-2 transition-colors hover:bg-secondary"
                 >
-                  <span className="font-medium text-neutral-800">{p.label}</span>
-                  <span className="text-xs text-neutral-500">{p.desc}</span>
+                  <span className="font-medium text-popover-foreground">{p.label}</span>
+                  <span className="text-xs text-muted-foreground">{p.desc}</span>
                 </Link>
               ))}
               <Link
                 href="/products"
                 role="menuitem"
-                className="mt-1 border-t border-dashed border-neutral-200 px-3 py-2 text-xs font-medium text-blue-700 hover:bg-neutral-50"
+                className="mt-1 border-t border-border px-3 py-2 text-xs font-medium text-primary transition-colors hover:bg-secondary"
               >
                 View all products →
               </Link>
@@ -85,7 +82,7 @@ export function MainNav() {
       {navLinks
         .filter((l) => l.href !== "/")
         .map((link) => (
-          <Link key={link.href} href={link.href} className="hover:text-neutral-900">
+          <Link key={link.href} href={link.href} className="transition-colors hover:text-foreground">
             {link.label}
           </Link>
         ))}
