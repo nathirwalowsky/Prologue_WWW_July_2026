@@ -1,6 +1,6 @@
 import Link from "next/link"
 import type React from "react"
-import { MainNav } from "@/components/main-nav"
+import { MainNav, MobileNav } from "@/components/main-nav"
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -45,12 +45,15 @@ export function SiteShell({
             <Wordmark />
           </Link>
           <MainNav />
-          <Link
-            href="/contact"
-            className="hidden items-center rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 md:inline-flex"
-          >
-            [CTA]
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link
+              href="/contact"
+              className="hidden items-center rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 md:inline-flex"
+            >
+              [CTA]
+            </Link>
+            <MobileNav />
+          </div>
         </div>
       </header>
 

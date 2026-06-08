@@ -55,15 +55,8 @@ export default function PartnerWireframeV2() {
                 [Select company type]
                 <span aria-hidden="true">▾</span>
               </span>
-              <span className="flex flex-wrap gap-2 pt-1">
-                {companyTypes.map((type) => (
-                  <span
-                    key={type}
-                    className="rounded-full border border-neutral-300 bg-neutral-100 px-3 py-1 text-xs text-neutral-600"
-                  >
-                    {type}
-                  </span>
-                ))}
+              <span className="font-mono text-[11px] text-neutral-400">
+                [Options: {companyTypes.join(", ")}]
               </span>
             </label>
 
