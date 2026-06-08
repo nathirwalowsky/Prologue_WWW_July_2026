@@ -88,6 +88,69 @@ export function WireButton({
   )
 }
 
+// Reusable FAQ wireframe block.
+export function WireFAQ({ count = 5 }: { count?: number }) {
+  return (
+    <section className="py-16 md:py-24">
+      <div className="mx-auto max-w-3xl px-4">
+        <div className="mb-10 flex flex-col items-center gap-3 text-center">
+          <WireLabel>FAQ</WireLabel>
+          <WireHeading level={2}>Frequently Asked Questions</WireHeading>
+        </div>
+        <div className="flex flex-col gap-3">
+          {Array.from({ length: count }).map((_, i) => (
+            <div
+              key={i}
+              className="flex items-center justify-between gap-4 rounded-md border-2 border-dashed border-neutral-300 bg-neutral-50 px-5 py-4"
+            >
+              <p className="font-semibold text-neutral-800">
+                {"Question " + (i + 1) + ": [FAQ question text]"}
+              </p>
+              <span className="font-mono text-xl text-neutral-400" aria-hidden="true">
+                +
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// Reusable CTA band.
+export function WireCTA({
+  title,
+  text,
+  primary,
+  secondary,
+}: {
+  title: string
+  text?: string
+  primary: string
+  secondary?: string
+}) {
+  return (
+    <section className="bg-blue-600 py-16 text-white md:py-20">
+      <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 px-4 text-center">
+        <WireHeading level={2} className="text-balance text-white">
+          {title}
+        </WireHeading>
+        {text ? <p className="max-w-xl text-pretty leading-relaxed text-blue-100">{text}</p> : null}
+        <div className="flex flex-wrap justify-center gap-4 pt-2">
+          <span className="rounded-md border-2 border-white bg-white px-5 py-2.5 text-sm font-medium text-blue-700">
+            {primary}
+          </span>
+          {secondary ? (
+            <span className="rounded-md border-2 border-white bg-transparent px-5 py-2.5 text-sm font-medium text-white">
+              {secondary}
+            </span>
+          ) : null}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 // Generic image / media placeholder.
 export function WirePlaceholder({
   label,
