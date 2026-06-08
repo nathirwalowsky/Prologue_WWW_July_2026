@@ -12,6 +12,15 @@ export default async function BlogPostWireframeV2({
   const post = blogPosts.find((p) => String(p.id) === id) ?? blogPosts[0]
   const related = blogPosts.filter((p) => p.id !== post.id).slice(0, 3)
 
+  const tableOfContents = [
+    { id: "introduction", label: "Introduction" },
+    { id: "section-1", label: "Main Point #1" },
+    { id: "section-2", label: "Main Point #2" },
+    { id: "section-3", label: "Main Point #3" },
+    { id: "conclusion", label: "Conclusion" },
+    { id: "action-items", label: "Action Items" },
+  ]
+
   return (
     <SiteShell pageName="Blog Post">
       {/* Breadcrumb */}
@@ -52,77 +61,127 @@ export default async function BlogPostWireframeV2({
 
       {/* Article body */}
       <article className="py-12 md:py-16">
-        <div className="mx-auto flex max-w-3xl flex-col gap-6 px-4">
-          <WirePlaceholder label="[Featured / hero image]" className="aspect-video w-full" />
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-4 lg:grid-cols-[240px_1fr]">
+          {/* Table of contents (sticky sidebar) */}
+          <aside className="hidden lg:block">
+            <nav aria-label="Table of contents" className="sticky top-24">
+              <p className="mb-3 text-sm font-semibold uppercase tracking-wide text-neutral-500">On this page</p>
+              <ol className="flex flex-col gap-2 border-l-2 border-neutral-200 text-sm">
+                {tableOfContents.map((item) => (
+                  <li key={item.id}>
+                    <a
+                      href={`#${item.id}`}
+                      className="-ml-0.5 block border-l-2 border-transparent py-1 pl-4 text-neutral-600 transition-colors hover:border-blue-500 hover:text-blue-700"
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          </aside>
 
-          <WireHeading level={3}>Introduction</WireHeading>
-          <WireText>
-            [Opening paragraph that hooks the reader and sets up the main argument or story. This should be compelling
-            and make the reader want to continue.]
-          </WireText>
+          <div className="flex max-w-3xl flex-col gap-6">
+            <WirePlaceholder label="[Featured / hero image]" className="aspect-video w-full" />
 
-          <WireHeading level={3}>Section 1: [Main Point #1]</WireHeading>
-          <WireText>
-            [Body content explaining the first main point. Include examples, data, stories, or case studies that
-            support your argument.]
-          </WireText>
-          <div className="rounded-md border-l-4 border-blue-500 bg-blue-50 px-5 py-4">
-            <p className="mb-1 font-semibold text-neutral-800">Key Takeaway</p>
-            <WireText className="text-neutral-600">[Important insight or quote that summarizes this section.]</WireText>
-          </div>
+            {/* Inline TOC for mobile */}
+            <nav
+              aria-label="Table of contents"
+              className="rounded-md border-2 border-dashed border-neutral-300 bg-neutral-50 p-5 lg:hidden"
+            >
+              <p className="mb-3 text-sm font-semibold uppercase tracking-wide text-neutral-500">On this page</p>
+              <ol className="flex flex-col gap-2 text-sm">
+                {tableOfContents.map((item, i) => (
+                  <li key={item.id}>
+                    <a href={`#${item.id}`} className="text-blue-700 hover:underline">
+                      {`${i + 1}. ${item.label}`}
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
 
-          <WireHeading level={3}>Section 2: [Main Point #2]</WireHeading>
-          <WireText>
-            [Second major point of the article. Continue building your argument with supporting evidence and practical
-            applications.]
-          </WireText>
-          <WireBox className="bg-neutral-50">
-            <WirePlaceholder label="[Supporting image, chart, or diagram]" className="mb-3 h-56 w-full" />
-            <p className="text-center text-sm text-neutral-500">[Image caption explaining what this visual shows]</p>
-          </WireBox>
-
-          <WireHeading level={3}>Section 3: [Main Point #3]</WireHeading>
-          <WireText>
-            [Third major point, building toward the conclusion. Include actionable advice readers can implement
-            immediately.]
-          </WireText>
-          <div className="rounded-md border-l-4 border-amber-400 bg-amber-50 px-5 py-4">
-            <p className="mb-1 font-semibold text-neutral-800">Real-World Example</p>
-            <WireText className="text-neutral-600">
-              [Case study or example that illustrates the concept in action. Make it specific and relatable.]
+            <div id="introduction" className="scroll-mt-24">
+              <WireHeading level={3}>Introduction</WireHeading>
+            </div>
+            <WireText>
+              [Opening paragraph that hooks the reader and sets up the main argument or story. This should be compelling
+              and make the reader want to continue.]
             </WireText>
-          </div>
 
-          <WireHeading level={3}>Conclusion</WireHeading>
-          <WireText>
-            [Wrap up the main arguments and provide a clear call to action or next steps for readers.]
-          </WireText>
+            <div id="section-1" className="scroll-mt-24">
+              <WireHeading level={3}>Section 1: [Main Point #1]</WireHeading>
+            </div>
+            <WireText>
+              [Body content explaining the first main point. Include examples, data, stories, or case studies that
+              support your argument.]
+            </WireText>
+            <div className="rounded-md border-l-4 border-blue-500 bg-blue-50 px-5 py-4">
+              <p className="mb-1 font-semibold text-neutral-800">Key Takeaway</p>
+              <WireText className="text-neutral-600">
+                [Important insight or quote that summarizes this section.]
+              </WireText>
+            </div>
 
-          {/* Action items */}
-          <div className="rounded-md border-2 border-dashed border-emerald-400 bg-emerald-50 p-6">
-            <WireHeading level={4} className="mb-3">
-              Action Items
-            </WireHeading>
-            <ul className="flex flex-col gap-2 text-neutral-700">
-              {[1, 2, 3, 4].map((i) => (
-                <li key={i} className="flex items-start gap-2">
-                  <span className="text-emerald-600" aria-hidden="true">
-                    ✓
-                  </span>
-                  <span>[Actionable step #{i}]</span>
-                </li>
+            <div id="section-2" className="scroll-mt-24">
+              <WireHeading level={3}>Section 2: [Main Point #2]</WireHeading>
+            </div>
+            <WireText>
+              [Second major point of the article. Continue building your argument with supporting evidence and practical
+              applications.]
+            </WireText>
+            <WireBox className="bg-neutral-50">
+              <WirePlaceholder label="[Supporting image, chart, or diagram]" className="mb-3 h-56 w-full" />
+              <p className="text-center text-sm text-neutral-500">[Image caption explaining what this visual shows]</p>
+            </WireBox>
+
+            <div id="section-3" className="scroll-mt-24">
+              <WireHeading level={3}>Section 3: [Main Point #3]</WireHeading>
+            </div>
+            <WireText>
+              [Third major point, building toward the conclusion. Include actionable advice readers can implement
+              immediately.]
+            </WireText>
+            <div className="rounded-md border-l-4 border-amber-400 bg-amber-50 px-5 py-4">
+              <p className="mb-1 font-semibold text-neutral-800">Real-World Example</p>
+              <WireText className="text-neutral-600">
+                [Case study or example that illustrates the concept in action. Make it specific and relatable.]
+              </WireText>
+            </div>
+
+            <div id="conclusion" className="scroll-mt-24">
+              <WireHeading level={3}>Conclusion</WireHeading>
+            </div>
+            <WireText>
+              [Wrap up the main arguments and provide a clear call to action or next steps for readers.]
+            </WireText>
+
+            {/* Action items */}
+            <div id="action-items" className="scroll-mt-24 rounded-md border-2 border-dashed border-emerald-400 bg-emerald-50 p-6">
+              <WireHeading level={4} className="mb-3">
+                Action Items
+              </WireHeading>
+              <ul className="flex flex-col gap-2 text-neutral-700">
+                {[1, 2, 3, 4].map((i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <span className="text-emerald-600" aria-hidden="true">
+                      ✓
+                    </span>
+                    <span>[Actionable step #{i}]</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Tags */}
+            <div className="flex flex-wrap items-center gap-2 border-t border-neutral-200 pt-6">
+              <span className="text-sm text-neutral-500">Tags:</span>
+              {["Business Strategy", "Resilience", "Planning", "Risk Management"].map((tag) => (
+                <span key={tag} className="rounded-full bg-neutral-100 px-3 py-1 text-sm text-neutral-600">
+                  {tag}
+                </span>
               ))}
-            </ul>
-          </div>
-
-          {/* Tags */}
-          <div className="flex flex-wrap items-center gap-2 border-t border-neutral-200 pt-6">
-            <span className="text-sm text-neutral-500">Tags:</span>
-            {["Business Strategy", "Resilience", "Planning", "Risk Management"].map((tag) => (
-              <span key={tag} className="rounded-full bg-neutral-100 px-3 py-1 text-sm text-neutral-600">
-                {tag}
-              </span>
-            ))}
+            </div>
           </div>
         </div>
       </article>
