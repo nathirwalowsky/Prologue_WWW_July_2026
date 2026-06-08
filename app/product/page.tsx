@@ -1,4 +1,4 @@
-import { SiteShell, PageHeader } from "@/components/site-shell"
+import { SiteShell } from "@/components/site-shell"
 import {
   WireBox,
   WireButton,
@@ -19,18 +19,63 @@ import {
 export default function ProductWireframeV2() {
   return (
     <SiteShell pageName="Product / Situation">
-      <PageHeader
-        label="Product / Situation"
-        title="[Situation Headline — name the problem your customer faces]"
-        intro="[One-line promise that this page will show the path from problem to resolution.]"
-      />
+      {/* HERO — problem-forward, identify immediately */}
+      <section className="border-b border-neutral-200 bg-neutral-50 py-16 md:py-24">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2">
+            {/* Left: framing + headline */}
+            <div className="flex flex-col items-start gap-5">
+              <WireLabel>Product / Situation</WireLabel>
+              <WireHeading level={1} className="text-balance">
+                [If any of these sound familiar, you&apos;re in the right place.]
+              </WireHeading>
+              <WireText className="max-w-md text-pretty">
+                [One-line promise: you&apos;re not alone, and there&apos;s a clear path from where you
+                are now to where you want to be.]
+              </WireText>
+              <div className="flex flex-wrap gap-3 pt-2">
+                <WireButton variant="primary">[Show me the way forward]</WireButton>
+                <WireButton variant="ghost">[Book a call]</WireButton>
+              </div>
+            </div>
+
+            {/* Right: the problems checklist */}
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center gap-2">
+                <WireBadge tone="muted">Common challenges</WireBadge>
+                <span className="font-mono text-xs text-neutral-400">[Select what resonates]</span>
+              </div>
+              {[
+                "[Problem 1 — e.g. growth has stalled and you're not sure why]",
+                "[Problem 2 — e.g. the team is busy but priorities feel unclear]",
+                "[Problem 3 — e.g. decisions take too long to make]",
+                "[Problem 4 — e.g. you're reacting instead of leading]",
+                "[Problem 5 — e.g. results don't match the effort going in]",
+              ].map((problem, i) => (
+                <div
+                  key={i}
+                  className="flex items-start gap-3 rounded-md border-2 border-dashed border-neutral-300 bg-white px-4 py-3"
+                >
+                  <span
+                    className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded border-2 border-neutral-300 font-mono text-xs text-neutral-400"
+                    aria-hidden="true"
+                  >
+                    ✓
+                  </span>
+                  <WireText className="text-sm text-neutral-700">{problem}</WireText>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* 1. IDENTIFICATION — current vs. desired comparison table */}
       <section className="border-b border-neutral-200 py-16 md:py-24">
         <div className="mx-auto max-w-5xl px-4">
           <div className="mb-8 flex flex-col items-start gap-5">
             <WireLabel>1 · Identification</WireLabel>
-            <WireHeading level={2}>Does This Sound Familiar?</WireHeading>
+            <WireHeading level={2}>From Where You Are to Where You Want to Be</WireHeading>
             <WireText className="max-w-2xl">
               [Frame the gap between where the customer is today and where they want to be.]
             </WireText>
