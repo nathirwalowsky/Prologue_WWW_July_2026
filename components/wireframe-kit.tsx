@@ -65,6 +65,36 @@ export function WireText({
   return <p className={cn("leading-relaxed text-neutral-500", className)}>{children}</p>
 }
 
+// GDPR-style consent checkbox (unchecked by default, granular, with required marker).
+export function WireConsent({
+  children,
+  required = false,
+  tone = "light",
+}: {
+  children: React.ReactNode
+  required?: boolean
+  tone?: "light" | "onDark"
+}) {
+  const boxClass =
+    tone === "onDark"
+      ? "border-white/70 bg-white/10"
+      : "border-neutral-300 bg-white"
+  const textClass = tone === "onDark" ? "text-blue-50" : "text-neutral-600"
+  const reqClass = tone === "onDark" ? "text-white" : "text-blue-700"
+  return (
+    <label className="flex items-start gap-3 text-left">
+      <span
+        className={cn("mt-0.5 size-4 shrink-0 rounded-sm border-2", boxClass)}
+        aria-hidden="true"
+      />
+      <span className={cn("text-xs leading-relaxed", textClass)}>
+        {children}
+        {required ? <span className={cn("ml-1 font-semibold", reqClass)}>*</span> : null}
+      </span>
+    </label>
+  )
+}
+
 export function WireButton({
   children,
   variant = "primary",

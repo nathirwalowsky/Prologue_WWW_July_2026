@@ -1,5 +1,5 @@
 import { SiteShell } from "@/components/site-shell"
-import { WireButton, WireHeading, WireLabel, WireText } from "@/components/wireframe-kit"
+import { WireButton, WireConsent, WireHeading, WireLabel, WireText } from "@/components/wireframe-kit"
 
 const textFields = [
   { label: "Email", placeholder: "[you@company.com]" },
@@ -67,8 +67,25 @@ export default function PartnerWireframeV2() {
               </span>
             </label>
 
+            {/* GDPR consent */}
+            <div className="flex flex-col gap-3 border-t border-dashed border-neutral-300 pt-4">
+              <WireConsent required>
+                I consent to the processing of my company and personal data by Prologue Agency to
+                review and respond to this partnership inquiry, in accordance with the{" "}
+                <span className="underline">Privacy Policy</span> (GDPR / RODO).
+              </WireConsent>
+              <WireConsent>
+                I would like to receive partnership updates and marketing communications from
+                Prologue Agency. I can withdraw this consent at any time.
+              </WireConsent>
+            </div>
+
             <WireButton variant="primary">Submit Partner Inquiry</WireButton>
-            <WireText className="text-xs">[Reassurance: we&apos;ll get back to you within X business days.]</WireText>
+            <WireText className="text-xs">
+              [* Required. Prologue Agency is the controller of your data. You have the right to
+              access, rectify, and erase it — see our Privacy Policy. We&apos;ll get back to you
+              within X business days.]
+            </WireText>
           </div>
         </div>
       </section>

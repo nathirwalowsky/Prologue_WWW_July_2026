@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { SiteShell, PageHeader } from "@/components/site-shell"
-import { WireBox, WireHeading, WireLabel, WirePlaceholder, WireText } from "@/components/wireframe-kit"
+import { WireBox, WireConsent, WireHeading, WireLabel, WirePlaceholder, WireText } from "@/components/wireframe-kit"
 import { blogCategories, blogPosts } from "@/lib/blog-data"
 
 export default function BlogWireframeV2() {
@@ -133,6 +133,14 @@ export default function BlogWireframeV2() {
             <span className="rounded-md border-2 border-white bg-white px-6 py-2.5 text-sm font-medium text-blue-700">
               Subscribe
             </span>
+          </div>
+          <div className="w-full max-w-md">
+            <WireConsent required tone="onDark">
+              I consent to receiving the newsletter from Prologue Agency and to the processing of my
+              email for this purpose, in accordance with the{" "}
+              <span className="underline">Privacy Policy</span> (GDPR / RODO). I can unsubscribe at
+              any time.
+            </WireConsent>
           </div>
         </div>
       </section>
