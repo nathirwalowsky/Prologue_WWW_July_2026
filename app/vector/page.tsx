@@ -1,3 +1,5 @@
+"use client"
+
 import { SiteShell, PageHeader } from "@/components/site-shell"
 import { WireButton, WireFAQ, WireHeading, WireLabel, WireText } from "@/components/wireframe-kit"
 import {
