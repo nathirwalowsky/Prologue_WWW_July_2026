@@ -2,13 +2,8 @@
 
 import { SiteShell, PageHeader } from "@/components/site-shell"
 import { WireButton, WireFAQ, WireHeading, WireLabel, WireText } from "@/components/wireframe-kit"
-import {
-  WireAccordion,
-  WireBadge,
-  WireChecklist,
-  WireStepAccordion,
-  WireTabs,
-} from "@/components/wire-ui"
+import { WireAccordion, WireBadge, WireStepAccordion, WireTabs } from "@/components/wire-ui"
+import { VectorReadiness } from "@/components/vector-readiness"
 
 export default function VectorWireframeV2() {
   return (
@@ -279,46 +274,18 @@ export default function VectorWireframeV2() {
         </div>
       </section>
 
-      {/* HOW TO PREPARE — interactive facilitator checklist */}
+      {/* HOW TO PREPARE — readiness self-assessment */}
       <section className="border-b border-neutral-200 py-16 md:py-24">
         <div className="mx-auto grid max-w-6xl grid-cols-1 items-start gap-10 px-4 md:grid-cols-2">
           <div className="flex flex-col items-start gap-5">
             <WireLabel>Preparation</WireLabel>
-            <WireHeading level={2}>How to Prepare to Facilitate</WireHeading>
+            <WireHeading level={2}>Are You Ready to Facilitate?</WireHeading>
             <WireText className="max-w-md">
-              [Work through this checklist before the session. Tick items off as you go so nothing
-              gets missed on the day.]
+              [Answer three quick questions and we&apos;ll point you to the right next step — whether
+              that&apos;s jumping straight in, brushing up first, or booking a call with us.]
             </WireText>
           </div>
-          <WireChecklist
-            groups={[
-              {
-                title: "Before the session",
-                items: [
-                  "[Read through the full framework]",
-                  "[Watch the facilitator walkthrough videos]",
-                  "[Pick a date and book the room or call]",
-                  "[Invite participants with a clear agenda]",
-                ],
-              },
-              {
-                title: "Materials to prepare",
-                items: [
-                  "[Print or share the worksheet template]",
-                  "[Prepare sticky notes / whiteboard / digital board]",
-                  "[Have the timer and agenda visible]",
-                ],
-              },
-              {
-                title: "On the day",
-                items: [
-                  "[Arrive early and set up the space]",
-                  "[Open with the framing from Phase 1]",
-                  "[Assign a note-taker for decisions and owners]",
-                ],
-              },
-            ]}
-          />
+          <VectorReadiness />
         </div>
       </section>
 
