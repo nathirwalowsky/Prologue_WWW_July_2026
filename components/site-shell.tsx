@@ -1,12 +1,13 @@
 import Link from "next/link"
 import type React from "react"
 import { WireButton, WireLabel } from "@/components/wireframe-kit"
+import { MainNav } from "@/components/main-nav"
 
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/product", label: "Product" },
-  { href: "/about", label: "About" },
   { href: "/vector", label: "Vector" },
+  { href: "/about", label: "About" },
   { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
 ]
@@ -36,13 +37,7 @@ export function SiteShell({
           <Link href="/">
             <WireLabel>[Logo]</WireLabel>
           </Link>
-          <nav className="hidden items-center gap-6 text-sm text-neutral-500 md:flex">
-            {navLinks.map((link) => (
-              <Link key={link.href} href={link.href} className="hover:text-neutral-900">
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+          <MainNav />
           <Link href="/contact">
             <WireButton variant="primary">[CTA]</WireButton>
           </Link>
