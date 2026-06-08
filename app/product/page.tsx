@@ -98,17 +98,71 @@ export default function ProductWireframeV2() {
         </div>
       </section>
 
-      {/* 2. EMPATHY */}
+      {/* 2. EMPATHY — emotional resonance, make them feel seen */}
       <section className="border-b border-neutral-200 bg-neutral-50 py-16 md:py-24">
-        <div className="mx-auto max-w-4xl px-4 text-center">
-          <div className="mb-6 flex flex-col items-center gap-3">
+        <div className="mx-auto max-w-5xl px-4">
+          <div className="mb-10 flex flex-col items-center gap-3 text-center">
             <WireLabel>2 · Empathy</WireLabel>
-            <WireHeading level={2}>We Understand How You Feel</WireHeading>
+            <WireHeading level={2} className="text-balance">
+              [The part no one talks about — how this actually feels]
+            </WireHeading>
+            <WireText className="max-w-2xl text-pretty">
+              [Name the emotional weight behind the problem. This is not about logistics — it&apos;s
+              about the toll it takes on you.]
+            </WireText>
           </div>
-          <WireText className="mx-auto max-w-2xl text-pretty">
-            [Empathetic statement reflecting what the customer thinks and feels. Show you understand
-            their frustration before offering the solution.]
-          </WireText>
+
+          {/* Unspoken inner-thoughts as quote cards */}
+          <div className="mb-10">
+            <div className="mb-4 flex items-center justify-center gap-2">
+              <WireBadge tone="muted">The thoughts you don&apos;t say out loud</WireBadge>
+            </div>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+              {[
+                "[\u201cAm I the only one who feels this way?\u201d]",
+                "[\u201cI work all the time, but it never feels like enough.\u201d]",
+                "[\u201cWhat if I\u2019m steering this in the wrong direction?\u201d]",
+              ].map((quote, i) => (
+                <div
+                  key={i}
+                  className="relative flex flex-col gap-3 rounded-md border-2 border-dashed border-neutral-300 bg-white px-5 py-6"
+                >
+                  <span className="font-serif text-4xl leading-none text-neutral-300" aria-hidden="true">
+                    &ldquo;
+                  </span>
+                  <WireText className="text-pretty italic text-neutral-700">{quote}</WireText>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Emotional toll — what it's costing you (not the business) */}
+          <div className="mb-10 grid grid-cols-1 gap-4 md:grid-cols-3">
+            {[
+              { tag: "Energy", line: "[The constant low-grade stress of carrying it alone.]" },
+              { tag: "Confidence", line: "[Second-guessing decisions you used to make easily.]" },
+              { tag: "Time", line: "[The evenings and weekends that quietly disappear.]" },
+            ].map((item, i) => (
+              <div key={i} className="flex flex-col gap-2 rounded-md border-2 border-dashed border-neutral-300 bg-white p-5">
+                <WireBadge tone="blue">{item.tag}</WireBadge>
+                <WireText className="text-sm text-neutral-700">{item.line}</WireText>
+              </div>
+            ))}
+          </div>
+
+          {/* Authority + empathy — we've been there, you can trust us */}
+          <div className="rounded-md border-l-4 border-blue-500 bg-white px-6 py-6">
+            <WireText className="text-pretty text-neutral-800">
+              [&ldquo;We&apos;ve sat exactly where you&apos;re sitting.&rdquo; A short, human statement
+              that shows you&apos;ve felt this too — and that&apos;s precisely why you can guide them out
+              of it.]
+            </WireText>
+            <div className="mt-4 flex flex-wrap items-center gap-2">
+              <WireBadge tone="muted">[Years guiding leaders]</WireBadge>
+              <WireBadge tone="muted">[Founders supported]</WireBadge>
+              <WireBadge tone="muted">[We&apos;ve been in your seat]</WireBadge>
+            </div>
+          </div>
         </div>
       </section>
 
