@@ -55,6 +55,27 @@ const businessSections: Section[] = [
   },
 ]
 
+function DetailPanel({ section }: { section: Section }) {
+  return (
+    <div className="flex flex-col gap-5 rounded-xl border border-border bg-card p-6 md:p-8">
+      <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">Detail</span>
+      <h3 className="font-sans text-2xl font-semibold tracking-tight text-foreground">
+        {section.title}
+      </h3>
+      <p className="font-serif text-lg leading-relaxed text-muted-foreground">
+        {section.description}
+      </p>
+      <WirePlaceholder label="[Supporting visual / icon]" className="mt-2 h-40 w-full" />
+      <div className="mt-auto">
+        <span className="inline-flex items-center gap-2 font-medium text-primary">
+          {"[Learn more about " + section.title + "]"}
+          <span aria-hidden="true">→</span>
+        </span>
+      </div>
+    </div>
+  )
+}
+
 export function BusinessSections() {
   const [activeIndex, setActiveIndex] = useState(0)
   const active = businessSections[activeIndex]
@@ -70,12 +91,12 @@ export function BusinessSections() {
             Business Sections We Work On
           </h2>
           <p className="max-w-xl font-serif text-lg leading-relaxed text-muted-foreground">
-            [Intro line] Hover or tap a topic on the left to read the full description on the right.
+            [Intro line] Tap a topic to read the full description.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] md:gap-8">
-          {/* LEFT: subtitle list */}
+        {/* Desktop: side-by-side tab list + sticky detail panel */}
+        <div className="hidden md:grid md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] md:gap-8">
           <ul className="flex flex-col gap-2" role="tablist" aria-label="Business sections">
             {businessSections.map((section, index) => {
               const isActive = index === activeIndex
@@ -85,6 +106,7 @@ export function BusinessSections() {
                     type="button"
                     role="tab"
                     aria-selected={isActive}
+                    aria-controls="business-detail-panel"
                     onMouseEnter={() => setActiveIndex(index)}
                     onFocus={() => setActiveIndex(index)}
                     onClick={() => setActiveIndex(index)}
@@ -121,30 +143,70 @@ export function BusinessSections() {
             })}
           </ul>
 
-          {/* RIGHT: long description for the active item */}
-          <div
-            role="tabpanel"
-            className="flex flex-col gap-5 rounded-xl border border-border bg-card p-6 md:p-8"
-          >
-            <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
-              Detail
-            </span>
-            <h3 className="font-sans text-2xl font-semibold tracking-tight text-foreground">
-              {active.title}
-            </h3>
-            <p className="font-serif text-lg leading-relaxed text-muted-foreground">
-              {active.description}
-            </p>
-
-            <WirePlaceholder label="[Supporting visual / icon]" className="mt-2 h-40 w-full" />
-
-            <div className="mt-auto">
-              <span className="inline-flex items-center gap-2 font-medium text-primary">
-                {"[Learn more about " + active.title + "]"} <span aria-hidden="true">→</span>
-              </span>
-            </div>
+          <div id="business-detail-panel" role="tabpanel">
+            <DetailPanel section={active} />
           </div>
         </div>
+
+        {/* Mobile: accordion — each button expands its own detail panel inline */}
+        <dl className="flex flex-col gap-2 md:hidden">
+          {businessSections.map((section, index) => {
+            const isOpen = activeIndex === index
+            return (
+              <div key={section.title} className="rounded-lg border border-border bg-card">
+                <dt>
+                  <button
+                    type="button"
+                    aria-expanded={isOpen}
+                    aria-controls={`mobile-section-${index}`}
+                    onClick={() => setActiveIndex(isOpen ? -1 : index)}
+                    className="flex w-full items-center justify-between gap-4 px-4 py-4 text-left"
+                  >
+                    <span className="flex flex-col">
+                      <span
+                        className={cn(
+                          "font-sans font-semibold",
+                          isOpen ? "text-primary" : "text-foreground",
+                        )}
+                      >
+                        {section.title}
+                      </span>
+                      <span className="text-sm text-muted-foreground">{section.short}</span>
+                    </span>
+                    <span
+                      className={cn(
+                        "flex size-6 shrink-0 items-center justify-center rounded-full border font-mono text-sm transition-all duration-200",
+                        isOpen
+                          ? "rotate-45 border-primary text-primary"
+                          : "border-border text-muted-foreground",
+                      )}
+                      aria-hidden="true"
+                    >
+                      +
+                    </span>
+                  </button>
+                </dt>
+                <dd
+                  id={`mobile-section-${index}`}
+                  className={cn(
+                    "overflow-hidden transition-all duration-300 ease-in-out",
+                    isOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0",
+                  )}
+                >
+                  <div className="border-t border-border px-4 py-5">
+                    <p className="font-serif text-base leading-relaxed text-muted-foreground">
+                      {section.description}
+                    </p>
+                    <span className="mt-4 inline-flex items-center gap-2 font-medium text-primary">
+                      {"[Learn more about " + section.title + "]"}
+                      <span aria-hidden="true">→</span>
+                    </span>
+                  </div>
+                </dd>
+              </div>
+            )
+          })}
+        </dl>
       </div>
     </section>
   )

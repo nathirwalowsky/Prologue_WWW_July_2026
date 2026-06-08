@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import type React from "react"
 import { MainNav, MobileNav } from "@/components/main-nav"
 
@@ -13,14 +14,14 @@ const navLinks = [
 
 function Wordmark({ tone = "dark" }: { tone?: "dark" | "light" }) {
   return (
-    <span
-      className={
-        "font-sans text-lg font-semibold uppercase tracking-[0.2em] " +
-        (tone === "light" ? "text-background" : "text-foreground")
-      }
-    >
-      [Logo]
-    </span>
+    <Image
+      src="/brand/prologue-wordmark.png"
+      alt="Prologue Agency"
+      width={180}
+      height={60}
+      className={tone === "light" ? "brightness-0 invert" : ""}
+      priority
+    />
   )
 }
 

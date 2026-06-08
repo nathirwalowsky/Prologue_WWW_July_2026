@@ -1,4 +1,6 @@
+import Image from "next/image"
 import { BusinessSections } from "@/components/business-sections"
+import { HomeFaq } from "@/components/home-faq"
 import { SiteShell } from "@/components/site-shell"
 
 export default function HomePage() {
@@ -33,37 +35,17 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Conceptual before → after shift */}
-          <div className="flex flex-col gap-5 rounded-xl border border-border bg-card p-6 shadow-sm md:p-8">
-            <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
-              The shift
-            </span>
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_auto_1fr] sm:items-stretch">
-              <div className="flex flex-col gap-2 rounded-lg border border-border bg-secondary p-4">
-                <span className="font-mono text-xs uppercase tracking-wide text-muted-foreground">
-                  Before
-                </span>
-                <p className="font-serif text-sm leading-relaxed text-foreground">
-                  [Where the business feels stuck today]
-                </p>
-              </div>
-              <div className="flex items-center justify-center">
-                <span className="font-mono text-2xl text-accent" aria-hidden="true">
-                  →
-                </span>
-              </div>
-              <div className="flex flex-col gap-2 rounded-lg border border-primary/30 bg-primary/5 p-4">
-                <span className="font-mono text-xs uppercase tracking-wide text-primary">
-                  After
-                </span>
-                <p className="font-serif text-sm leading-relaxed text-foreground">
-                  [The breakthrough state they reach with us]
-                </p>
-              </div>
-            </div>
-            <p className="font-serif text-sm leading-relaxed text-muted-foreground">
-              [One sentence describing the kind of clarity or momentum this unlocks.]
-            </p>
+          {/* Symbol — atmospheric visual anchor for the hero */}
+          <div className="relative flex items-center justify-center">
+            <Image
+              src="/brand/prologue-symbol.png"
+              alt=""
+              aria-hidden="true"
+              width={480}
+              height={480}
+              className="w-full max-w-[380px] opacity-90 md:max-w-none"
+              priority
+            />
           </div>
         </div>
       </section>
@@ -170,22 +152,22 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* PHILOSOPHY */}
-      <section className="border-b border-border py-20 md:py-28">
+      {/* PHILOSOPHY — ink/dark section for contrast rhythm */}
+      <section className="bg-foreground py-20 md:py-28">
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-4 md:grid-cols-[0.8fr_1.2fr] md:px-6">
           <div className="flex flex-col gap-3">
             <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
               Philosophy
             </span>
-            <h2 className="font-sans text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
+            <h2 className="font-sans text-3xl font-semibold tracking-tight text-background md:text-4xl">
               How We Think
             </h2>
-            <p className="font-serif text-lg leading-relaxed text-muted-foreground">
+            <p className="font-serif text-lg leading-relaxed text-background/60">
               [Short text explaining your philosophy and approach to business transformation.]
             </p>
             <a
               href="/about"
-              className="mt-2 inline-flex w-fit items-center gap-2 font-medium text-primary hover:underline"
+              className="mt-2 inline-flex w-fit items-center gap-2 font-medium text-accent hover:underline"
             >
               Learn more about us <span aria-hidden="true">→</span>
             </a>
@@ -199,10 +181,10 @@ export default function HomePage() {
             ].map((p, i) => (
               <article
                 key={i}
-                className="flex flex-col gap-2 rounded-xl border border-border bg-card p-5"
+                className="flex flex-col gap-2 rounded-xl border border-background/10 bg-background/5 p-5"
               >
-                <h3 className="font-sans text-base font-semibold text-foreground">{p.title}</h3>
-                <p className="font-serif text-sm leading-relaxed text-muted-foreground">{p.body}</p>
+                <h3 className="font-sans text-base font-semibold text-background">{p.title}</h3>
+                <p className="font-serif text-sm leading-relaxed text-background/60">{p.body}</p>
               </article>
             ))}
           </div>
@@ -254,31 +236,7 @@ export default function HomePage() {
       </section>
 
       {/* FAQ */}
-      <section className="py-20 md:py-28">
-        <div className="mx-auto max-w-3xl px-4 md:px-6">
-          <div className="mb-10 flex flex-col items-center gap-3 text-center">
-            <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">FAQ</span>
-            <h2 className="font-sans text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
-              Frequently Asked Questions
-            </h2>
-          </div>
-          <div className="flex flex-col gap-3">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <div
-                key={i}
-                className="flex items-center justify-between gap-4 rounded-lg border border-border bg-card px-5 py-4"
-              >
-                <p className="font-sans font-medium text-foreground">
-                  [FAQ question {i + 1}]
-                </p>
-                <span className="font-mono text-xl text-muted-foreground" aria-hidden="true">
-                  +
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <HomeFaq />
     </SiteShell>
   )
 }
