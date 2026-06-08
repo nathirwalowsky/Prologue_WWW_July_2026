@@ -369,6 +369,66 @@ export function WireStepAccordion({
 }
 
 /* ------------------------------------------------------------------ */
+/* Checklist (interactive, grouped, tickable)                          */
+/* ------------------------------------------------------------------ */
+
+export type WireChecklistGroup = {
+  title: string
+  items: string[]
+}
+
+export function WireChecklist({ groups }: { groups: WireChecklistGroup[] }) {
+  const [checked, setChecked] = useState<Record<string, boolean>>({})
+
+  const allItems = groups.flatMap((g, gi) => g.items.map((_, ii) => `${gi}-${ii}`))
+  const doneCount = allItems.filter((key) => checked[key]).length
+
+  return (
+    <div className="flex flex-col gap-6 rounded-md border-2 border-dashed border-neutral-300 bg-neutral-50 p-6">
+      <div className="flex items-center justify-between">
+        <WireBadge tone="blue">Facilitator checklist</WireBadge>
+        <span className="font-mono text-xs text-neutral-500">
+          {doneCount}/{allItems.length} done
+        </span>
+      </div>
+
+      {groups.map((group, gi) => (
+        <fieldset key={gi} className="flex flex-col gap-2 border-0 p-0">
+          <legend className="mb-1 text-sm font-semibold uppercase tracking-wide text-neutral-500">
+            {group.title}
+          </legend>
+          {group.items.map((item, ii) => {
+            const key = `${gi}-${ii}`
+            const isChecked = !!checked[key]
+            return (
+              <label
+                key={key}
+                className="flex cursor-pointer items-start gap-3 rounded-md border-2 border-dashed border-neutral-300 bg-white px-4 py-3"
+              >
+                <input
+                  type="checkbox"
+                  checked={isChecked}
+                  onChange={() => setChecked((prev) => ({ ...prev, [key]: !prev[key] }))}
+                  className="mt-0.5 size-4 shrink-0 accent-blue-600"
+                />
+                <span
+                  className={cn(
+                    "text-sm",
+                    isChecked ? "text-neutral-400 line-through" : "text-neutral-700",
+                  )}
+                >
+                  {item}
+                </span>
+              </label>
+            )
+          })}
+        </fieldset>
+      ))}
+    </div>
+  )
+}
+
+/* ------------------------------------------------------------------ */
 /* Badge + progress / meter                                            */
 /* ------------------------------------------------------------------ */
 

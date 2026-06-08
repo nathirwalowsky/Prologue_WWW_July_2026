@@ -3,7 +3,7 @@ import { WireButton, WireFAQ, WireHeading, WireLabel, WireText } from "@/compone
 import {
   WireAccordion,
   WireBadge,
-  WireProgress,
+  WireChecklist,
   WireStepAccordion,
   WireTabs,
 } from "@/components/wire-ui"
@@ -231,26 +231,46 @@ export default function VectorWireframeV2() {
         </div>
       </section>
 
-      {/* HOW TO PREPARE — readiness checklist with progress */}
+      {/* HOW TO PREPARE — interactive facilitator checklist */}
       <section className="border-b border-neutral-200 py-16 md:py-24">
         <div className="mx-auto grid max-w-6xl grid-cols-1 items-start gap-10 px-4 md:grid-cols-2">
           <div className="flex flex-col items-start gap-5">
             <WireLabel>Preparation</WireLabel>
             <WireHeading level={2}>How to Prepare to Facilitate</WireHeading>
             <WireText className="max-w-md">
-              [Checklist and guidance for getting ready to run the session confidently.]
+              [Work through this checklist before the session. Tick items off as you go so nothing
+              gets missed on the day.]
             </WireText>
           </div>
-          <div className="flex flex-col gap-5 rounded-md border-2 border-dashed border-neutral-300 bg-neutral-50 p-6">
-            <div className="flex items-center justify-between">
-              <WireBadge tone="blue">Readiness</WireBadge>
-              <span className="font-mono text-xs text-neutral-400">[Track your prep]</span>
-            </div>
-            <WireProgress label="[Review the framework]" value={100} />
-            <WireProgress label="[Watch the walkthrough]" value={75} />
-            <WireProgress label="[Print the materials]" value={40} />
-            <WireProgress label="[Invite participants]" value={20} />
-          </div>
+          <WireChecklist
+            groups={[
+              {
+                title: "Before the session",
+                items: [
+                  "[Read through the full framework]",
+                  "[Watch the facilitator walkthrough videos]",
+                  "[Pick a date and book the room or call]",
+                  "[Invite participants with a clear agenda]",
+                ],
+              },
+              {
+                title: "Materials to prepare",
+                items: [
+                  "[Print or share the worksheet template]",
+                  "[Prepare sticky notes / whiteboard / digital board]",
+                  "[Have the timer and agenda visible]",
+                ],
+              },
+              {
+                title: "On the day",
+                items: [
+                  "[Arrive early and set up the space]",
+                  "[Open with the framing from Phase 1]",
+                  "[Assign a note-taker for decisions and owners]",
+                ],
+              },
+            ]}
+          />
         </div>
       </section>
 
