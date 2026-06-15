@@ -5,9 +5,11 @@ import Link from "next/link"
 import { SiteShell, PageHeader } from "@/components/site-shell"
 import { WireBox, WireConsent, WireHeading, WireLabel, WirePlaceholder, WireText } from "@/components/wireframe-kit"
 import { blogCategories, blogPosts } from "@/lib/blog-data"
+import { useLanguage } from "@/contexts/language-context"
 
 export default function BlogWireframeV2() {
   const [activeCategory, setActiveCategory] = useState("All")
+  const { t } = useLanguage()
 
   const featured = blogPosts[0]
   const rest = blogPosts.slice(1)
@@ -16,9 +18,9 @@ export default function BlogWireframeV2() {
   return (
     <SiteShell pageName="Blog">
       <PageHeader
-        label="Blog & Insights"
-        title="[Blog — insights on business, strategy and leadership]"
-        intro="[A short line describing the kind of content readers will find here.]"
+        label={t.blog.pageLabel}
+        title={t.pageHeader.blog.title}
+        intro={t.pageHeader.blog.intro}
       />
 
       {/* Featured post */}
@@ -28,7 +30,7 @@ export default function BlogWireframeV2() {
             <WireBox className="grid grid-cols-1 gap-6 bg-white transition-colors hover:border-blue-500 md:grid-cols-2">
               <WirePlaceholder label="[Featured image]" className="aspect-video w-full" />
               <div className="flex flex-col justify-center gap-4">
-                <WireLabel>Featured Post</WireLabel>
+                <WireLabel>{t.blog.featuredLabel}</WireLabel>
                 <WireHeading level={3}>{featured.title}</WireHeading>
                 <WireText>{featured.excerpt}</WireText>
                 <div className="flex flex-wrap items-center gap-3 text-sm text-neutral-500">
@@ -38,7 +40,7 @@ export default function BlogWireframeV2() {
                   <span aria-hidden="true">·</span>
                   <span>{featured.readTime}</span>
                 </div>
-                <span className="font-medium text-blue-700">Read Full Article →</span>
+                <span className="font-medium text-blue-700">{t.blog.readFull}</span>
               </div>
             </WireBox>
           </Link>
@@ -89,13 +91,13 @@ export default function BlogWireframeV2() {
                       <span aria-hidden="true">·</span>
                       <span>{post.readTime}</span>
                     </div>
-                    <span className="mt-auto font-medium text-blue-700">Read More →</span>
+                    <span className="mt-auto font-medium text-blue-700">{t.blog.readMore}</span>
                   </WireBox>
                 </Link>
               ))}
             </div>
           ) : (
-            <p className="py-12 text-center text-neutral-500">[No posts in this category yet.]</p>
+            <p className="py-12 text-center text-neutral-500">{t.blog.noPostsYet}</p>
           )}
 
           {/* Pagination */}
@@ -121,7 +123,7 @@ export default function BlogWireframeV2() {
       <section className="bg-blue-600 py-16 text-white md:py-20">
         <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 px-4 text-center">
           <WireHeading level={2} className="text-white">
-            Subscribe to Our Newsletter
+            {t.blog.newsletterTitle}
           </WireHeading>
           <p className="max-w-xl text-pretty leading-relaxed text-blue-100">
             [Text encouraging newsletter signup for the latest insights.]
@@ -131,15 +133,12 @@ export default function BlogWireframeV2() {
               [Email input]
             </div>
             <span className="rounded-md border-2 border-white bg-white px-6 py-2.5 text-sm font-medium text-blue-700">
-              Subscribe
+              {t.blog.subscribe}
             </span>
           </div>
           <div className="w-full max-w-md">
             <WireConsent required tone="onDark">
-              I consent to receiving the newsletter from Prologue Agency and to the processing of my
-              email for this purpose, in accordance with the{" "}
-              <span className="underline">Privacy Policy</span> (GDPR / RODO). I can unsubscribe at
-              any time.
+              {t.blog.consentNewsletter}
             </WireConsent>
           </div>
         </div>

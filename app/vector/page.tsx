@@ -4,22 +4,25 @@ import { SiteShell, PageHeader } from "@/components/site-shell"
 import { WireButton, WireFAQ, WireHeading, WireLabel, WireText } from "@/components/wireframe-kit"
 import { WireAccordion, WireBadge, WireStepAccordion, WireTabs } from "@/components/wire-ui"
 import { VectorChecklist } from "@/components/vector-checklist"
+import { useLanguage } from "@/contexts/language-context"
 
 export default function VectorWireframeV2() {
+  const { t } = useLanguage()
+
   return (
     <SiteShell pageName="Vector Workshop">
       <PageHeader
-        label="Vector Workshop"
-        title="[Vector Workshop — facilitate it yourself with our framework]"
-        intro="[One line on what the Vector workshop is and who it's for.]"
+        label={t.vector.pageLabel}
+        title={t.pageHeader.vector.title}
+        intro={t.pageHeader.vector.intro}
       />
 
       {/* WHY THIS WORKSHOP — tabs instead of a graphic */}
       <section className="border-b border-neutral-200 py-16 md:py-24">
         <div className="mx-auto max-w-5xl px-4">
           <div className="mb-8 flex flex-col items-start gap-5">
-            <WireLabel>Why This Workshop</WireLabel>
-            <WireHeading level={2}>Why It Works</WireHeading>
+            <WireLabel>{t.vector.whyLabel}</WireLabel>
+            <WireHeading level={2}>{t.vector.whyTitle}</WireHeading>
             <WireText className="max-w-2xl">
               [Explain the outcomes and the reasoning behind the framework.]
             </WireText>
@@ -27,7 +30,7 @@ export default function VectorWireframeV2() {
           <WireTabs
             tabs={[
               {
-                label: "The Outcome",
+                label: t.vector.tabOutcome,
                 content: (
                   <div className="flex flex-col gap-3">
                     <WireHeading level={4}>[What you walk away with]</WireHeading>
@@ -39,7 +42,7 @@ export default function VectorWireframeV2() {
                 ),
               },
               {
-                label: "The Method",
+                label: t.vector.tabMethod,
                 content: (
                   <div className="flex flex-col gap-3">
                     <WireHeading level={4}>[Why the structure works]</WireHeading>
@@ -50,7 +53,7 @@ export default function VectorWireframeV2() {
                 ),
               },
               {
-                label: "Who It's For",
+                label: t.vector.tabForWhom,
                 content: (
                   <div className="flex flex-col gap-3">
                     <WireHeading level={4}>[The right team for this]</WireHeading>
@@ -69,8 +72,8 @@ export default function VectorWireframeV2() {
       <section className="border-b border-neutral-200 bg-neutral-50 py-16 md:py-24">
         <div className="mx-auto max-w-5xl px-4">
           <div className="mb-10 flex flex-col items-center gap-3 text-center">
-            <WireLabel>When to Use</WireLabel>
-            <WireHeading level={2}>When to Run a Vector Workshop</WireHeading>
+            <WireLabel>{t.vector.whenLabel}</WireLabel>
+            <WireHeading level={2}>{t.vector.whenTitle}</WireHeading>
           </div>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
             {[
@@ -95,8 +98,8 @@ export default function VectorWireframeV2() {
       <section className="border-b border-neutral-200 py-16 md:py-24">
         <div className="mx-auto max-w-4xl px-4">
           <div className="mb-10 flex flex-col items-center gap-3 text-center">
-            <WireLabel>How It Works</WireLabel>
-            <WireHeading level={2}>The Session, Step by Step</WireHeading>
+            <WireLabel>{t.vector.howLabel}</WireLabel>
+            <WireHeading level={2}>{t.vector.howTitle}</WireHeading>
             <WireText className="max-w-2xl">
               [Each step expands to a full walkthrough — watch the short video, then follow the
               detailed instructions at your own pace.]
@@ -209,7 +212,7 @@ export default function VectorWireframeV2() {
                         <span className="font-mono text-xs text-neutral-400">{file.meta}</span>
                       </div>
                     </div>
-                    <span className="text-sm font-medium text-blue-700">Download</span>
+                    <span className="text-sm font-medium text-blue-700">{t.vector.download}</span>
                   </div>
                 ))}
               </div>
@@ -260,8 +263,8 @@ export default function VectorWireframeV2() {
       <section className="border-b border-neutral-200 bg-neutral-50 py-16 md:py-24">
         <div className="mx-auto max-w-4xl px-4">
           <div className="mb-8 flex flex-col items-start gap-3">
-            <WireLabel>Notes & Tips</WireLabel>
-            <WireHeading level={2}>Notes, Tips and Instructions</WireHeading>
+            <WireLabel>{t.vector.notesLabel}</WireLabel>
+            <WireHeading level={2}>{t.vector.notesTitle}</WireHeading>
           </div>
           <WireAccordion
             items={[
@@ -278,8 +281,8 @@ export default function VectorWireframeV2() {
       <section className="border-b border-neutral-200 py-16 md:py-24">
         <div className="mx-auto grid max-w-6xl grid-cols-1 items-start gap-10 px-4 md:grid-cols-2">
           <div className="flex flex-col items-start gap-5">
-            <WireLabel>Preparation</WireLabel>
-            <WireHeading level={2}>Get Ready to Facilitate</WireHeading>
+            <WireLabel>{t.vector.prepLabel}</WireLabel>
+            <WireHeading level={2}>{t.vector.prepTitle}</WireHeading>
             <WireText className="max-w-md">
               [A simple checklist to run through before your session. Download it as a PDF to print,
               or as Markdown to drop into your own notes.]
@@ -293,14 +296,14 @@ export default function VectorWireframeV2() {
       <section className="bg-blue-600 py-16 text-white md:py-20">
         <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 px-4 text-center">
           <WireHeading level={2} className="text-balance text-white">
-            Ready to Go Deeper?
+            {t.vector.ctaTitle}
           </WireHeading>
           <div className="flex flex-wrap justify-center gap-4 pt-2">
             <WireButton variant="primary" className="border-white bg-white text-blue-700">
-              Schedule a Consulting Session
+              {t.vector.schedule}
             </WireButton>
             <span className="rounded-md border-2 border-white bg-transparent px-5 py-2.5 text-sm font-medium text-white">
-              Buy Full Workshop
+              {t.vector.buyWorkshop}
             </span>
           </div>
         </div>

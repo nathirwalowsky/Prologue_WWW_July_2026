@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import { useLanguage } from "@/contexts/language-context"
 
 type ProductItem = { href: string; label: string; desc: string }
 
@@ -12,22 +13,23 @@ const products: ProductItem[] = [
   { href: "/product", label: "[Product Four]", desc: "[One-line description of this product]" },
 ]
 
-const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/vector", label: "Vector" },
-  { href: "/about", label: "About" },
-  { href: "/blog", label: "Blog" },
-  { href: "/contact", label: "Contact" },
-]
-
 export function MainNav() {
   const [open, setOpen] = useState(false)
+  const { t } = useLanguage()
+
+  const navLinks = [
+    { href: "/", label: t.nav.home },
+    { href: "/vector", label: t.nav.vector },
+    { href: "/about", label: t.nav.about },
+    { href: "/blog", label: t.nav.blog },
+    { href: "/contact", label: t.nav.contact },
+  ]
 
   return (
     <nav className="hidden items-center gap-7 text-sm text-muted-foreground md:flex">
       {/* Home */}
       <Link href="/" className="transition-colors hover:text-foreground">
-        Home
+        {t.nav.home}
       </Link>
 
       {/* Product dropdown */}
@@ -43,7 +45,7 @@ export function MainNav() {
           onClick={() => setOpen((v) => !v)}
           className="flex items-center gap-1 transition-colors hover:text-foreground"
         >
-          Product
+          {t.nav.product}
           <span
             className={`font-mono text-xs transition-transform ${open ? "rotate-180" : ""}`}
             aria-hidden="true"
@@ -71,7 +73,7 @@ export function MainNav() {
                 role="menuitem"
                 className="mt-1 border-t border-border px-3 py-2 text-xs font-medium text-primary transition-colors hover:bg-secondary"
               >
-                View all products →
+                {t.nav.viewAllProducts}
               </Link>
             </div>
           </div>
@@ -92,6 +94,15 @@ export function MainNav() {
 
 export function MobileNav() {
   const [open, setOpen] = useState(false)
+  const { t } = useLanguage()
+
+  const navLinks = [
+    { href: "/", label: t.nav.home },
+    { href: "/vector", label: t.nav.vector },
+    { href: "/about", label: t.nav.about },
+    { href: "/blog", label: t.nav.blog },
+    { href: "/contact", label: t.nav.contact },
+  ]
 
   // Lock body scroll while the menu is open and close on Escape.
   useEffect(() => {
@@ -112,7 +123,7 @@ export function MobileNav() {
     <div className="md:hidden">
       <button
         type="button"
-        aria-label={open ? "Close menu" : "Open menu"}
+        aria-label={open ? t.nav.closeMenu : t.nav.openMenu}
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
         className="flex h-10 w-10 items-center justify-center rounded-md border border-border text-foreground"
@@ -139,7 +150,7 @@ export function MobileNav() {
           {/* Backdrop */}
           <button
             type="button"
-            aria-label="Close menu"
+            aria-label={t.nav.closeMenu}
             onClick={() => setOpen(false)}
             className="absolute inset-0 bg-foreground/40 backdrop-blur-sm"
           />
@@ -161,7 +172,7 @@ export function MobileNav() {
               {/* Products group */}
               <div className="mt-2 border-t border-border pt-3">
                 <p className="px-3 pb-1 text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground">
-                  Product
+                  {t.nav.product}
                 </p>
                 {products.map((p, i) => (
                   <Link
@@ -179,7 +190,7 @@ export function MobileNav() {
                   onClick={() => setOpen(false)}
                   className="block px-3 py-2.5 text-sm font-medium text-primary transition-colors hover:bg-secondary"
                 >
-                  View all products →
+                  {t.nav.viewAllProducts}
                 </Link>
               </div>
 
@@ -188,7 +199,7 @@ export function MobileNav() {
                 onClick={() => setOpen(false)}
                 className="mt-3 inline-flex items-center justify-center rounded-md bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
               >
-                [CTA]
+                {t.nav.cta}
               </Link>
             </nav>
           </div>

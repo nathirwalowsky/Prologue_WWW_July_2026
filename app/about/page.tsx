@@ -11,6 +11,7 @@ import {
   WireText,
 } from "@/components/wireframe-kit"
 import { WireBadge } from "@/components/wire-ui"
+import { useLanguage } from "@/contexts/language-context"
 
 const values = [
   { label: "01", title: "[Value One]", text: "[Short explanation of what this value means in practice.]" },
@@ -84,6 +85,8 @@ const storyBeats = [
 ]
 
 export default function AboutWireframeV2() {
+  const { t } = useLanguage()
+
   return (
     <SiteShell pageName="About">
       {/* HERO — narrative opening with a photo space */}
@@ -92,7 +95,7 @@ export default function AboutWireframeV2() {
           <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-14">
             <div className="flex flex-col items-start">
               <div className="mb-5">
-                <WireLabel>Our Story</WireLabel>
+                <WireLabel>{t.about.storyLabel}</WireLabel>
               </div>
               <WireHeading level={1} className="text-balance">
                 [A single, human sentence that captures why Prologue exists.]
@@ -115,10 +118,10 @@ export default function AboutWireframeV2() {
         <div className="mx-auto max-w-4xl px-4">
           <div className="mb-12 flex flex-col gap-3 text-center md:mb-16">
             <div className="flex justify-center">
-              <WireLabel>The Story</WireLabel>
+              <WireLabel>{t.about.theStoryLabel}</WireLabel>
             </div>
             <WireHeading level={2} className="text-balance">
-              Told in Three Acts
+              {t.about.threeActs}
             </WireHeading>
             <WireText className="mx-auto max-w-2xl text-pretty">
               [Our path, structured like every story worth telling — from an ordinary beginning,
@@ -182,18 +185,18 @@ export default function AboutWireframeV2() {
       <section className="border-b border-neutral-200 py-16 md:py-24">
         <div className="mx-auto max-w-6xl px-4">
           <div className="mb-10 flex flex-col gap-3 md:mb-14">
-            <WireLabel>Philosophy</WireLabel>
-            <WireHeading level={2}>What We Believe</WireHeading>
+            <WireLabel>{t.about.philosophyLabel}</WireLabel>
+            <WireHeading level={2}>{t.about.whatWeBelieve}</WireHeading>
           </div>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <WireBox className="flex flex-col gap-4 bg-neutral-50">
-              <WireLabel>Way of Work</WireLabel>
-              <WireHeading level={3}>How We Work</WireHeading>
+              <WireLabel>{t.about.wayOfWork}</WireLabel>
+              <WireHeading level={3}>{t.about.howWeWork}</WireHeading>
               <WireText>[Describe your methodology and process as part of the narrative.]</WireText>
             </WireBox>
             <WireBox className="flex flex-col gap-4 bg-neutral-50">
-              <WireLabel>Why It Matters</WireLabel>
-              <WireHeading level={3}>Why It Matters</WireHeading>
+              <WireLabel>{t.about.whyItMatters}</WireLabel>
+              <WireHeading level={3}>{t.about.whyItMatters}</WireHeading>
               <WireText>[Explain the impact and deeper purpose behind the work.]</WireText>
             </WireBox>
           </div>
@@ -204,8 +207,8 @@ export default function AboutWireframeV2() {
       <section className="border-b border-neutral-200 bg-neutral-50 py-16 md:py-24">
         <div className="mx-auto max-w-6xl px-4">
           <div className="mb-10 flex flex-col gap-3 md:mb-14">
-            <WireLabel>Values</WireLabel>
-            <WireHeading level={2}>What Guides Our Decisions</WireHeading>
+            <WireLabel>{t.about.valuesLabel}</WireLabel>
+            <WireHeading level={2}>{t.about.valuesTitle}</WireHeading>
             <WireText className="max-w-2xl">
               [Introduce the values as the principles that show up in every project and decision.]
             </WireText>
@@ -231,8 +234,8 @@ export default function AboutWireframeV2() {
       <section className="border-b border-neutral-200 py-16 md:py-24">
         <div className="mx-auto max-w-3xl px-4">
           <div className="mb-10 flex flex-col items-start gap-3">
-            <WireBadge tone="blue">Our AI Manifest</WireBadge>
-            <WireHeading level={2}>How We Use AI — Responsibly</WireHeading>
+            <WireBadge tone="blue">{t.about.aiManifest}</WireBadge>
+            <WireHeading level={2}>{t.about.aiTitle}</WireHeading>
             <WireText className="max-w-2xl">
               [A clear, principled statement on your stance toward AI: where it helps, where it
               doesn&apos;t, and the commitments you make to clients.]
@@ -255,17 +258,17 @@ export default function AboutWireframeV2() {
             ))}
           </div>
           <div className="mt-8">
-            <WireButton variant="secondary">[Read the full manifest]</WireButton>
+            <WireButton variant="secondary">{t.about.readManifest}</WireButton>
           </div>
         </div>
       </section>
 
       <WireCTA
-        title="Want to Work With Us?"
+        title={t.about.ctaTitle}
         text="[Invite the visitor to start a conversation.]"
-        primary="Get in Touch"
+        primary={t.about.ctaPrimary}
         primaryHref="/contact"
-        secondary="Become a Partner"
+        secondary={t.about.ctaSecondary}
         secondaryHref="/partner"
       />
     </SiteShell>

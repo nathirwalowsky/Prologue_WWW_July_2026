@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { cn } from "@/lib/utils"
+import { useLanguage } from "@/contexts/language-context"
 
 const faqs = [
   { q: "[FAQ question 1]", a: "[Answer to FAQ question 1. Explain clearly and concisely.]" },
@@ -13,6 +14,7 @@ const faqs = [
 
 export function HomeFaq() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
+  const { t } = useLanguage()
 
   function toggle(i: number) {
     setOpenIndex((prev) => (prev === i ? null : i))
@@ -22,9 +24,9 @@ export function HomeFaq() {
     <section className="py-20 md:py-28">
       <div className="mx-auto max-w-3xl px-4 md:px-6">
         <div className="mb-10 flex flex-col items-center gap-3 text-center">
-          <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">FAQ</span>
+          <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">{t.home.faqLabel}</span>
           <h2 className="font-sans text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
-            Frequently Asked Questions
+            {t.home.faqTitle}
           </h2>
         </div>
 

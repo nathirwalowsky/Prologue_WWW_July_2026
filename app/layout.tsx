@@ -1,6 +1,7 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata } from 'next'
 import { Geist_Mono, Jost, Spectral } from 'next/font/google'
+import { LanguageProvider } from '@/contexts/language-context'
 import './globals.css'
 
 // Jost ≈ Century Gothic (geometric sans) for headings/UI
@@ -46,9 +47,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${jost.variable} ${spectral.variable} ${geistMono.variable} bg-background`}>
+    <html lang="pl" className={`${jost.variable} ${spectral.variable} ${geistMono.variable} bg-background`}>
       <body className="font-sans antialiased">
-        {children}
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
