@@ -4,6 +4,7 @@ import Image from "next/image"
 import { BusinessSections } from "@/components/business-sections"
 import { HomeFaq } from "@/components/home-faq"
 import { SiteShell } from "@/components/site-shell"
+import { VideoLightbox } from "@/components/video-lightbox"
 import { useLanguage } from "@/contexts/language-context"
 
 export default function HomePage() {
@@ -95,6 +96,15 @@ export default function HomePage() {
               </article>
             ))}
           </div>
+
+          {/* Video — paste your URL into the src prop below */}
+          <div className="mt-12">
+            <VideoLightbox
+              label={t.home.breakthroughsVideoLabel}
+              ariaLabel={t.home.breakthroughsVideoPlay}
+              // src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+            />
+          </div>
         </div>
       </section>
 
@@ -155,6 +165,15 @@ export default function HomePage() {
             >
               {t.home.ctaGetInTouch}
             </a>
+          </div>
+
+          {/* Video — paste your URL into the src prop below */}
+          <div className="w-full pt-4">
+            <VideoLightbox
+              label={t.home.ctaVideoLabel}
+              ariaLabel={t.home.ctaVideoPlay}
+              // src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+            />
           </div>
         </div>
       </section>

@@ -67,6 +67,10 @@ export const translations = {
     blogReadMore:     { pl: "Czytaj więcej →",                          en: "Read more →" },
     faqLabel:         { pl: "FAQ",                                      en: "FAQ" },
     faqTitle:         { pl: "Najczęściej zadawane pytania",             en: "Frequently Asked Questions" },
+    ctaVideoLabel:    { pl: "[Wideo — sekcja CTA]",                     en: "[Video — CTA section]" },
+    ctaVideoPlay:     { pl: "Odtwórz wideo CTA",                        en: "Play CTA video" },
+    breakthroughsVideoLabel: { pl: "[Wideo — Przełomy]",                en: "[Video — Breakthroughs]" },
+    breakthroughsVideoPlay:  { pl: "Odtwórz wideo Przełomy",           en: "Play Breakthroughs video" },
   },
 
   // ── Business Sections component ──────────────────────────────────────────────
