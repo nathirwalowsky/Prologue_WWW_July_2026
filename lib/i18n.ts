@@ -67,6 +67,7 @@ export const translations = {
     blogReadMore:     { pl: "Czytaj więcej →",                          en: "Read more →" },
     faqLabel:         { pl: "FAQ",                                      en: "FAQ" },
     faqTitle:         { pl: "Najczęściej zadawane pytania",             en: "Frequently Asked Questions" },
+    faqReadArticle:   { pl: "Przeczytaj artykuł",                       en: "Read article" },
     ctaVideoLabel:    { pl: "[Wideo — sekcja CTA]",                     en: "[Video — CTA section]" },
     ctaVideoPlay:     { pl: "Odtwórz wideo CTA",                        en: "Play CTA video" },
     breakthroughsVideoLabel: { pl: "[Wideo — Przełomy]",                en: "[Video — Breakthroughs]" },
