@@ -103,7 +103,7 @@ export default function ContactPage() {
         <div className="mx-auto max-w-6xl px-4 md:px-6">
 
           {/* Two-column grid: form | video + contact details */}
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-[1fr_auto]">
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-[minmax(0,480px)_auto]">
 
             {/* ── Form ── */}
             <form className="flex flex-col gap-5" noValidate>
@@ -196,10 +196,10 @@ export default function ContactPage() {
             </form>
 
             {/* ── Right column: video + contact details ── */}
-            <div className="flex w-[220px] flex-shrink-0 flex-col gap-5">
+            <div className="flex w-[300px] flex-shrink-0 flex-col gap-5">
 
               {/* Vertical video */}
-              <div style={{ width: 220, height: 391 }}>
+              <div style={{ width: 300, height: 533 }}>
                 <div className="relative h-full w-full overflow-hidden rounded-2xl border border-border bg-secondary shadow-md">
                   {videoPlaying ? (
                     <div className="flex h-full w-full items-center justify-center px-4">
