@@ -15,7 +15,6 @@ export function MainNav() {
   ]
 
   const restLinks = [
-    { href: "/vector",  label: t.nav.vector },
     { href: "/about",   label: t.nav.about },
     { href: "/blog",    label: t.nav.blog },
     { href: "/contact", label: t.nav.contact },
@@ -96,7 +95,6 @@ export function MobileNav() {
 
   const navLinks = [
     { href: "/", label: t.nav.home },
-    { href: "/vector", label: t.nav.vector },
     { href: "/about", label: t.nav.about },
     { href: "/blog", label: t.nav.blog },
     { href: "/contact", label: t.nav.contact },
