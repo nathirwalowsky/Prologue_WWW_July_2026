@@ -147,10 +147,17 @@ export const translations = {
 
   // ── Business Sections component ──────────────────────────────────────────────
   businessSections: {
-    label:  { pl: "Nad czym pracujemy",                         en: "What we work on" },
-    title:  { pl: "Sekcje biznesowe, nad którymi pracujemy",    en: "Business Sections We Work On" },
-    intro:  { pl: "[Wiersz intro] Kliknij temat, aby przeczytać pełny opis.", en: "[Intro line] Tap a topic to read the full description." },
-    detail: { pl: "Szczegóły",                                  en: "Detail" },
+    label:       { pl: "Jak pracujemy i co osiągasz",         en: "How we work and what you achieve" },
+    howTitle:    { pl: "Jak pracujemy",                       en: "How we work" },
+    resultsTitle:{ pl: "Rezultaty, których możesz oczekiwać", en: "Results you can expect" },
+    principle1Title: { pl: "Zaczynamy od diagnozy",           en: "We start with diagnosis" },
+    principle1Desc:  { pl: "Zanim zaproponujemy cokolwiek, rozumiemy gdzie naprawdę jesteś — nie gdzie myślisz, że jesteś.", en: "Before proposing anything, we understand where you truly are — not where you think you are." },
+    principle2Title: { pl: "Pracujemy ramię w ramię z Twoim zespołem",  en: "We embed alongside your team" },
+    principle2Desc:  { pl: "Nie zostawiamy slajdów i znikamy. Jesteśmy obecni przez cały czas trwania pracy.", en: "We don't drop slides and disappear. We stay present for the duration of the work." },
+    principle3Title: { pl: "Mierzymy wyniki, nie aktywności",  en: "We measure outcomes, not outputs" },
+    principle3Desc:  { pl: "Sukces jest zdefiniowany na początku i weryfikowany na końcu. Jasne, uczciwe, bez wymówek.", en: "Success is defined at the start and verified at the end. Clear, honest, no excuses." },
+    principle4Title: { pl: "Budujemy zdolności, nie zależność", en: "We build capability, not dependency" },
+    principle4Desc:  { pl: "Naszym celem jest sprawić, byś nie potrzebował nas — posiadając umiejętności, by prowadzić następny projekt samodzielnie.", en: "Our goal is to make you not need us — owning the skills to lead the next project yourself." },
   },
 
   // ── About page ───────────────────────────────────────────────────────────────
