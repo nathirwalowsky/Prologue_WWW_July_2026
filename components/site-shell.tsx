@@ -49,7 +49,10 @@ export function SiteShell({
           heroMode ? "hero-mode-announcement" : ""
         }`}
       >
-        {t.announcement.text}
+        <Link href="/vector" className="inline-flex items-center gap-2 hover:underline">
+          <span>{t.announcement.text}</span>
+          <span className="font-semibold">{t.announcement.cta}</span>
+        </Link>
       </div>
 
       {/* Nav — in heroMode, starts invisible and slides in after scroll */}

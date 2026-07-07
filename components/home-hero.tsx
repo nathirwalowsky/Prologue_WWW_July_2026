@@ -66,16 +66,19 @@ export function HomeHero() {
           className="brightness-0 invert"
           priority
         />
-        {/* Minimal right-side nav hint */}
+        {/* Minimal right-side nav — simple, no jargon, no "Services" */}
         <nav className="hidden items-center gap-6 text-sm text-background/60 md:flex">
-          <Link href="/vector" className="transition-colors hover:text-background">
-            {t.nav.vector}
-          </Link>
           <Link href="/about" className="transition-colors hover:text-background">
             {t.nav.about}
           </Link>
           <Link href="/contact" className="transition-colors hover:text-background">
             {t.nav.contact}
+          </Link>
+          <Link
+            href="/vector"
+            className="rounded-md border border-background/30 px-4 py-1.5 font-medium text-background transition-colors hover:border-background/60 hover:bg-background/10"
+          >
+            {t.announcement.cta}
           </Link>
         </nav>
       </div>

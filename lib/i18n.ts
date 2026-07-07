@@ -37,8 +37,12 @@ export const translations = {
   // ── Announcement bar ─────────────────────────────────────────────────────────
   announcement: {
     text: {
-      pl: "[Pasek ogłoszeń — specjalna oferta lub ważna wiadomość]",
-      en: "[Announcement bar — special offer or important message]",
+      pl: "Darmowe warsztaty strategiczne — pobierz warsztat Vector bez kosztów.",
+      en: "Free strategic workshop — get the Vector Workshop at no cost.",
+    },
+    cta: {
+      pl: "Pobierz za darmo →",
+      en: "Get it free →",
     },
   },
 
@@ -254,7 +258,7 @@ export const translations = {
     },
   },
 
-  // ── PageHeader (shared) ───────────────────────────────────────────────────────
+  // ── PageHeader (shared) ────────────────────────────────────────────────��──────
   pageHeader: {
     blog: {
       title: { pl: "[Blog — spostrzeżenia na temat biznesu, strategii i przywództwa]", en: "[Blog — insights on business, strategy and leadership]" },
