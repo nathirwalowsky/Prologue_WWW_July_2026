@@ -12,6 +12,7 @@ export function HomeServices() {
       desc: t.home.service1Desc,
       details: [t.home.service1Detail1, t.home.service1Detail2, t.home.service1Detail3],
       index: "01",
+      href: "/services/strategy",
     },
     {
       tag: t.home.service2Tag,
@@ -19,6 +20,7 @@ export function HomeServices() {
       desc: t.home.service2Desc,
       details: [t.home.service2Detail1, t.home.service2Detail2, t.home.service2Detail3],
       index: "02",
+      href: "/services/key-projects",
     },
     {
       tag: t.home.service3Tag,
@@ -26,6 +28,7 @@ export function HomeServices() {
       desc: t.home.service3Desc,
       details: [t.home.service3Detail1, t.home.service3Detail2, t.home.service3Detail3],
       index: "03",
+      href: "/services/transformation",
     },
   ]
 
@@ -92,7 +95,7 @@ export function HomeServices() {
 
               {/* CTA */}
               <a
-                href="/contact"
+                href={service.href}
                 className="mt-1 inline-flex items-center gap-1.5 font-medium text-primary text-sm transition-transform group-hover:translate-x-0.5"
               >
                 {t.home.servicesLearnMore} <span aria-hidden="true">→</span>

@@ -5,6 +5,14 @@ export const translations = {
   nav: {
     home:          { pl: "Strona główna",  en: "Home" },
     product:       { pl: "Produkt",        en: "Product" },
+    services:      { pl: "Usługi",         en: "Services" },
+    servicesStrategy:    { pl: "Budowanie strategii",           en: "Building Strategy" },
+    servicesStrategyDesc:{ pl: "Zdefiniuj kierunek i przewagę konkurencyjną", en: "Define direction and competitive advantage" },
+    servicesKeyProjects:    { pl: "Kluczowe projekty",          en: "Key Projects" },
+    servicesKeyProjectsDesc:{ pl: "Dostarcz inicjatywy, które naprawdę się liczą", en: "Deliver the initiatives that truly matter" },
+    servicesTransformation:    { pl: "Transformacja",           en: "Transformation" },
+    servicesTransformationDesc:{ pl: "Przeprowadź całą organizację przez głęboką zmianę", en: "Guide your whole organisation through deep change" },
+    viewAllServices: { pl: "Wszystkie usługi →",               en: "All services →" },
     vector:        { pl: "Vector",         en: "Vector" },
     about:         { pl: "O nas",          en: "About" },
     blog:          { pl: "Blog",           en: "Blog" },
@@ -259,6 +267,47 @@ export const translations = {
     contact: {
       title: { pl: "[Kontakt — zacznijmy rozmowę]", en: "[Contact — let's start a conversation]" },
       intro: { pl: "[Zapewnij odwiedzającego o czasie odpowiedzi i tym, co nastąpi dalej.]", en: "[Reassure the visitor about response time and what happens next.]" },
+    },
+    strategy: {
+      title: { pl: "Budowanie strategii", en: "Building Strategy" },
+      intro: { pl: "[Jedno zdanie opisujące, co klient zyska po zaangażowaniu się w usługę strategiczną.]", en: "[One sentence on what the client gains from the strategy engagement.]" },
+    },
+    keyProjects: {
+      title: { pl: "Dostarczanie kluczowych projektów", en: "Delivering Key Projects" },
+      intro: { pl: "[Jedno zdanie opisujące, co klient zyska po zaangażowaniu się w realizację kluczowych projektów.]", en: "[One sentence on what the client gains from the key projects engagement.]" },
+    },
+    transformation: {
+      title: { pl: "Prowadzenie transformacji", en: "Leading Transformation" },
+      intro: { pl: "[Jedno zdanie opisujące, co klient zyska po zaangażowaniu się w transformację.]", en: "[One sentence on what the client gains from the transformation engagement.]" },
+    },
+  },
+
+  // ── Services pages (shared copy) ─────────────────────────────────────────────
+  services: {
+    identificationLabel: { pl: "Identyfikacja",                  en: "Identification" },
+    identificationTitle: { pl: "Od tego, gdzie jesteś, do tego, gdzie chcesz być", en: "From where you are to where you want to be" },
+    empathyLabel:        { pl: "Empatia",                        en: "Empathy" },
+    empathyTitle:        { pl: "Jak to naprawdę wygląda od środka", en: "What it really looks like from the inside" },
+    hopeLabel:           { pl: "Nadzieja",                       en: "Hope" },
+    hopeTitle:           { pl: "Można to zmienić",               en: "This can be changed" },
+    planLabel:           { pl: "Plan",                           en: "The Plan" },
+    planTitle:           { pl: "Jak to naprawiamy",              en: "Here is how we fix it" },
+    thresholdLabel:      { pl: "Próg",                           en: "Threshold" },
+    thresholdTitle:      { pl: "Co się stanie, jeśli nie podejmiesz działania?", en: "What happens if you don't act?" },
+    notReadyLabel:       { pl: "Nie gotowy?",                    en: "Not ready yet?" },
+    notReadyTitle:       { pl: "Zacznij od pogłębienia wiedzy",  en: "Start by learning more" },
+    ctaSchedule:         { pl: "Zaplanuj rozmowę",               en: "Schedule a call" },
+    ctaLearnMore:        { pl: "Dowiedz się więcej",             en: "Learn more" },
+    readMore:            { pl: "Czytaj więcej →",                en: "Read more →" },
+    step:                { pl: "Krok",                           en: "Step" },
+    caseStudy:           { pl: "Studium przypadku",              en: "Case study" },
+    readStory:           { pl: "Przeczytaj historię →",          en: "Read story →" },
+    nowBadge:            { pl: "Teraz",                          en: "Now" },
+    goalBadge:           { pl: "Cel",                            en: "Goal" },
+    ctaTitle: {
+      strategy:       { pl: "Gotowy, by zdefiniować swoją strategię?",       en: "Ready to define your strategy?" },
+      keyProjects:    { pl: "Gotowy, by dostarczyć projekty, które mają znaczenie?", en: "Ready to deliver the projects that matter?" },
+      transformation: { pl: "Gotowy, by przeprowadzić swoją organizację przez transformację?", en: "Ready to lead your organisation through transformation?" },
     },
   },
 } as const
