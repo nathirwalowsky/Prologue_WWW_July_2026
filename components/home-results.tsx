@@ -8,18 +8,24 @@ const caseStudies = [
     title: "[Case Study #1 — Company or Initiative Name]",
     outcome: "[Key outcome or breakthrough achieved with the client.]",
     tag: "[Strategy]",
+    metric: "[3×]",
+    metricLabel: "[revenue growth in 18 months]",
   },
   {
     industry: "[Manufacturing]",
     title: "[Case Study #2 — Company or Initiative Name]",
     outcome: "[Key outcome or breakthrough achieved with the client.]",
     tag: "[Transformation]",
+    metric: "[+40%]",
+    metricLabel: "[operating margin improvement]",
   },
   {
     industry: "[Professional Services]",
     title: "[Case Study #3 — Company or Initiative Name]",
     outcome: "[Key outcome or breakthrough achieved with the client.]",
     tag: "[Delivery]",
+    metric: "[12 mo]",
+    metricLabel: "[to market from standing start]",
   },
 ]
 
@@ -92,25 +98,38 @@ export function HomeResults() {
             {caseStudies.map((cs, i) => (
               <article
                 key={i}
-                className="group flex flex-col gap-5 rounded-xl border border-border bg-card p-6 transition-colors hover:border-primary/30"
+                className="group flex flex-col rounded-xl border border-border bg-card overflow-hidden transition-colors hover:border-primary/30"
               >
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground">
-                    {cs.industry}
+                {/* Big metric — top accent band */}
+                <div className="flex flex-col gap-1 border-b border-border bg-secondary px-6 py-7">
+                  <span className="font-sans text-5xl font-semibold tracking-tight text-foreground leading-none">
+                    {cs.metric}
                   </span>
-                  <span className="rounded-full bg-accent/10 px-2.5 py-0.5 font-mono text-xs uppercase tracking-wide text-accent">
-                    {cs.tag}
+                  <span className="font-serif text-sm text-muted-foreground leading-snug">
+                    {cs.metricLabel}
                   </span>
                 </div>
-                <h4 className="font-sans text-lg font-semibold text-foreground leading-snug">
-                  {cs.title}
-                </h4>
-                <p className="font-serif text-sm leading-relaxed text-muted-foreground flex-1">
-                  {cs.outcome}
-                </p>
-                <span className="mt-auto font-medium text-primary text-sm transition-transform group-hover:translate-x-0.5 inline-flex items-center gap-1.5">
-                  [Read case study] <span aria-hidden="true">→</span>
-                </span>
+
+                {/* Card body */}
+                <div className="flex flex-1 flex-col gap-4 p-6">
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground">
+                      {cs.industry}
+                    </span>
+                    <span className="rounded-full bg-accent/10 px-2.5 py-0.5 font-mono text-xs uppercase tracking-wide text-accent">
+                      {cs.tag}
+                    </span>
+                  </div>
+                  <h4 className="font-sans text-base font-semibold text-foreground leading-snug">
+                    {cs.title}
+                  </h4>
+                  <p className="font-serif text-sm leading-relaxed text-muted-foreground flex-1">
+                    {cs.outcome}
+                  </p>
+                  <span className="mt-auto font-medium text-primary text-sm transition-transform group-hover:translate-x-0.5 inline-flex items-center gap-1.5">
+                    [Read case study] <span aria-hidden="true">→</span>
+                  </span>
+                </div>
               </article>
             ))}
           </div>
