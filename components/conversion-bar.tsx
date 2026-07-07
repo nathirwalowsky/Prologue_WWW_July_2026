@@ -35,11 +35,10 @@ export function ConversionBar() {
           </div>
         </div>
 
-        {/* Right — vertical video placeholder */}
-        <div className="mx-auto w-full max-w-[260px] flex-shrink-0 md:mx-0">
-          <div className="relative overflow-hidden rounded-2xl bg-primary-foreground/10 border border-primary-foreground/20 shadow-xl"
-            style={{ aspectRatio: "9 / 16" }}
-          >
+        {/* Right — vertical video placeholder, fixed 9:16 dimensions */}
+        <div className="mx-auto flex-shrink-0 md:mx-0" style={{ width: 220, height: 391 }}>
+          <div className="relative h-full w-full overflow-hidden rounded-2xl border border-primary-foreground/20 bg-primary-foreground/10 shadow-xl">
+
             {playing ? (
               /* When a real video src is available, swap in a <video> element here */
               <div className="flex h-full w-full items-center justify-center">
@@ -82,5 +81,6 @@ export function ConversionBar() {
 
       </div>
     </section>
+
   )
 }
