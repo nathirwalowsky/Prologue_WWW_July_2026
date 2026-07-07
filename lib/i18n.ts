@@ -259,8 +259,10 @@ export const translations = {
     copyEmail:   { pl: "Kopiuj e-mail",                 en: "Copy email" },
     copyPhone:   { pl: "Kopiuj telefon",                en: "Copy phone" },
     copied:      { pl: "Skopiowano!",                   en: "Copied!" },
-    emailValue:  { pl: "hello@prologue.agency",         en: "hello@prologue.agency" },
-    phoneValue:  { pl: "+48 000 000 000",               en: "+48 000 000 000" },
+    emailValue:    { pl: "hello@prologue.agency",          en: "hello@prologue.agency" },
+    phoneValue:    { pl: "+48 000 000 000",               en: "+48 000 000 000" },
+    whatsappNote:  { pl: "Dostępny również na WhatsApp",  en: "Also available on WhatsApp" },
+    whatsappCta:   { pl: "Napisz na WhatsApp →",          en: "Message on WhatsApp →" },
   },
 
   // ── Partner page ─────────────────────────────────────────────────────────────
