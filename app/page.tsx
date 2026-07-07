@@ -76,6 +76,17 @@ export default function HomePage() {
               {t.home.breakthroughsSub}
             </p>
           </div>
+
+          {/* Video — sits above the cards as the primary visual anchor */}
+          {/* To activate: replace the commented src prop with your embed URL */}
+          <div className="mb-12">
+            <VideoLightbox
+              label={t.home.breakthroughsVideoLabel}
+              ariaLabel={t.home.breakthroughsVideoPlay}
+              // src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+            />
+          </div>
+
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {[
               { tag: "Clarity", title: "[Breakthrough #1]" },
@@ -95,15 +106,6 @@ export default function HomePage() {
                 </p>
               </article>
             ))}
-          </div>
-
-          {/* Video — paste your URL into the src prop below */}
-          <div className="mt-12">
-            <VideoLightbox
-              label={t.home.breakthroughsVideoLabel}
-              ariaLabel={t.home.breakthroughsVideoPlay}
-              // src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
-            />
           </div>
         </div>
       </section>
@@ -152,7 +154,18 @@ export default function HomePage() {
           <p className="max-w-xl text-pretty font-serif text-lg leading-relaxed text-primary-foreground/80">
             {t.home.ctaSub}
           </p>
-          <div className="flex flex-wrap justify-center gap-3 pt-2">
+
+          {/* Video — sits between the copy and the buttons */}
+          {/* To activate: replace the commented src prop with your embed URL */}
+          <div className="w-full">
+            <VideoLightbox
+              label={t.home.ctaVideoLabel}
+              ariaLabel={t.home.ctaVideoPlay}
+              // src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+            />
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-3">
             <a
               href="/vector"
               className="inline-flex items-center rounded-md bg-background px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-background/90"
@@ -165,15 +178,6 @@ export default function HomePage() {
             >
               {t.home.ctaGetInTouch}
             </a>
-          </div>
-
-          {/* Video — paste your URL into the src prop below */}
-          <div className="w-full pt-4">
-            <VideoLightbox
-              label={t.home.ctaVideoLabel}
-              ariaLabel={t.home.ctaVideoPlay}
-              // src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
-            />
           </div>
         </div>
       </section>

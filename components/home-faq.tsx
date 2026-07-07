@@ -52,32 +52,27 @@ const faqs: FaqItem[] = [
 export function HomeFaq() {
   const [activeIndex, setActiveIndex] = useState(0)
   const { t } = useLanguage()
-
   const active = faqs[activeIndex]
 
   return (
-    <section className="py-20 md:py-28">
+    <section className="py-20 md:py-32">
       <div className="mx-auto max-w-6xl px-4 md:px-6">
 
-        {/* Section header */}
-        <div className="mb-12 flex flex-col gap-3">
+        {/* Section header — generous bottom spacing like the Claude design */}
+        <div className="mb-16 flex flex-col gap-3">
           <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
             {t.home.faqLabel}
           </span>
-          <h2 className="font-sans text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
+          <h2 className="font-sans text-4xl font-semibold tracking-tight text-foreground md:text-5xl">
             {t.home.faqTitle}
           </h2>
         </div>
 
-        {/* Two-column layout */}
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:items-start">
+        {/* Two-column layout: questions left, answer right */}
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_1.1fr] lg:items-start lg:gap-12">
 
-          {/* Left — question list */}
-          <div
-            role="tablist"
-            aria-label={t.home.faqTitle}
-            className="flex flex-col divide-y divide-border rounded-xl border border-border"
-          >
+          {/* ── Left column: numbered question list ── */}
+          <div role="tablist" aria-label={t.home.faqTitle} className="flex flex-col">
             {faqs.map((faq, i) => {
               const isActive = activeIndex === i
               return (
@@ -90,17 +85,27 @@ export function HomeFaq() {
                   type="button"
                   onClick={() => setActiveIndex(i)}
                   className={cn(
-                    "flex items-start gap-4 px-5 py-5 text-left transition-colors duration-150 first:rounded-t-xl last:rounded-b-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset",
+                    // Base: generous padding, left-border slot, no bg by default
+                    "group relative flex items-start gap-5 border-b border-border py-7 pl-5 pr-4 text-left transition-all duration-150 last:border-b-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset",
                     isActive
-                      ? "bg-foreground/[0.04]"
-                      : "hover:bg-foreground/[0.02]",
+                      ? "bg-foreground/[0.035]"
+                      : "hover:bg-foreground/[0.015]",
                   )}
                 >
-                  {/* Number */}
+                  {/* Active left-border accent */}
+                  <span
+                    aria-hidden="true"
+                    className={cn(
+                      "absolute inset-y-0 left-0 w-[3px] rounded-r-full transition-colors duration-150",
+                      isActive ? "bg-accent" : "bg-transparent",
+                    )}
+                  />
+
+                  {/* Index number */}
                   <span
                     className={cn(
-                      "mt-0.5 shrink-0 font-mono text-xs tabular-nums",
-                      isActive ? "text-accent" : "text-muted-foreground/50",
+                      "mt-0.5 shrink-0 font-mono text-xs tabular-nums transition-colors duration-150",
+                      isActive ? "text-accent" : "text-muted-foreground/40",
                     )}
                   >
                     {String(i + 1).padStart(2, "0")}
@@ -109,41 +114,32 @@ export function HomeFaq() {
                   {/* Question text */}
                   <span
                     className={cn(
-                      "flex-1 font-sans text-sm leading-snug md:text-base",
+                      "flex-1 font-sans text-base leading-snug transition-colors duration-150 md:text-lg",
                       isActive
                         ? "font-semibold text-foreground"
-                        : "font-normal text-muted-foreground",
+                        : "font-normal text-muted-foreground group-hover:text-foreground/80",
                     )}
                   >
                     {faq.q}
                   </span>
-
-                  {/* Active indicator bar */}
-                  <span
-                    className={cn(
-                      "mt-1 h-4 w-0.5 shrink-0 self-center rounded-full transition-colors duration-150",
-                      isActive ? "bg-accent" : "bg-transparent",
-                    )}
-                    aria-hidden="true"
-                  />
                 </button>
               )
             })}
           </div>
 
-          {/* Right — answer panel */}
+          {/* ── Right column: sticky answer panel ── */}
           <div
             id="faq-answer-panel"
             role="tabpanel"
             aria-labelledby={`faq-tab-${activeIndex}`}
-            className="sticky top-24 flex flex-col gap-6 rounded-xl border border-border bg-card p-6 md:p-8"
+            className="sticky top-24 flex flex-col gap-7 rounded-2xl border border-border bg-card p-8 md:p-10"
           >
-            {/* Question number + text */}
-            <div className="flex items-start gap-3">
-              <span className="mt-1 font-mono text-xs tabular-nums text-accent">
+            {/* Active question number + question text */}
+            <div className="flex items-start gap-4">
+              <span className="mt-1 font-mono text-sm tabular-nums text-accent">
                 {String(activeIndex + 1).padStart(2, "0")}
               </span>
-              <h3 className="font-sans text-lg font-semibold leading-snug text-foreground md:text-xl">
+              <h3 className="font-sans text-xl font-semibold leading-snug text-foreground md:text-2xl">
                 {active.q}
               </h3>
             </div>
@@ -151,8 +147,8 @@ export function HomeFaq() {
             {/* Divider */}
             <div className="h-px w-full bg-border" />
 
-            {/* Answer body */}
-            <p className="font-serif text-base leading-relaxed text-muted-foreground">
+            {/* Answer body — larger type, more line-height for readability */}
+            <p className="font-serif text-lg leading-[1.75] text-muted-foreground">
               {active.a}
             </p>
 
@@ -160,24 +156,24 @@ export function HomeFaq() {
             {active.article && (
               <Link
                 href={active.article.href}
-                className="group mt-2 flex items-start gap-3 rounded-lg border border-border bg-background p-4 transition-colors hover:border-accent/50 hover:bg-accent/5"
+                className="group mt-1 flex items-start gap-4 rounded-xl border border-border bg-background p-5 transition-colors hover:border-accent/50 hover:bg-accent/5"
               >
                 <span
-                  className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-md bg-accent/10 font-mono text-xs text-accent"
+                  className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg bg-accent/10 font-mono text-sm text-accent"
                   aria-hidden="true"
                 >
                   ↗
                 </span>
-                <div className="flex flex-col gap-0.5">
+                <div className="flex flex-col gap-1">
                   <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-muted-foreground">
                     {t.home.faqReadArticle}
                     {active.article.readTime && (
-                      <span className="ml-2 text-muted-foreground/60">
+                      <span className="ml-2 text-muted-foreground/50">
                         · {active.article.readTime}
                       </span>
                     )}
                   </span>
-                  <span className="font-sans text-sm font-medium text-foreground group-hover:text-accent transition-colors">
+                  <span className="font-sans text-base font-medium text-foreground transition-colors group-hover:text-accent">
                     {active.article.title}
                   </span>
                 </div>
