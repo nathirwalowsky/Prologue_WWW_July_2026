@@ -1,18 +1,49 @@
 "use client"
 
+import { useState } from "react"
 import { SiteShell, PageHeader } from "@/components/site-shell"
-import { WireButton, WireConsent, WireHeading, WireLabel, WireText } from "@/components/wireframe-kit"
 import { useLanguage } from "@/contexts/language-context"
 
-export default function ContactWireframeV2() {
-  const { t } = useLanguage()
+function CopyButton({ value, label, copiedLabel }: { value: string; label: string; copiedLabel: string }) {
+  const [copied, setCopied] = useState(false)
 
-  const fields = [
-    t.contact.fieldFullName,
-    t.contact.fieldEmail,
-    t.contact.fieldCompany,
-    t.contact.fieldMessage,
-  ]
+  function handleCopy() {
+    navigator.clipboard.writeText(value).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    })
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={handleCopy}
+      aria-label={copied ? copiedLabel : label}
+      className="flex items-center gap-1.5 rounded-md border border-border bg-secondary px-2.5 py-1 text-xs font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground"
+    >
+      {copied ? (
+        <>
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.75" className="h-3.5 w-3.5 text-primary" aria-hidden="true">
+            <path d="M2.5 8.5l3.5 3.5 7-7" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          <span>{copiedLabel}</span>
+        </>
+      ) : (
+        <>
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-3.5 w-3.5" aria-hidden="true">
+            <rect x="5.5" y="5.5" width="8" height="9" rx="1" />
+            <path d="M10.5 5.5V3.5a1 1 0 0 0-1-1h-7a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h2" strokeLinecap="round" />
+          </svg>
+          <span>{label}</span>
+        </>
+      )}
+    </button>
+  )
+}
+
+export default function ContactPage() {
+  const { t } = useLanguage()
+  const [ndaChecked, setNdaChecked] = useState(false)
 
   return (
     <SiteShell pageName="Contact">
@@ -23,58 +54,154 @@ export default function ContactWireframeV2() {
       />
 
       <section className="py-16 md:py-24">
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-4 md:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
-          {/* Form */}
-          <div className="flex flex-col gap-5 rounded-md border-2 border-dashed border-neutral-400 bg-neutral-50 p-6 md:p-8">
-            <WireLabel>{t.contact.formLabel}</WireLabel>
-            {fields.map((field) => (
-              <label key={field} className="flex flex-col gap-2">
-                <span className="text-sm font-medium text-neutral-700">{field}</span>
-                <span
-                  className={
-                    field === t.contact.fieldMessage
-                      ? "h-28 rounded-md border-2 border-dashed border-neutral-300 bg-white"
-                      : "h-11 rounded-md border-2 border-dashed border-neutral-300 bg-white"
-                  }
-                  aria-hidden="true"
-                />
-              </label>
-            ))}
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-4 md:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] md:px-6">
 
-            {/* GDPR consent */}
-            <div className="flex flex-col gap-3 border-t border-dashed border-neutral-300 pt-4">
-              <WireConsent required>
-                {t.contact.consentRequired}{" "}
-                <span className="underline">Privacy Policy</span> (GDPR / RODO).
-              </WireConsent>
-              <WireConsent>
-                {t.contact.consentMarketing}
-              </WireConsent>
-            </div>
+          {/* ── Form ── */}
+          <form className="flex flex-col gap-5" noValidate>
+            {/* Name */}
+            <label className="flex flex-col gap-1.5">
+              <span className="text-sm font-medium text-foreground">{t.contact.fieldFullName} *</span>
+              <input
+                type="text"
+                name="fullName"
+                autoComplete="name"
+                required
+                className="h-11 w-full rounded-md border border-border bg-background px-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                placeholder="Jan Kowalski"
+              />
+            </label>
 
-            <WireButton variant="primary">{t.contact.sendMessage}</WireButton>
-            <WireText className="text-xs">
-              [* Required. Your data is controlled by Prologue Agency. You have the right to access,
-              rectify, and erase your data — see our Privacy Policy.]
-            </WireText>
-          </div>
+            {/* Email */}
+            <label className="flex flex-col gap-1.5">
+              <span className="text-sm font-medium text-foreground">{t.contact.fieldEmail} *</span>
+              <input
+                type="email"
+                name="email"
+                autoComplete="email"
+                required
+                className="h-11 w-full rounded-md border border-border bg-background px-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                placeholder="jan@firma.pl"
+              />
+            </label>
 
-          {/* Contact details */}
-          <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-2">
-              <WireLabel>{t.contact.directLabel}</WireLabel>
-              <WireHeading level={3}>{t.contact.otherWays}</WireHeading>
-            </div>
-            {["Email", "Phone", "Office", "Social"].map((item) => (
-              <div
-                key={item}
-                className="flex flex-col gap-1 rounded-md border-2 border-dashed border-neutral-300 bg-neutral-50 px-4 py-3"
-              >
-                <span className="text-sm font-semibold text-neutral-700">{item}</span>
-                <WireText className="text-sm">[{item} details]</WireText>
+            {/* Company */}
+            <label className="flex flex-col gap-1.5">
+              <span className="text-sm font-medium text-foreground">{t.contact.fieldCompany}</span>
+              <input
+                type="text"
+                name="company"
+                autoComplete="organization"
+                className="h-11 w-full rounded-md border border-border bg-background px-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                placeholder="Nazwa firmy"
+              />
+            </label>
+
+            {/* Message */}
+            <label className="flex flex-col gap-1.5">
+              <span className="text-sm font-medium text-foreground">{t.contact.fieldMessage} *</span>
+              <textarea
+                name="message"
+                rows={5}
+                required
+                className="w-full resize-none rounded-md border border-border bg-background px-3.5 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                placeholder="Opisz krótko, z czym chcesz się do nas zgłosić…"
+              />
+            </label>
+
+            {/* ── NDA checkbox ── */}
+            <label className="flex cursor-pointer items-start gap-3 rounded-md border border-border bg-secondary p-4 transition-colors hover:border-primary/40">
+              <input
+                type="checkbox"
+                name="nda"
+                checked={ndaChecked}
+                onChange={(e) => setNdaChecked(e.target.checked)}
+                className="mt-0.5 h-4 w-4 flex-shrink-0 cursor-pointer accent-primary"
+              />
+              <div className="flex flex-col gap-0.5">
+                <span className="text-sm font-medium text-foreground">{t.contact.ndaLabel}</span>
+                <span className="text-xs text-muted-foreground">{t.contact.ndaDesc}</span>
               </div>
-            ))}
+            </label>
+
+            {/* ── Consents ── */}
+            <div className="flex flex-col gap-3 border-t border-border pt-4">
+              <label className="flex cursor-pointer items-start gap-3">
+                <input type="checkbox" required className="mt-0.5 h-4 w-4 flex-shrink-0 cursor-pointer accent-primary" />
+                <span className="text-xs text-muted-foreground">
+                  * {t.contact.consentRequired}{" "}
+                  <a href="/privacy" className="underline hover:text-foreground">Privacy Policy</a> (GDPR / RODO).
+                </span>
+              </label>
+              <label className="flex cursor-pointer items-start gap-3">
+                <input type="checkbox" className="mt-0.5 h-4 w-4 flex-shrink-0 cursor-pointer accent-primary" />
+                <span className="text-xs text-muted-foreground">{t.contact.consentMarketing}</span>
+              </label>
+            </div>
+
+            <button
+              type="submit"
+              className="mt-1 inline-flex h-11 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            >
+              {t.contact.sendMessage}
+            </button>
+
+            <p className="text-xs text-muted-foreground">
+              * {t.contact.consentRequired.split(" ")[0] === "Wyrażam" ? "Pola wymagane." : "Required fields."}
+            </p>
+          </form>
+
+          {/* ── Contact details ── */}
+          <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-1">
+              <span className="font-mono text-xs uppercase tracking-[0.15em] text-accent">
+                {t.contact.directLabel}
+              </span>
+              <h2 className="font-sans text-2xl font-semibold text-foreground">
+                {t.contact.otherWays}
+              </h2>
+            </div>
+
+            {/* Email */}
+            <div className="flex flex-col gap-2 rounded-md border border-border bg-card p-4">
+              <span className="font-mono text-xs uppercase tracking-[0.1em] text-muted-foreground">
+                {t.contact.emailLabel}
+              </span>
+              <div className="flex items-center justify-between gap-3">
+                <a
+                  href={`mailto:${t.contact.emailValue}`}
+                  className="font-sans text-sm font-medium text-foreground hover:text-primary"
+                >
+                  {t.contact.emailValue}
+                </a>
+                <CopyButton
+                  value={t.contact.emailValue}
+                  label={t.contact.copyEmail}
+                  copiedLabel={t.contact.copied}
+                />
+              </div>
+            </div>
+
+            {/* Phone */}
+            <div className="flex flex-col gap-2 rounded-md border border-border bg-card p-4">
+              <span className="font-mono text-xs uppercase tracking-[0.1em] text-muted-foreground">
+                {t.contact.phoneLabel}
+              </span>
+              <div className="flex items-center justify-between gap-3">
+                <a
+                  href={`tel:${t.contact.phoneValue.replace(/\s/g, "")}`}
+                  className="font-sans text-sm font-medium text-foreground hover:text-primary"
+                >
+                  {t.contact.phoneValue}
+                </a>
+                <CopyButton
+                  value={t.contact.phoneValue}
+                  label={t.contact.copyPhone}
+                  copiedLabel={t.contact.copied}
+                />
+              </div>
+            </div>
           </div>
+
         </div>
       </section>
     </SiteShell>

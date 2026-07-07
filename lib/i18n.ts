@@ -241,6 +241,15 @@ export const translations = {
       pl: "Chcę otrzymywać okazjonalne aktualizacje i komunikaty marketingowe od Prologue Agency. Mogę wycofać zgodę w każdej chwili.",
       en: "I would like to receive occasional updates and marketing communications from Prologue Agency. I can withdraw this consent at any time.",
     },
+    ndaLabel:    { pl: "Umowa o poufności (NDA)",       en: "Non-disclosure agreement (NDA)" },
+    ndaDesc:     { pl: "Proszę o podpisanie NDA przed omówieniem szczegółów projektu.", en: "I'd like an NDA signed before discussing project details." },
+    emailLabel:  { pl: "E-mail",                        en: "Email" },
+    phoneLabel:  { pl: "Telefon",                       en: "Phone" },
+    copyEmail:   { pl: "Kopiuj e-mail",                 en: "Copy email" },
+    copyPhone:   { pl: "Kopiuj telefon",                en: "Copy phone" },
+    copied:      { pl: "Skopiowano!",                   en: "Copied!" },
+    emailValue:  { pl: "hello@prologue.agency",         en: "hello@prologue.agency" },
+    phoneValue:  { pl: "+48 000 000 000",               en: "+48 000 000 000" },
   },
 
   // ── Partner page ─────────────────────────────────────────────────────────────
