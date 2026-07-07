@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { cn } from "@/lib/utils"
 import { WirePlaceholder } from "@/components/wireframe-kit"
+import { useLanguage } from "@/contexts/language-context"
 
 type Section = {
   title: string
@@ -55,10 +56,10 @@ const businessSections: Section[] = [
   },
 ]
 
-function DetailPanel({ section }: { section: Section }) {
+function DetailPanel({ section, detailLabel }: { section: Section; detailLabel: string }) {
   return (
     <div className="flex flex-col gap-5 rounded-xl border border-border bg-card p-6 md:p-8">
-      <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">Detail</span>
+      <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">{detailLabel}</span>
       <h3 className="font-sans text-2xl font-semibold tracking-tight text-foreground">
         {section.title}
       </h3>
@@ -79,19 +80,20 @@ function DetailPanel({ section }: { section: Section }) {
 export function BusinessSections() {
   const [activeIndex, setActiveIndex] = useState(0)
   const active = businessSections[activeIndex]
+  const { t } = useLanguage()
 
   return (
     <section className="bg-background py-20 md:py-28">
       <div className="mx-auto max-w-6xl px-4 md:px-6">
         <div className="mb-10 flex flex-col gap-3 md:mb-14">
           <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
-            What we work on
+            {t.businessSections.label}
           </span>
           <h2 className="font-sans text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
-            Business Sections We Work On
+            {t.businessSections.title}
           </h2>
           <p className="max-w-xl font-serif text-lg leading-relaxed text-muted-foreground">
-            [Intro line] Tap a topic to read the full description.
+            {t.businessSections.intro}
           </p>
         </div>
 
@@ -144,7 +146,7 @@ export function BusinessSections() {
           </ul>
 
           <div id="business-detail-panel" role="tabpanel">
-            <DetailPanel section={active} />
+            <DetailPanel section={active} detailLabel={t.businessSections.detail} />
           </div>
         </div>
 

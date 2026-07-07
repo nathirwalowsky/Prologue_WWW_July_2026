@@ -1,16 +1,11 @@
+"use client"
+
 import Link from "next/link"
 import Image from "next/image"
 import type React from "react"
 import { MainNav, MobileNav } from "@/components/main-nav"
-
-const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/product", label: "Product" },
-  { href: "/vector", label: "Vector" },
-  { href: "/about", label: "About" },
-  { href: "/blog", label: "Blog" },
-  { href: "/contact", label: "Contact" },
-]
+import { LanguageToggle } from "@/components/language-toggle"
+import { useLanguage } from "@/contexts/language-context"
 
 function Wordmark({ tone = "dark" }: { tone?: "dark" | "light" }) {
   return (
@@ -32,11 +27,22 @@ export function SiteShell({
   children: React.ReactNode
   pageName: string
 }) {
+  const { t } = useLanguage()
+
+  const navLinks = [
+    { href: "/", label: t.nav.home },
+    { href: "/product", label: t.nav.product },
+    { href: "/vector", label: t.nav.vector },
+    { href: "/about", label: t.nav.about },
+    { href: "/blog", label: t.nav.blog },
+    { href: "/contact", label: t.nav.contact },
+  ]
+
   return (
     <div className="flex min-h-screen flex-col bg-background">
       {/* Announcement bar */}
       <div className="bg-primary px-4 py-2.5 text-center text-sm text-primary-foreground">
-        [Announcement bar — special offer or important message]
+        {t.announcement.text}
       </div>
 
       {/* Nav */}
@@ -47,11 +53,12 @@ export function SiteShell({
           </Link>
           <MainNav />
           <div className="flex items-center gap-2">
+            <LanguageToggle />
             <Link
               href="/contact"
               className="hidden items-center rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 md:inline-flex"
             >
-              [CTA]
+              {t.nav.cta}
             </Link>
             <MobileNav />
           </div>
@@ -71,7 +78,7 @@ export function SiteShell({
               </p>
             </div>
 
-            <FooterColumn title="Explore">
+            <FooterColumn title={t.footer.explore}>
               {navLinks.map((link) => (
                 <FooterLink key={link.href} href={link.href}>
                   {link.label}
@@ -79,14 +86,14 @@ export function SiteShell({
               ))}
             </FooterColumn>
 
-            <FooterColumn title="Company">
-              <FooterLink href="/about">About</FooterLink>
-              <FooterLink href="/partner">Become a Partner</FooterLink>
-              <FooterLink href="/privacy">Privacy Policy</FooterLink>
-              <FooterLink href="/contact">Contact</FooterLink>
+            <FooterColumn title={t.footer.company}>
+              <FooterLink href="/about">{t.footer.about}</FooterLink>
+              <FooterLink href="/partner">{t.footer.becomePartner}</FooterLink>
+              <FooterLink href="/privacy">{t.footer.privacy}</FooterLink>
+              <FooterLink href="/contact">{t.footer.contact}</FooterLink>
             </FooterColumn>
 
-            <FooterColumn title="Connect">
+            <FooterColumn title={t.footer.connect}>
               <FooterLink href="#">[LinkedIn]</FooterLink>
               <FooterLink href="#">[Twitter / X]</FooterLink>
               <FooterLink href="#">[Newsletter]</FooterLink>

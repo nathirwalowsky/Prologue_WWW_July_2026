@@ -1,9 +1,15 @@
+"use client"
+
 import Image from "next/image"
 import { BusinessSections } from "@/components/business-sections"
 import { HomeFaq } from "@/components/home-faq"
 import { SiteShell } from "@/components/site-shell"
+import { VideoLightbox } from "@/components/video-lightbox"
+import { useLanguage } from "@/contexts/language-context"
 
 export default function HomePage() {
+  const { t } = useLanguage()
+
   return (
     <SiteShell pageName="Home">
       {/* HERO */}
@@ -11,29 +17,29 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-4 py-20 md:grid-cols-[1.1fr_0.9fr] md:px-6 md:py-28">
           <div className="flex flex-col items-start gap-6">
             <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
-              [Eyebrow — who you serve]
+              {t.home.heroEyebrow}
             </span>
             <h1 className="text-balance font-sans text-5xl font-semibold leading-[1.05] tracking-tight text-foreground md:text-7xl">
-              Strategic excellence{" "}
+              {t.home.heroHeading}{" "}
               <span className="text-accent">
-                in an age of constant transformation
+                {t.home.heroHeadingAccent}
               </span>
             </h1>
             <p className="max-w-md text-pretty font-serif text-lg leading-relaxed text-muted-foreground">
-              [Subheadline explaining your value proposition in one or two clear, human sentences.]
+              {t.home.heroSub}
             </p>
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <a
                 href="/vector"
                 className="inline-flex items-center rounded-md bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
               >
-                Vector Workshop
+                {t.home.heroCtaPrimary}
               </a>
               <a
                 href="/contact"
                 className="inline-flex items-center rounded-md border border-border bg-background px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-secondary"
               >
-                [Secondary action]
+                {t.home.heroCtaSecondary}
               </a>
             </div>
           </div>
@@ -61,16 +67,26 @@ export default function HomePage() {
         <div className="mx-auto max-w-6xl px-4 md:px-6">
           <div className="mb-12 flex flex-col items-center gap-3 text-center">
             <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
-              Breakthroughs
+              {t.home.breakthroughsLabel}
             </span>
             <h2 className="font-sans text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
-              What You Could Unlock
+              {t.home.breakthroughsTitle}
             </h2>
             <p className="max-w-xl font-serif text-lg leading-relaxed text-muted-foreground">
-              [Framing sentence: the conceptual breakthroughs a client can achieve — shifts in
-              clarity, capability, and direction.]
+              {t.home.breakthroughsSub}
             </p>
           </div>
+
+          {/* Video — sits above the cards as the primary visual anchor */}
+          {/* To activate: replace the commented src prop with your embed URL */}
+          <div className="mb-12">
+            <VideoLightbox
+              label={t.home.breakthroughsVideoLabel}
+              ariaLabel={t.home.breakthroughsVideoPlay}
+              // src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+            />
+          </div>
+
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {[
               { tag: "Clarity", title: "[Breakthrough #1]" },
@@ -86,7 +102,7 @@ export default function HomePage() {
                 </span>
                 <h3 className="font-sans text-lg font-semibold text-foreground">{b.title}</h3>
                 <p className="font-serif text-sm leading-relaxed text-muted-foreground">
-                  [Short description of the conceptual shift and why it matters for the client.]
+                  {t.home.breakthroughDesc}
                 </p>
               </article>
             ))}
@@ -99,10 +115,10 @@ export default function HomePage() {
         <div className="mx-auto max-w-6xl px-4 md:px-6">
           <div className="mb-12 flex flex-col items-center gap-3 text-center">
             <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
-              Social proof
+              {t.home.testimonialsLabel}
             </span>
             <h2 className="font-sans text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
-              What Our Clients Say
+              {t.home.testimonialsTitle}
             </h2>
           </div>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -112,7 +128,7 @@ export default function HomePage() {
                 className="flex flex-col gap-5 rounded-xl border border-border bg-card p-6"
               >
                 <blockquote className="font-serif text-lg leading-relaxed text-foreground">
-                  &ldquo;[Client quote about working with Prologue Agency]&rdquo;
+                  &ldquo;{t.home.testimonialQuote}&rdquo;
                 </blockquote>
                 <figcaption className="mt-auto flex items-center gap-3 border-t border-border pt-4">
                   <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-secondary font-mono text-xs text-muted-foreground">
@@ -133,23 +149,34 @@ export default function HomePage() {
       <section className="bg-primary py-20 text-primary-foreground md:py-24">
         <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 px-4 text-center md:px-6">
           <h2 className="text-balance font-sans text-3xl font-semibold tracking-tight md:text-4xl">
-            Ready to Transform Your Business?
+            {t.home.ctaTitle}
           </h2>
           <p className="max-w-xl text-pretty font-serif text-lg leading-relaxed text-primary-foreground/80">
-            [Supporting text encouraging the visitor to take the next step.]
+            {t.home.ctaSub}
           </p>
-          <div className="flex flex-wrap justify-center gap-3 pt-2">
+
+          {/* Video — sits between the copy and the buttons */}
+          {/* To activate: replace the commented src prop with your embed URL */}
+          <div className="w-full">
+            <VideoLightbox
+              label={t.home.ctaVideoLabel}
+              ariaLabel={t.home.ctaVideoPlay}
+              // src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+            />
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-3">
             <a
               href="/vector"
               className="inline-flex items-center rounded-md bg-background px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-background/90"
             >
-              Schedule Vector Workshop
+              {t.home.ctaSchedule}
             </a>
             <a
               href="/contact"
               className="inline-flex items-center rounded-md border border-primary-foreground/40 px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary-foreground/10"
             >
-              Get in Touch
+              {t.home.ctaGetInTouch}
             </a>
           </div>
         </div>
@@ -160,27 +187,27 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-4 md:grid-cols-[0.8fr_1.2fr] md:px-6">
           <div className="flex flex-col gap-3">
             <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
-              Philosophy
+              {t.home.philosophyLabel}
             </span>
             <h2 className="font-sans text-3xl font-semibold tracking-tight text-background md:text-4xl">
-              How We Think
+              {t.home.philosophyTitle}
             </h2>
             <p className="font-serif text-lg leading-relaxed text-background/60">
-              [Short text explaining your philosophy and approach to business transformation.]
+              {t.home.philosophySub}
             </p>
             <a
               href="/about"
               className="mt-2 inline-flex w-fit items-center gap-2 font-medium text-accent hover:underline"
             >
-              Learn more about us <span aria-hidden="true">→</span>
+              {t.home.philosophyLearnMore}
             </a>
           </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {[
-              { title: "Way of Work", body: "[How the team works with clients day to day.]" },
-              { title: "Why It Matters", body: "[The reasoning behind the approach.]" },
-              { title: "Values", body: "[Core values that guide engagements.]" },
-              { title: "AI Manifest", body: "[Our stance on responsible AI in the work.]" },
+              { title: t.home.philosophyWayOfWork, body: "[How the team works with clients day to day.]" },
+              { title: t.home.philosophyWhyItMatters, body: "[The reasoning behind the approach.]" },
+              { title: t.home.philosophyValues, body: "[Core values that guide engagements.]" },
+              { title: t.home.philosophyAIManifest, body: "[Our stance on responsible AI in the work.]" },
             ].map((p, i) => (
               <article
                 key={i}
@@ -199,13 +226,13 @@ export default function HomePage() {
         <div className="mx-auto max-w-6xl px-4 md:px-6">
           <div className="mb-10 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div className="flex flex-col gap-3">
-              <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">Blog</span>
+              <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">{t.home.blogLabel}</span>
               <h2 className="font-sans text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
-                Latest from Our Blog
+                {t.home.blogTitle}
               </h2>
             </div>
             <a href="/blog" className="font-medium text-primary hover:underline">
-              View all posts →
+              {t.home.blogViewAll}
             </a>
           </div>
           <div className="flex flex-col gap-4">
@@ -230,7 +257,7 @@ export default function HomePage() {
                   </p>
                 </div>
                 <span className="shrink-0 font-medium text-primary transition-transform group-hover:translate-x-0.5">
-                  Read more →
+                  {t.home.blogReadMore}
                 </span>
               </a>
             ))}
