@@ -4,6 +4,7 @@ import { useState } from "react"
 import { SiteShell, PageHeader } from "@/components/site-shell"
 import { useLanguage } from "@/contexts/language-context"
 
+/* ── Copy button ─────────────────────────────────────────────────────────── */
 function CopyButton({ value, label, copiedLabel }: { value: string; label: string; copiedLabel: string }) {
   const [copied, setCopied] = useState(false)
 
@@ -41,9 +42,51 @@ function CopyButton({ value, label, copiedLabel }: { value: string; label: strin
   )
 }
 
+/* ── Process bar ─────────────────────────────────────────────────────────── */
+function ProcessBar() {
+  const { t } = useLanguage()
+
+  const steps = [
+    { label: t.contact.processStep1, desc: t.contact.processStep1Desc },
+    { label: t.contact.processStep2, desc: t.contact.processStep2Desc },
+    { label: t.contact.processStep3, desc: t.contact.processStep3Desc },
+    { label: t.contact.processStep4, desc: t.contact.processStep4Desc },
+    { label: t.contact.processStep5, desc: t.contact.processStep5Desc },
+  ]
+
+  return (
+    <div className="border-b border-border bg-secondary">
+      <div className="mx-auto max-w-6xl px-4 py-8 md:px-6">
+        <p className="mb-6 font-mono text-xs uppercase tracking-[0.2em] text-accent">
+          {t.contact.processLabel}
+        </p>
+        <ol className="grid grid-cols-2 gap-4 md:grid-cols-5">
+          {steps.map((step, i) => (
+            <li key={i} className="flex flex-col gap-1.5">
+              {/* Step number + connector line */}
+              <div className="flex items-center gap-2">
+                <span className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full border-2 border-primary bg-background font-mono text-xs font-semibold text-primary">
+                  {i + 1}
+                </span>
+                {i < steps.length - 1 && (
+                  <div className="hidden h-px flex-1 bg-border md:block" aria-hidden="true" />
+                )}
+              </div>
+              <span className="font-sans text-sm font-semibold text-foreground">{step.label}</span>
+              <span className="font-serif text-xs leading-relaxed text-muted-foreground">{step.desc}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  )
+}
+
+/* ── Page ────────────────────────────────────────────────────────────────── */
 export default function ContactPage() {
   const { t } = useLanguage()
   const [ndaChecked, setNdaChecked] = useState(false)
+  const [videoPlaying, setVideoPlaying] = useState(false)
 
   return (
     <SiteShell pageName="Contact">
@@ -53,155 +96,177 @@ export default function ContactPage() {
         intro={t.pageHeader.contact.intro}
       />
 
+      {/* Process bar */}
+      <ProcessBar />
+
       <section className="py-16 md:py-24">
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-4 md:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] md:px-6">
+        <div className="mx-auto max-w-6xl px-4 md:px-6">
 
-          {/* ── Form ── */}
-          <form className="flex flex-col gap-5" noValidate>
-            {/* Name */}
-            <label className="flex flex-col gap-1.5">
-              <span className="text-sm font-medium text-foreground">{t.contact.fieldFullName} *</span>
-              <input
-                type="text"
-                name="fullName"
-                autoComplete="name"
-                required
-                className="h-11 w-full rounded-md border border-border bg-background px-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-                placeholder="Jan Kowalski"
-              />
-            </label>
+          {/* Three-column grid: form | video | contact details */}
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-[1fr_auto_260px]">
 
-            {/* Email */}
-            <label className="flex flex-col gap-1.5">
-              <span className="text-sm font-medium text-foreground">{t.contact.fieldEmail} *</span>
-              <input
-                type="email"
-                name="email"
-                autoComplete="email"
-                required
-                className="h-11 w-full rounded-md border border-border bg-background px-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-                placeholder="jan@firma.pl"
-              />
-            </label>
+            {/* ── Form ── */}
+            <form className="flex flex-col gap-5" noValidate>
+              {/* Name */}
+              <label className="flex flex-col gap-1.5">
+                <span className="text-sm font-medium text-foreground">{t.contact.fieldFullName} *</span>
+                <input
+                  type="text"
+                  name="fullName"
+                  autoComplete="name"
+                  required
+                  className="h-11 w-full rounded-md border border-border bg-background px-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  placeholder="Jan Kowalski"
+                />
+              </label>
 
-            {/* Company */}
-            <label className="flex flex-col gap-1.5">
-              <span className="text-sm font-medium text-foreground">{t.contact.fieldCompany}</span>
-              <input
-                type="text"
-                name="company"
-                autoComplete="organization"
-                className="h-11 w-full rounded-md border border-border bg-background px-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-                placeholder="Nazwa firmy"
-              />
-            </label>
+              {/* Email */}
+              <label className="flex flex-col gap-1.5">
+                <span className="text-sm font-medium text-foreground">{t.contact.fieldEmail} *</span>
+                <input
+                  type="email"
+                  name="email"
+                  autoComplete="email"
+                  required
+                  className="h-11 w-full rounded-md border border-border bg-background px-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  placeholder="jan@firma.pl"
+                />
+              </label>
 
-            {/* Message */}
-            <label className="flex flex-col gap-1.5">
-              <span className="text-sm font-medium text-foreground">{t.contact.fieldMessage} *</span>
-              <textarea
-                name="message"
-                rows={5}
-                required
-                className="w-full resize-none rounded-md border border-border bg-background px-3.5 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-                placeholder="Opisz krótko, z czym chcesz się do nas zgłosić…"
-              />
-            </label>
+              {/* Company */}
+              <label className="flex flex-col gap-1.5">
+                <span className="text-sm font-medium text-foreground">{t.contact.fieldCompany}</span>
+                <input
+                  type="text"
+                  name="company"
+                  autoComplete="organization"
+                  className="h-11 w-full rounded-md border border-border bg-background px-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  placeholder="Nazwa firmy"
+                />
+              </label>
 
-            {/* ── NDA checkbox ── */}
-            <label className="flex cursor-pointer items-start gap-3 rounded-md border border-border bg-secondary p-4 transition-colors hover:border-primary/40">
-              <input
-                type="checkbox"
-                name="nda"
-                checked={ndaChecked}
-                onChange={(e) => setNdaChecked(e.target.checked)}
-                className="mt-0.5 h-4 w-4 flex-shrink-0 cursor-pointer accent-primary"
-              />
-              <div className="flex flex-col gap-0.5">
-                <span className="text-sm font-medium text-foreground">{t.contact.ndaLabel}</span>
-                <span className="text-xs text-muted-foreground">{t.contact.ndaDesc}</span>
+              {/* Message */}
+              <label className="flex flex-col gap-1.5">
+                <span className="text-sm font-medium text-foreground">{t.contact.fieldMessage} *</span>
+                <textarea
+                  name="message"
+                  rows={5}
+                  required
+                  className="w-full resize-none rounded-md border border-border bg-background px-3.5 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  placeholder="Opisz krótko, z czym chcesz się do nas zgłosić…"
+                />
+              </label>
+
+              {/* NDA checkbox */}
+              <label className="flex cursor-pointer items-start gap-3 rounded-md border border-border bg-secondary p-4 transition-colors hover:border-primary/40">
+                <input
+                  type="checkbox"
+                  name="nda"
+                  checked={ndaChecked}
+                  onChange={(e) => setNdaChecked(e.target.checked)}
+                  className="mt-0.5 h-4 w-4 flex-shrink-0 cursor-pointer accent-primary"
+                />
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-sm font-medium text-foreground">{t.contact.ndaLabel}</span>
+                  <span className="text-xs text-muted-foreground">{t.contact.ndaDesc}</span>
+                </div>
+              </label>
+
+              {/* Consents */}
+              <div className="flex flex-col gap-3 border-t border-border pt-4">
+                <label className="flex cursor-pointer items-start gap-3">
+                  <input type="checkbox" required className="mt-0.5 h-4 w-4 flex-shrink-0 cursor-pointer accent-primary" />
+                  <span className="text-xs text-muted-foreground">
+                    * {t.contact.consentRequired}{" "}
+                    <a href="/privacy" className="underline hover:text-foreground">Privacy Policy</a> (GDPR / RODO).
+                  </span>
+                </label>
+                <label className="flex cursor-pointer items-start gap-3">
+                  <input type="checkbox" className="mt-0.5 h-4 w-4 flex-shrink-0 cursor-pointer accent-primary" />
+                  <span className="text-xs text-muted-foreground">{t.contact.consentMarketing}</span>
+                </label>
               </div>
-            </label>
 
-            {/* ── Consents ── */}
-            <div className="flex flex-col gap-3 border-t border-border pt-4">
-              <label className="flex cursor-pointer items-start gap-3">
-                <input type="checkbox" required className="mt-0.5 h-4 w-4 flex-shrink-0 cursor-pointer accent-primary" />
-                <span className="text-xs text-muted-foreground">
-                  * {t.contact.consentRequired}{" "}
-                  <a href="/privacy" className="underline hover:text-foreground">Privacy Policy</a> (GDPR / RODO).
+              <button
+                type="submit"
+                className="mt-1 inline-flex h-11 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+              >
+                {t.contact.sendMessage}
+              </button>
+            </form>
+
+            {/* ── Vertical video ── */}
+            <div className="mx-auto flex-shrink-0 md:mx-0" style={{ width: 200, height: 356 }}>
+              <div className="relative h-full w-full overflow-hidden rounded-2xl border border-border bg-secondary shadow-md">
+                {videoPlaying ? (
+                  <div className="flex h-full w-full items-center justify-center px-4">
+                    <span className="text-center font-mono text-xs text-muted-foreground">
+                      {t.home.ctaVideoLabel}
+                    </span>
+                  </div>
+                ) : (
+                  <>
+                    <div className="absolute inset-0 flex flex-col items-center justify-end gap-2 p-5">
+                      <span className="text-center font-mono text-xs uppercase tracking-[0.12em] text-muted-foreground">
+                        {t.home.ctaVideoLabel}
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      aria-label={t.home.ctaVideoPlay}
+                      onClick={() => setVideoPlaying(true)}
+                      className="absolute inset-0 flex items-center justify-center group"
+                    >
+                      <span className="flex h-14 w-14 items-center justify-center rounded-full bg-background shadow-lg transition-transform group-hover:scale-110 border border-border">
+                        <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5 translate-x-0.5 text-foreground">
+                          <path d="M8 5.14v14l11-7-11-7z" />
+                        </svg>
+                      </span>
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
+
+            {/* ── Contact details ── */}
+            <div className="flex flex-col gap-6">
+              <div className="flex flex-col gap-1">
+                <span className="font-mono text-xs uppercase tracking-[0.15em] text-accent">
+                  {t.contact.directLabel}
                 </span>
-              </label>
-              <label className="flex cursor-pointer items-start gap-3">
-                <input type="checkbox" className="mt-0.5 h-4 w-4 flex-shrink-0 cursor-pointer accent-primary" />
-                <span className="text-xs text-muted-foreground">{t.contact.consentMarketing}</span>
-              </label>
-            </div>
+                <h2 className="font-sans text-xl font-semibold text-foreground">
+                  {t.contact.otherWays}
+                </h2>
+              </div>
 
-            <button
-              type="submit"
-              className="mt-1 inline-flex h-11 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-            >
-              {t.contact.sendMessage}
-            </button>
+              {/* Email */}
+              <div className="flex flex-col gap-2 rounded-md border border-border bg-card p-4">
+                <span className="font-mono text-xs uppercase tracking-[0.1em] text-muted-foreground">
+                  {t.contact.emailLabel}
+                </span>
+                <div className="flex items-center justify-between gap-3">
+                  <a href={`mailto:${t.contact.emailValue}`} className="font-sans text-sm font-medium text-foreground hover:text-primary break-all">
+                    {t.contact.emailValue}
+                  </a>
+                  <CopyButton value={t.contact.emailValue} label={t.contact.copyEmail} copiedLabel={t.contact.copied} />
+                </div>
+              </div>
 
-            <p className="text-xs text-muted-foreground">
-              * {t.contact.consentRequired.split(" ")[0] === "Wyrażam" ? "Pola wymagane." : "Required fields."}
-            </p>
-          </form>
-
-          {/* ── Contact details ── */}
-          <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-1">
-              <span className="font-mono text-xs uppercase tracking-[0.15em] text-accent">
-                {t.contact.directLabel}
-              </span>
-              <h2 className="font-sans text-2xl font-semibold text-foreground">
-                {t.contact.otherWays}
-              </h2>
-            </div>
-
-            {/* Email */}
-            <div className="flex flex-col gap-2 rounded-md border border-border bg-card p-4">
-              <span className="font-mono text-xs uppercase tracking-[0.1em] text-muted-foreground">
-                {t.contact.emailLabel}
-              </span>
-              <div className="flex items-center justify-between gap-3">
-                <a
-                  href={`mailto:${t.contact.emailValue}`}
-                  className="font-sans text-sm font-medium text-foreground hover:text-primary"
-                >
-                  {t.contact.emailValue}
-                </a>
-                <CopyButton
-                  value={t.contact.emailValue}
-                  label={t.contact.copyEmail}
-                  copiedLabel={t.contact.copied}
-                />
+              {/* Phone */}
+              <div className="flex flex-col gap-2 rounded-md border border-border bg-card p-4">
+                <span className="font-mono text-xs uppercase tracking-[0.1em] text-muted-foreground">
+                  {t.contact.phoneLabel}
+                </span>
+                <div className="flex items-center justify-between gap-3">
+                  <a href={`tel:${t.contact.phoneValue.replace(/\s/g, "")}`} className="font-sans text-sm font-medium text-foreground hover:text-primary">
+                    {t.contact.phoneValue}
+                  </a>
+                  <CopyButton value={t.contact.phoneValue} label={t.contact.copyPhone} copiedLabel={t.contact.copied} />
+                </div>
               </div>
             </div>
 
-            {/* Phone */}
-            <div className="flex flex-col gap-2 rounded-md border border-border bg-card p-4">
-              <span className="font-mono text-xs uppercase tracking-[0.1em] text-muted-foreground">
-                {t.contact.phoneLabel}
-              </span>
-              <div className="flex items-center justify-between gap-3">
-                <a
-                  href={`tel:${t.contact.phoneValue.replace(/\s/g, "")}`}
-                  className="font-sans text-sm font-medium text-foreground hover:text-primary"
-                >
-                  {t.contact.phoneValue}
-                </a>
-                <CopyButton
-                  value={t.contact.phoneValue}
-                  label={t.contact.copyPhone}
-                  copiedLabel={t.contact.copied}
-                />
-              </div>
-            </div>
           </div>
-
         </div>
       </section>
     </SiteShell>
