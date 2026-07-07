@@ -134,3 +134,40 @@
     @apply font-sans;
   }
 }
+
+/* ── Hero scroll animation helpers ──────────────────────────────────────────
+   HomeHero toggles [hero-scrolled] on <html>.
+   In heroMode, announcement bar + nav header are hidden (no document flow)
+   until the user scrolls — then they slide in from the top.
+   --------------------------------------------------------------------------- */
+
+/* Both elements hidden by default in hero mode — completely out of flow */
+.hero-mode-announcement,
+.hero-mode-header {
+  position: fixed;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-100%);
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+}
+
+/* Stack: announcement bar at top, header immediately below it */
+.hero-mode-announcement {
+  top: 0;
+  z-index: 50;
+}
+.hero-mode-header {
+  /* approx announcement height — slides in just below */
+  top: 36px;
+  z-index: 40;
+}
+
+/* Once scrolled, slide both in */
+html.hero-scrolled .hero-mode-announcement,
+html.hero-scrolled .hero-mode-header {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}

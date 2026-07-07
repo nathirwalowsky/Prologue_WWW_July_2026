@@ -23,9 +23,12 @@ function Wordmark({ tone = "dark" }: { tone?: "dark" | "light" }) {
 export function SiteShell({
   children,
   pageName,
+  heroMode = false,
 }: {
   children: React.ReactNode
   pageName: string
+  /** When true the sticky header hides itself until the hero signals scroll */
+  heroMode?: boolean
 }) {
   const { t } = useLanguage()
 
@@ -40,13 +43,21 @@ export function SiteShell({
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
-      {/* Announcement bar */}
-      <div className="bg-primary px-4 py-2.5 text-center text-sm text-primary-foreground">
+      {/* Announcement bar — hidden in heroMode until scrolled */}
+      <div
+        className={`bg-primary px-4 py-2.5 text-center text-sm text-primary-foreground transition-all duration-500 ${
+          heroMode ? "hero-mode-announcement" : ""
+        }`}
+      >
         {t.announcement.text}
       </div>
 
-      {/* Nav */}
-      <header className="sticky top-0 z-30 border-b border-border bg-background/80 backdrop-blur-md">
+      {/* Nav — in heroMode, starts invisible and slides in after scroll */}
+      <header
+        className={`sticky top-0 z-30 border-b border-border bg-background/80 backdrop-blur-md transition-all duration-500 ${
+          heroMode ? "hero-mode-header" : ""
+        }`}
+      >
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 md:px-6">
           <Link href="/" aria-label="Prologue Agency — home">
             <Wordmark />
