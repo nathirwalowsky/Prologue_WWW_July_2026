@@ -353,6 +353,11 @@ export const translations = {
       keyProjects:    { pl: "Gotowy, by dostarczyć projekty, które mają znaczenie?", en: "Ready to deliver the projects that matter?" },
       transformation: { pl: "Gotowy, by przeprowadzić swoją organizację przez transformację?", en: "Ready to lead your organisation through transformation?" },
     },
+    formLabel:        { pl: "Pierwsza rozmowa",              en: "First conversation" },
+    formTitle:        { pl: "Zacznij od rozmowy",            en: "Start with a conversation" },
+    formIntro:        { pl: "Pierwsze 30 minut jest bezpłatne. Bez zobowiązań — po prostu sprawdzimy, czy jesteśmy dla siebie właściwi.", en: "The first 30 minutes are free. No commitment — we simply check if we're right for each other." },
+    formSubmit:       { pl: "Wyślij wiadomość",              en: "Send message" },
+    thresholdIntro:   { pl: "Każdy miesiąc bez działania to miesiąc, w którym problem się utrwala, a okno możliwości się zawęża.", en: "Every month without action is a month the problem becomes more embedded — and the window of opportunity narrows." },
   },
 } as const
 

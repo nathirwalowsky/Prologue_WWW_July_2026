@@ -229,6 +229,133 @@ function PhaseTimeline({ steps }: { steps: { title: string; body: string; durati
   )
 }
 
+// ── Inline contact form ───────────────────────────────────────────────────────
+
+function ServiceContactForm() {
+  const { t } = useLanguage()
+  const [ndaChecked, setNdaChecked] = useState(false)
+
+  return (
+    <section id="contact" className="scroll-mt-28 border-b border-border bg-secondary py-20 md:py-28">
+      <div className="mx-auto max-w-5xl px-4 md:px-6">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-[1fr_420px]">
+
+          {/* Left — context */}
+          <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-3">
+              <SectionLabel>{t.services.formLabel}</SectionLabel>
+              <h2 className="text-balance font-sans text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
+                {t.services.formTitle}
+              </h2>
+              <p className="max-w-md text-pretty font-serif text-lg leading-relaxed text-muted-foreground">
+                {t.services.formIntro}
+              </p>
+            </div>
+
+            {/* Process steps */}
+            <div className="flex flex-col gap-3 pt-2">
+              {[
+                t.contact.processStep1,
+                t.contact.processStep2,
+                t.contact.processStep3,
+                t.contact.processStep4,
+                t.contact.processStep5,
+              ].map((step, i) => (
+                <div key={i} className="flex items-center gap-3">
+                  <span className="flex size-6 shrink-0 items-center justify-center rounded-full border border-accent/40 font-mono text-[10px] text-accent">
+                    {i + 1}
+                  </span>
+                  <span className="font-sans text-sm text-muted-foreground">{step}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right — form */}
+          <form className="flex flex-col gap-4 rounded-xl border border-border bg-card p-6 md:p-8" noValidate>
+            <label className="flex flex-col gap-1.5">
+              <span className="text-sm font-medium text-foreground">{t.contact.fieldFullName} *</span>
+              <input
+                type="text"
+                name="fullName"
+                autoComplete="name"
+                required
+                className="h-11 w-full rounded-md border border-border bg-background px-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                placeholder="Jan Kowalski"
+              />
+            </label>
+
+            <label className="flex flex-col gap-1.5">
+              <span className="text-sm font-medium text-foreground">{t.contact.fieldEmail} *</span>
+              <input
+                type="email"
+                name="email"
+                autoComplete="email"
+                required
+                className="h-11 w-full rounded-md border border-border bg-background px-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                placeholder="jan@firma.pl"
+              />
+            </label>
+
+            <label className="flex flex-col gap-1.5">
+              <span className="text-sm font-medium text-foreground">{t.contact.fieldCompany}</span>
+              <input
+                type="text"
+                name="company"
+                autoComplete="organization"
+                className="h-11 w-full rounded-md border border-border bg-background px-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                placeholder="Nazwa firmy"
+              />
+            </label>
+
+            <label className="flex flex-col gap-1.5">
+              <span className="text-sm font-medium text-foreground">{t.contact.fieldMessage} *</span>
+              <textarea
+                name="message"
+                rows={4}
+                required
+                className="w-full resize-none rounded-md border border-border bg-background px-3.5 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                placeholder="Opisz krótko, z czym chcesz się do nas zgłosić…"
+              />
+            </label>
+
+            {/* NDA checkbox */}
+            <label className="flex cursor-pointer items-start gap-3 rounded-md border border-border bg-secondary p-3.5 transition-colors hover:border-primary/40">
+              <input
+                type="checkbox"
+                name="nda"
+                checked={ndaChecked}
+                onChange={(e) => setNdaChecked(e.target.checked)}
+                className="mt-0.5 h-4 w-4 flex-shrink-0 cursor-pointer accent-primary"
+              />
+              <div className="flex flex-col gap-0.5">
+                <span className="text-sm font-medium text-foreground">{t.contact.ndaLabel}</span>
+                <span className="text-xs text-muted-foreground">{t.contact.ndaDesc}</span>
+              </div>
+            </label>
+
+            {/* Required consent */}
+            <label className="flex cursor-pointer items-start gap-3">
+              <input type="checkbox" required className="mt-0.5 h-4 w-4 flex-shrink-0 cursor-pointer accent-primary" />
+              <span className="text-xs text-muted-foreground">
+                * {t.contact.consentRequired}{" "}
+                <a href="/privacy" className="underline hover:text-foreground">Privacy Policy</a>.
+              </span>
+            </label>
+
+            <button
+              type="submit"
+              className="mt-1 inline-flex h-11 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            >
+              {t.services.formSubmit}
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 // ── Page component ─────────────────────────────────────────────────────────────
 
 export function ServicePage({ data }: { data: ServicePageData }) {
@@ -240,6 +367,7 @@ export function ServicePage({ data }: { data: ServicePageData }) {
     { id: "before-after", label: "Przed / Po" },
     { id: "how-it-works", label: t.services.planLabel },
     { id: "results",      label: t.services.hopeLabel },
+    { id: "contact",      label: t.services.formLabel },
     { id: "faq",          label: t.home.faqLabel },
   ]
 
@@ -414,32 +542,53 @@ export function ServicePage({ data }: { data: ServicePageData }) {
         </div>
       </section>
 
-      {/* 6. THRESHOLD — cost of inaction */}
-      <section className="border-b border-border py-20 md:py-28">
-        <div className="mx-auto max-w-5xl px-4 md:px-6">
-          <div className="mb-10 flex flex-col gap-3">
-            <SectionLabel>{t.services.thresholdLabel}</SectionLabel>
-            <h2 className="text-balance font-sans text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
+      {/* 6. INLINE CONTACT FORM */}
+      <ServiceContactForm />
+
+      {/* 7. THRESHOLD — cost of inaction */}
+      <section className="border-b border-border">
+        <div className="grid grid-cols-1 md:grid-cols-[340px_1fr]">
+
+          {/* Left — dark framing panel */}
+          <div className="flex flex-col justify-center gap-6 bg-foreground px-8 py-16 md:py-20">
+            <span className="font-mono text-xs uppercase tracking-[0.2em] text-background/40">
+              {t.services.thresholdLabel}
+            </span>
+            <h2 className="text-balance font-sans text-2xl font-semibold leading-snug tracking-tight text-background md:text-3xl">
               {t.services.thresholdTitle}
             </h2>
+            <p className="font-serif text-base leading-relaxed text-background/60">
+              {t.services.thresholdIntro}
+            </p>
+            <Link
+              href="#contact"
+              onClick={(e) => { e.preventDefault(); document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }) }}
+              className="mt-2 inline-flex w-fit items-center rounded-md bg-background px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-background/90"
+            >
+              {t.services.ctaSchedule}
+            </Link>
           </div>
-          <ul className="flex flex-col gap-4">
+
+          {/* Right — consequence list */}
+          <div className="flex flex-col divide-y divide-border bg-card">
             {data.consequences.map((c, i) => (
-              <li key={i} className="flex items-start gap-4 rounded-xl border border-border bg-card p-5">
-                <span
-                  className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-destructive/10 font-mono text-sm text-destructive"
-                  aria-hidden="true"
-                >
-                  →
-                </span>
-                <p className="font-serif text-base leading-relaxed text-muted-foreground">{c}</p>
-              </li>
+              <div key={i} className="flex items-start gap-5 px-8 py-7">
+                <div className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full bg-destructive/10">
+                  <svg viewBox="0 0 16 16" fill="currentColor" className="size-3.5 text-destructive" aria-hidden="true">
+                    <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1Zm.75 4.25a.75.75 0 0 0-1.5 0v3.5a.75.75 0 0 0 1.5 0v-3.5ZM8 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z" />
+                  </svg>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <p className="font-serif text-base leading-relaxed text-foreground">{c}</p>
+                </div>
+              </div>
             ))}
-          </ul>
+          </div>
+
         </div>
       </section>
 
-      {/* 7. NOT READY — recent blog posts */}
+      {/* 8. NOT READY — recent blog posts */}
       <section className="border-b border-border bg-secondary py-20 md:py-28">
         <div className="mx-auto max-w-5xl px-4 md:px-6">
           <div className="mb-10 flex flex-col items-center gap-3 text-center">
