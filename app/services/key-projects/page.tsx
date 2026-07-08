@@ -97,10 +97,27 @@ export default function KeyProjectsPage() {
           },
         ],
         ctaTitle: t.services.ctaTitle.keyProjects,
-        consequences: [
-          "[Każdy miesiąc opóźnienia to zamrożony budżet i utracona przewaga konkurencyjna.]",
-          "[Niezrealizowane inicjatywy demotywują zespół i podważają zaufanie interesariuszy.]",
-          "[Organizacje, które nie umieją dowozić projektów, tracą zdolność do adaptacji i zmiany.]",
+        blockers: [
+          {
+            question: "Czy to nie odciągnie naszego zespołu od bieżącej pracy?",
+            answer: "[Projektujemy zaangażowanie tak, żeby minimalizować obciążenie Twojego zespołu. Przejmujemy prowadzenie, koordynację i eskalacje — Wasz wkład jest skupiony i zaplanowany z góry, nie ad hoc.]",
+          },
+          {
+            question: "Jak wiadomo, kiedy projekt naprawdę jest na dobrej drodze?",
+            answer: "[Pierwszą rzeczą, którą robimy, jest zdefiniowanie jasnych wskaźników sukcesu i kamieni milowych. Przez cały czas trwania projektu widzisz stan na bieżąco — nie dowiadujesz się o problemach, gdy jest już za późno.]",
+          },
+          {
+            question: "Próbowaliśmy już zewnętrznych konsultantów i nic z tego nie wyszło.",
+            answer: "[Rozumiemy ten sceptycyzm i słyszymy go regularnie. Różnica polega na tym, że pracujemy razem z Waszym zespołem, a nie obok niego. Nie zostajemy po skończeniu projektu — ale nie znikamy też w połowie drogi.]",
+          },
+          {
+            question: "Co się stanie, jeśli projekt się opóźni?",
+            answer: "[Opóźnienia rzadko biorą się znikąd — budujemy mechanizmy wczesnego ostrzegania, żeby widzieć ryzyka zanim staną się problemami. A jeśli coś się zmienia, reagujemy, zamiast czekać na kolejny status update.]",
+          },
+          {
+            question: "Nie jestem pewien, czy to właściwy moment na taki projekt.",
+            answer: "[To ważne pytanie. Część naszej pierwszej rozmowy to właśnie ocena: czy to jest właściwy projekt, właściwy czas i właściwe zasoby. Czasem odpowiedź brzmi — jeszcze nie. Wolimy powiedzieć to wcześnie niż startować projekt, który nie ma szans.]",
+          },
         ],
       }}
     />

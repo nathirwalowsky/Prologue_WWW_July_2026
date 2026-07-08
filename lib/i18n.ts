@@ -275,7 +275,7 @@ export const translations = {
     whatsappCta:   { pl: "Napisz na WhatsApp →",          en: "Message on WhatsApp →" },
   },
 
-  // ── Partner page ─────────────────────────────────────────────────────────────
+  // ── Partner page ─���───────────────────────────────────────────────────────────
   partner: {
     pageLabel:   { pl: "Zostań Partnerem",           en: "Become a Partner" },
     heading:     { pl: "Budujmy razem świetne projekty.", en: "Let's build great projects together." },
@@ -336,8 +336,8 @@ export const translations = {
     hopeTitle:           { pl: "Można to zmienić",               en: "This can be changed" },
     planLabel:           { pl: "Plan",                           en: "The Plan" },
     planTitle:           { pl: "Jak to naprawiamy",              en: "Here is how we fix it" },
-    thresholdLabel:      { pl: "Próg",                           en: "Threshold" },
-    thresholdTitle:      { pl: "Co się stanie, jeśli nie podejmiesz działania?", en: "What happens if you don't act?" },
+    thresholdLabel:      { pl: "Co Cię blokuje",                 en: "What blocks you" },
+    thresholdTitle:      { pl: "Najczęstsze pytania, zanim ktoś zdecyduje się działać", en: "The most common questions before someone decides to act" },
     notReadyLabel:       { pl: "Nie gotowy?",                    en: "Not ready yet?" },
     notReadyTitle:       { pl: "Zacznij od pogłębienia wiedzy",  en: "Start by learning more" },
     ctaSchedule:         { pl: "Zaplanuj rozmowę",               en: "Schedule a call" },

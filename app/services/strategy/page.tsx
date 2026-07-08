@@ -101,10 +101,27 @@ export default function StrategyPage() {
           },
         ],
         ctaTitle: t.services.ctaTitle.strategy,
-        consequences: [
-          "[Bez jasnej strategii zespół traci czas na inicjatywy, które nie przesuwają igły.]",
-          "[Brak pozycjonowania oznacza konkurowanie ceną — co prowadzi do presji marżowej.]",
-          "[Strategiczna niejasność generuje frustrację w zespole i rotację kluczowych ludzi.]",
+        blockers: [
+          {
+            question: "Jak sprawdzę, czy nowa strategia w ogóle działa?",
+            answer: "[Dobra strategia ma mierzalne wskaźniki sukcesu zdefiniowane na początku. Część naszej pracy to właśnie ustalenie: skąd za 6 miesięcy będziecie wiedzieć, że ta strategia działa — i co zrobicie, jeśli nie działa.]",
+          },
+          {
+            question: "Jak przekonam do tego resztę zarządu, skoro sam nie jestem pewien?",
+            answer: "[Właśnie dlatego prowadzimy strategię jako warsztat z zespołem, a nie jako projekt konsultanta. Kiedy ludzie współtworzą strategię, nie trzeba ich do niej przekonywać — bo jest już ich własnością.]",
+          },
+          {
+            question: "Czy to nie zajmie nam miesięcy i nie odciągnie ludzi od bieżącej pracy?",
+            answer: "[Nasz proces jest zaprojektowany tak, żeby trwać tygodnie, nie miesiące — i angażować właściwe osoby w skoncentrowanych sesjach, nie ciągłych spotkaniach. Cała praca jest zorganizowana tak, by minimalizować obciążenie operacyjne.]",
+          },
+          {
+            question: "A co, jeśli wypracujemy strategię i nic się nie zmieni?",
+            answer: "[To najczęstszy strach i całkowicie uzasadniony — bo wiele strategii kończy się na slajdach. Dlatego ostatni etap naszej pracy to aktywacja: razem uruchamiamy pierwsze inicjatywy strategiczne, zanim zakończymy współpracę.]",
+          },
+          {
+            question: "Mam już strategię — czy naprawdę potrzebuję zewnętrznego wsparcia?",
+            answer: "[Czasem tak, czasem nie. Zewnętrzna perspektywa jest wartościowa wtedy, gdy jesteś zbyt blisko problemu, żeby zobaczyć go wyraźnie — albo gdy potrzebujesz kogoś, kto powie głośno to, co wszyscy czują, ale nikt nie mówi.]",
+          },
         ],
       }}
     />

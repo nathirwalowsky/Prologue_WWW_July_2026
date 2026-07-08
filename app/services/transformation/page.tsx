@@ -97,10 +97,27 @@ export default function TransformationPage() {
           },
         ],
         ctaTitle: t.services.ctaTitle.transformation,
-        consequences: [
-          "[Organizacje, które nie przeprowadzą transformacji, ryzykują utratę relevance na rynku.]",
-          "[Każdy rok bez zmiany pogłębia przepaść między kulturą organizacji a wymaganiami otoczenia.]",
-          "[Nieudana transformacja może kosztować więcej niż jej nieprzeprowadzenie — warto zrobić to dobrze.]",
+        blockers: [
+          {
+            question: "Jak przekonam organizację, która już nie wierzy w kolejne inicjatywy zmian?",
+            answer: "[Cynizm w organizacji jest realny i uzasadniony historią. Dlatego zaczynamy od małego — pierwszych widocznych wyników, które odbudowują zaufanie, zanim wejdziemy w głębszą zmianę. Ludzie zmieniają zdanie przez doświadczenie, nie przez prezentacje.]",
+          },
+          {
+            question: "Skąd wiem, że za 2 lata zmiana się utrzyma?",
+            answer: "[Transformacje nie utrzymują się dlatego, że są dobrze zaprojektowane — utrzymują się dlatego, że są zakorzenione w nowych nawykach, strukturach i systemach motywacyjnych. Ostatni etap naszej pracy to właśnie to: sprawdzamy, że zmiana ma fundamenty, a nie tylko entuzjazm.]",
+          },
+          {
+            question: "Co, jeśli część kluczowych ludzi nie jest gotowa na zmianę?",
+            answer: "[To jeden z najważniejszych czynników ryzyka każdej transformacji. Identyfikujemy go na początku i projektujemy podejście do każdego segmentu: early adopters, skeptics i blockers wymagają różnych działań. Nie ignorujemy oporu — zarządzamy nim.]",
+          },
+          {
+            question: "Jak pogodzić transformację z bieżącymi wynikami biznesowymi?",
+            answer: "[To napięcie jest realne. Naszym zadaniem jest zaprojektować transformację tak, żeby nie zatrzymywała biznesu — ale żeby działa równolegle. Tempo transformacji dostosowujemy do Waszej zdolności absorpcji zmian, nie do jakiegoś idealnego harmonogramu.]",
+          },
+          {
+            question: "Ile to właściwie kosztuje — czas, pieniądze, energia?",
+            answer: "[Nie ma tu jednej odpowiedzi, bo transformacja różni się skalą w zależności od organizacji. Na pierwszej rozmowie robimy wstępną ocenę zakresu i dajemy Wam uczciwy obraz kosztu — zanim ktokolwiek podejmie jakiekolwiek zobowiązanie.]",
+          },
         ],
       }}
     />

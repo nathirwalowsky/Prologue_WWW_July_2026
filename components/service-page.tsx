@@ -25,7 +25,7 @@ export type ServicePageData = {
   caseStudies: { industry: string; client: string; result: string }[]
   steps: { title: string; body: string; duration?: string }[]
   ctaTitle: string
-  consequences: string[]
+  blockers: { question: string; answer: string }[]
 }
 
 // ── Sticky in-page nav ────────────────────────────────────────────────────────
@@ -229,6 +229,140 @@ function PhaseTimeline({ steps }: { steps: { title: string; body: string; durati
   )
 }
 
+// ── Blockers section ──────────────────────────────────────────────────────────
+
+function BlockersSection({
+  blockers,
+  t,
+}: {
+  blockers: { question: string; answer: string }[]
+  t: ReturnType<typeof useLanguage>["t"]
+}) {
+  const [active, setActive] = useState(0)
+  const [playing, setPlaying] = useState(false)
+
+  // reset play state when switching blocker
+  const selectBlocker = (i: number) => {
+    setActive(i)
+    setPlaying(false)
+  }
+
+  return (
+    <section id="blockers" className="scroll-mt-28 border-b border-border bg-secondary py-20 md:py-28">
+      <div className="mx-auto max-w-6xl px-4 md:px-6">
+
+        {/* Header */}
+        <div className="mb-12 flex flex-col items-center gap-3 text-center">
+          <SectionLabel>{t.services.thresholdLabel}</SectionLabel>
+          <h2 className="text-balance font-sans text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
+            {t.services.thresholdTitle}
+          </h2>
+        </div>
+
+        {/* Main layout: question list left | video + answer right */}
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-[1fr_320px]">
+
+          {/* Left — question cards */}
+          <div className="flex flex-col gap-3">
+            {blockers.map((blocker, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => selectBlocker(i)}
+                className={`group flex items-start gap-5 rounded-xl border px-6 py-5 text-left transition-all duration-200 ${
+                  active === i
+                    ? "border-accent/40 bg-card shadow-sm"
+                    : "border-border bg-card/50 hover:border-accent/20 hover:bg-card"
+                }`}
+              >
+                {/* Number */}
+                <span
+                  className={`mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-full font-mono text-xs font-semibold transition-colors ${
+                    active === i
+                      ? "bg-accent text-background"
+                      : "border border-border text-muted-foreground group-hover:border-accent/40 group-hover:text-accent"
+                  }`}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+
+                <div className="flex flex-1 flex-col gap-2">
+                  <p className={`font-sans text-base font-semibold transition-colors ${active === i ? "text-foreground" : "text-muted-foreground group-hover:text-foreground"}`}>
+                    {blocker.question}
+                  </p>
+                  {/* Expanded answer text on mobile / always visible on large */}
+                  {active === i && (
+                    <p className="font-serif text-sm leading-relaxed text-muted-foreground md:hidden">
+                      {blocker.answer}
+                    </p>
+                  )}
+                </div>
+
+                {/* Chevron */}
+                <svg
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  className={`mt-1 size-4 shrink-0 transition-transform ${active === i ? "rotate-180 text-accent" : "text-border"}`}
+                  aria-hidden="true"
+                >
+                  <path d="M3.47 5.47a.75.75 0 0 1 1.06 0L8 8.94l3.47-3.47a.75.75 0 1 1 1.06 1.06l-4 4a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 0-1.06Z" />
+                </svg>
+              </button>
+            ))}
+          </div>
+
+          {/* Right — vertical video + answer */}
+          <div className="hidden flex-col gap-5 md:flex">
+
+            {/* 9:16 video */}
+            <div style={{ width: 320, height: 569 }} className="w-full">
+              <div className="relative h-full w-full overflow-hidden rounded-2xl border border-border bg-card shadow-md">
+                {playing ? (
+                  <div className="flex h-full items-center justify-center px-6 text-center">
+                    <span className="font-mono text-xs text-muted-foreground">Video placeholder</span>
+                  </div>
+                ) : (
+                  <>
+                    {/* Question label inside video */}
+                    <div className="absolute inset-x-0 bottom-0 flex flex-col gap-2 bg-gradient-to-t from-foreground/80 to-transparent p-5">
+                      <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-background/60">
+                        {t.services.thresholdLabel}
+                      </span>
+                      <p className="text-pretty font-sans text-sm font-medium leading-snug text-background">
+                        {blockers[active].question}
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      aria-label="Play answer video"
+                      onClick={() => setPlaying(true)}
+                      className="group absolute inset-0 flex items-center justify-center"
+                    >
+                      <span className="flex size-14 items-center justify-center rounded-full border border-border bg-background shadow-lg transition-transform group-hover:scale-110">
+                        <svg viewBox="0 0 24 24" fill="currentColor" className="size-5 translate-x-0.5 text-foreground" aria-hidden="true">
+                          <path d="M8 5.14v14l11-7-11-7z" />
+                        </svg>
+                      </span>
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
+
+            {/* Answer text below video */}
+            <div className="rounded-xl border border-border bg-card p-5">
+              <p className="font-serif text-sm leading-relaxed text-muted-foreground">
+                {blockers[active].answer}
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 // ── Inline contact form ───────────────────────────────────────────────────────
 
 function ServiceContactForm() {
@@ -367,6 +501,7 @@ export function ServicePage({ data }: { data: ServicePageData }) {
     { id: "before-after", label: "Przed / Po" },
     { id: "how-it-works", label: t.services.planLabel },
     { id: "results",      label: t.services.hopeLabel },
+    { id: "blockers",     label: t.services.thresholdLabel },
     { id: "contact",      label: t.services.formLabel },
     { id: "faq",          label: t.home.faqLabel },
   ]
@@ -545,48 +680,8 @@ export function ServicePage({ data }: { data: ServicePageData }) {
       {/* 6. INLINE CONTACT FORM */}
       <ServiceContactForm />
 
-      {/* 7. THRESHOLD — cost of inaction */}
-      <section className="border-b border-border">
-        <div className="grid grid-cols-1 md:grid-cols-[340px_1fr]">
-
-          {/* Left — dark framing panel */}
-          <div className="flex flex-col justify-center gap-6 bg-foreground px-8 py-16 md:py-20">
-            <span className="font-mono text-xs uppercase tracking-[0.2em] text-background/40">
-              {t.services.thresholdLabel}
-            </span>
-            <h2 className="text-balance font-sans text-2xl font-semibold leading-snug tracking-tight text-background md:text-3xl">
-              {t.services.thresholdTitle}
-            </h2>
-            <p className="font-serif text-base leading-relaxed text-background/60">
-              {t.services.thresholdIntro}
-            </p>
-            <Link
-              href="#contact"
-              onClick={(e) => { e.preventDefault(); document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }) }}
-              className="mt-2 inline-flex w-fit items-center rounded-md bg-background px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-background/90"
-            >
-              {t.services.ctaSchedule}
-            </Link>
-          </div>
-
-          {/* Right — consequence list */}
-          <div className="flex flex-col divide-y divide-border bg-card">
-            {data.consequences.map((c, i) => (
-              <div key={i} className="flex items-start gap-5 px-8 py-7">
-                <div className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full bg-destructive/10">
-                  <svg viewBox="0 0 16 16" fill="currentColor" className="size-3.5 text-destructive" aria-hidden="true">
-                    <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1Zm.75 4.25a.75.75 0 0 0-1.5 0v3.5a.75.75 0 0 0 1.5 0v-3.5ZM8 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z" />
-                  </svg>
-                </div>
-                <div className="flex flex-col gap-1">
-                  <p className="font-serif text-base leading-relaxed text-foreground">{c}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-        </div>
-      </section>
+      {/* 7. BLOCKERS — "What blocks you" */}
+      <BlockersSection blockers={data.blockers} t={t} />
 
       {/* 8. NOT READY — recent blog posts */}
       <section className="border-b border-border bg-secondary py-20 md:py-28">
