@@ -195,6 +195,16 @@ export const translations = {
       pl: "Wyrażam zgodę na otrzymywanie newslettera od Prologue Agency i przetwarzanie mojego e-maila w tym celu, zgodnie z Polityką Prywatności (RODO). Mogę zrezygnować w każdej chwili.",
       en: "I consent to receiving the newsletter from Prologue Agency and to the processing of my email for this purpose, in accordance with the Privacy Policy (GDPR / RODO). I can unsubscribe at any time.",
     },
+    ctaMidLabel:   { pl: "Pracujemy z liderami takimi jak Ty",     en: "We work with leaders like you" },
+    ctaMidTitle:   { pl: "Czy ten artykuł rezonuje z Twoją sytuacją?", en: "Does this article resonate with your situation?" },
+    ctaMidDesc:    { pl: "Jeśli tak, prawdopodobnie jest dobry moment na rozmowę. Pierwsze 30 minut jest bezpłatne.", en: "If so, it's probably a good time to talk. The first 30 minutes are free." },
+    ctaMidPrimary: { pl: "Zaplanuj bezpłatną rozmowę",             en: "Schedule a free call" },
+    ctaMidSecondary:{ pl: "Albo pobierz warsztat Vector →",        en: "Or get the free Vector Workshop →" },
+    ctaEndLabel:   { pl: "Gotowy na kolejny krok?",                en: "Ready for the next step?" },
+    ctaEndTitle:   { pl: "Zamień spostrzeżenia w działanie",       en: "Turn insight into action" },
+    ctaEndDesc:    { pl: "Każdy artykuł na tym blogu wynika z pracy z prawdziwymi firmami w prawdziwych sytuacjach. Jeśli rozpoznajesz swoje wyzwanie — możemy pomóc.", en: "Every article on this blog comes from working with real businesses in real situations. If you recognise your challenge — we can help." },
+    ctaEndPrimary: { pl: "Zaplanuj rozmowę wstępną",              en: "Schedule an intro call" },
+    ctaEndSecondary:{ pl: "Dowiedz się więcej o usługach →",       en: "Learn more about services →" },
   },
 
   // ── Vector page ──────────────────────────────────────────────────────────────

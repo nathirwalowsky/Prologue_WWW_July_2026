@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { SiteShell } from "@/components/site-shell"
-import { WireBox, WireCTA, WireHeading, WireLabel, WirePlaceholder, WireText } from "@/components/wireframe-kit"
+import { WireBox, WireHeading, WireLabel, WirePlaceholder, WireText } from "@/components/wireframe-kit"
+import { BlogCta } from "@/components/blog-cta"
 import { blogPosts } from "@/lib/blog-data"
 
 export default async function BlogPostWireframeV2({
@@ -135,6 +136,9 @@ export default async function BlogPostWireframeV2({
               <p className="text-center text-sm text-neutral-500">[Image caption explaining what this visual shows]</p>
             </WireBox>
 
+            {/* Mid-article conversion banner */}
+            <BlogCta variant="inline" />
+
             <div id="section-3" className="scroll-mt-24">
               <WireHeading level={3}>Section 3: [Main Point #3]</WireHeading>
             </div>
@@ -228,11 +232,8 @@ export default async function BlogPostWireframeV2({
         </div>
       </section>
 
-      <WireCTA
-        title="Ready to Transform Your Business?"
-        text="[CTA text related to the blog post topic.]"
-        primary="Get Started"
-      />
+      {/* End-of-article conversion band */}
+      <BlogCta variant="end" />
     </SiteShell>
   )
 }
