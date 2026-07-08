@@ -11,9 +11,11 @@ import type { CaseStudy } from "@/lib/case-study-data"
 function TableOfContents({
   sections,
   stats,
+  t,
 }: {
   sections: { id: string; title: string }[]
   stats: { value: string; label: string }[]
+  t: ReturnType<typeof useLanguage>["t"]
 }) {
   const [active, setActive] = useState<string | null>(null)
 
@@ -178,7 +180,7 @@ export function CaseStudyPage({ cs }: { cs: CaseStudy }) {
       {/* ── Body: TOC left + content right ── */}
       <div className="mx-auto max-w-5xl px-4 py-16 md:px-6 md:py-20">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[220px_1fr]">
-          <TableOfContents sections={tocSections} stats={cs.stats} />
+          <TableOfContents sections={tocSections} stats={cs.stats} t={t} />
 
           {/* Article body */}
           <article className="flex flex-col gap-14">
