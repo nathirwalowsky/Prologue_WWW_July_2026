@@ -1,44 +1,86 @@
 "use client"
 
+import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { SiteShell, PageHeader } from "@/components/site-shell"
 import { HomeFaq } from "@/components/home-faq"
 import { useLanguage } from "@/contexts/language-context"
 import { blogPosts } from "@/lib/blog-data"
 
-// ── Types ────────────────────────────────────────────────────────────────────
+// ── Types ─────────────────────────────────────────────────────────────────────
 
 export type ServiceSlug = "strategy" | "key-projects" | "transformation"
 
-// All copy that varies between services — fill in via i18n or direct props
 export type ServicePageData = {
   slug: ServiceSlug
   label: string
   title: string
   intro: string
-  // Hero problem list — for visitor self-identification
   problems: string[]
-  // Identification table rows
   identRows: { area: string; now: string; goal: string }[]
-  // Empathy quotes
   innerThoughts: string[]
-  // Empathy toll cards
   toll: { tag: string; line: string }[]
-  // Empathy authority quote
   authorityQuote: string
-  // Hope stats
   stats: { value: string; label: string }[]
-  // Hope case studies
   caseStudies: { industry: string; client: string; result: string }[]
-  // Plan steps
-  steps: { title: string; body: string }[]
-  // CTA
+  steps: { title: string; body: string; duration?: string }[]
   ctaTitle: string
-  // Threshold consequences
   consequences: string[]
 }
 
-// ── Shared section chrome ────────────────────────────────────────────────────
+// ── Sticky in-page nav ────────────────────────────────────────────────────────
+
+function InPageNav({ sections }: { sections: { id: string; label: string }[] }) {
+  const [active, setActive] = useState<string | null>(null)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => {
+      // Show nav after 300px
+      setVisible(window.scrollY > 300)
+
+      // Track active section
+      let current: string | null = null
+      for (const section of sections) {
+        const el = document.getElementById(section.id)
+        if (el && el.getBoundingClientRect().top < 140) current = section.id
+      }
+      setActive(current)
+    }
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [sections])
+
+  return (
+    <div
+      className={`fixed left-0 right-0 z-20 border-b border-border bg-background/95 backdrop-blur-sm transition-all duration-300 ${
+        visible ? "top-[72px] translate-y-0 opacity-100" : "-top-12 opacity-0 pointer-events-none"
+      }`}
+    >
+      <nav className="mx-auto flex max-w-6xl items-center gap-0 overflow-x-auto px-4 md:px-6" aria-label="Page sections">
+        {sections.map((s) => (
+          <a
+            key={s.id}
+            href={`#${s.id}`}
+            onClick={(e) => {
+              e.preventDefault()
+              document.getElementById(s.id)?.scrollIntoView({ behavior: "smooth", block: "start" })
+            }}
+            className={`shrink-0 border-b-2 px-4 py-3 font-mono text-xs uppercase tracking-[0.12em] transition-colors ${
+              active === s.id
+                ? "border-accent text-foreground"
+                : "border-transparent text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {s.label}
+          </a>
+        ))}
+      </nav>
+    </div>
+  )
+}
+
+// ── Section shell ─────────────────────────────────────────────────────────────
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -48,16 +90,164 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   )
 }
 
-// ── Page component ────────────────────────────────────────────────────────────
+// ── Before / After row ────────────────────────────────────────────────────────
+
+function BeforeAfterRow({ area, now, goal, index }: { area: string; now: string; goal: string; index: number }) {
+  return (
+    <div className={`grid grid-cols-1 gap-px md:grid-cols-[1fr_48px_1fr] ${index > 0 ? "border-t border-border" : ""}`}>
+      {/* Before */}
+      <div className="flex items-start gap-4 bg-background px-5 py-6">
+        <div className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full bg-destructive/10">
+          <svg viewBox="0 0 16 16" fill="currentColor" className="size-4 text-destructive" aria-hidden="true">
+            <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1Zm3.53 4.47a.75.75 0 0 1 0 1.06L9.06 8l2.47 2.47a.75.75 0 1 1-1.06 1.06L8 9.06l-2.47 2.47a.75.75 0 0 1-1.06-1.06L6.94 8 4.47 5.53a.75.75 0 0 1 1.06-1.06L8 6.94l2.47-2.47a.75.75 0 0 1 1.06 0Z" />
+          </svg>
+        </div>
+        <div>
+          <p className="mb-0.5 font-mono text-[10px] uppercase tracking-[0.15em] text-muted-foreground">{area}</p>
+          <p className="font-serif text-base leading-relaxed text-muted-foreground">{now}</p>
+        </div>
+      </div>
+
+      {/* Arrow */}
+      <div className="hidden items-center justify-center bg-secondary md:flex">
+        <svg viewBox="0 0 24 24" fill="currentColor" className="size-5 text-accent" aria-hidden="true">
+          <path d="M13.22 19.03a.75.75 0 0 1 0-1.06l5.72-5.72H3.75a.75.75 0 0 1 0-1.5h15.19l-5.72-5.72a.75.75 0 1 1 1.06-1.06l7 7a.75.75 0 0 1 0 1.06l-7 7a.75.75 0 0 1-1.06 0Z" />
+        </svg>
+      </div>
+
+      {/* After */}
+      <div className="flex items-start gap-4 bg-background px-5 py-6">
+        <div className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full bg-primary/10">
+          <svg viewBox="0 0 16 16" fill="currentColor" className="size-4 text-primary" aria-hidden="true">
+            <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1Zm3.78 5.03a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 0 1-1.06 0l-2-2a.75.75 0 1 1 1.06-1.06l1.47 1.47 3.97-3.97a.75.75 0 0 1 1.06 0Z" />
+          </svg>
+        </div>
+        <div>
+          <p className="mb-0.5 font-mono text-[10px] uppercase tracking-[0.15em] text-primary/60">Cel</p>
+          <p className="font-sans text-base font-medium leading-relaxed text-foreground">{goal}</p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ── Phase timeline ────────────────────────────────────────────────────────────
+
+function PhaseTimeline({ steps }: { steps: { title: string; body: string; duration?: string }[] }) {
+  const [active, setActive] = useState(0)
+
+  return (
+    <div className="flex flex-col gap-8">
+      {/* Phase track */}
+      <div className="relative flex items-start gap-0">
+        {/* Line */}
+        <div className="absolute left-4 right-4 top-4 h-px bg-border md:left-[calc(100%/var(--n)/2)] md:right-[calc(100%/var(--n)/2)]" aria-hidden="true" style={{ "--n": steps.length } as React.CSSProperties} />
+        <div className="flex w-full gap-0">
+          {steps.map((step, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => setActive(i)}
+              className="group flex flex-1 flex-col items-center gap-2 px-2 pt-0 text-center"
+            >
+              {/* Circle */}
+              <span
+                className={`relative z-10 flex size-8 items-center justify-center rounded-full border-2 font-mono text-xs font-semibold transition-all duration-200 ${
+                  active === i
+                    ? "border-accent bg-accent text-background shadow-md shadow-accent/20"
+                    : i < active
+                    ? "border-accent bg-accent/20 text-accent"
+                    : "border-border bg-background text-muted-foreground group-hover:border-accent/50"
+                }`}
+              >
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              {/* Label */}
+              <span
+                className={`hidden text-xs leading-snug transition-colors md:block ${
+                  active === i ? "font-semibold text-foreground" : "text-muted-foreground group-hover:text-foreground"
+                }`}
+              >
+                {step.title}
+              </span>
+              {step.duration && (
+                <span className="hidden font-mono text-[10px] text-muted-foreground/60 md:block">
+                  {step.duration}
+                </span>
+              )}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Active step detail */}
+      <div className="rounded-xl border border-border bg-card p-6 md:p-8">
+        <div className="flex flex-col gap-3 md:flex-row md:items-start md:gap-6">
+          <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-accent/10 font-mono text-sm font-semibold text-accent">
+            {String(active + 1).padStart(2, "0")}
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="flex flex-wrap items-center gap-3">
+              <h3 className="font-sans text-xl font-semibold text-foreground">
+                {steps[active].title}
+              </h3>
+              {steps[active].duration && (
+                <span className="rounded-full bg-accent/10 px-3 py-0.5 font-mono text-xs text-accent">
+                  {steps[active].duration}
+                </span>
+              )}
+            </div>
+            <p className="font-serif text-base leading-relaxed text-muted-foreground">
+              {steps[active].body}
+            </p>
+          </div>
+        </div>
+        {/* Prev / Next */}
+        <div className="mt-6 flex items-center gap-3 border-t border-border pt-5">
+          <button
+            type="button"
+            disabled={active === 0}
+            onClick={() => setActive((a) => a - 1)}
+            className="rounded-md border border-border px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:border-accent/40 hover:text-foreground disabled:opacity-30"
+          >
+            ← Poprzedni
+          </button>
+          <button
+            type="button"
+            disabled={active === steps.length - 1}
+            onClick={() => setActive((a) => a + 1)}
+            className="rounded-md border border-border px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:border-accent/40 hover:text-foreground disabled:opacity-30"
+          >
+            Następny →
+          </button>
+          <span className="ml-auto font-mono text-xs text-muted-foreground/50">
+            {active + 1} / {steps.length}
+          </span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ── Page component ─────────────────────────────────────────────────────────────
 
 export function ServicePage({ data }: { data: ServicePageData }) {
   const { t } = useLanguage()
-  // Last 3 blog posts for the "Not Ready" section
   const recentPosts = blogPosts.slice(0, 3)
+
+  const sections = [
+    { id: "challenges",   label: t.services.identificationLabel },
+    { id: "before-after", label: "Przed / Po" },
+    { id: "how-it-works", label: t.services.planLabel },
+    { id: "results",      label: t.services.hopeLabel },
+    { id: "faq",          label: t.home.faqLabel },
+  ]
 
   return (
     <SiteShell pageName={data.title}>
-      {/* PAGE HEADER — problems list renders inside the hero zone */}
+      <InPageNav sections={sections} />
+
+      {/* PAGE HEADER — problems list inside the hero zone */}
       <PageHeader
         label={data.label}
         title={data.title}
@@ -65,80 +255,8 @@ export function ServicePage({ data }: { data: ServicePageData }) {
         problems={data.problems}
       />
 
-      {/* 1. IDENTIFICATION */}
-      <section className="border-b border-border py-20 md:py-28">
-        <div className="mx-auto max-w-5xl px-4 md:px-6">
-          <div className="mb-10 flex flex-col gap-3">
-            <SectionLabel>{t.services.identificationLabel}</SectionLabel>
-            <h2 className="text-balance font-sans text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
-              {t.services.identificationTitle}
-            </h2>
-          </div>
-
-          {/* Desktop table */}
-          <div className="hidden overflow-hidden rounded-xl border border-border md:block">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-border bg-secondary">
-                  <th className="px-5 py-3.5 text-left font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground">
-                    Obszar
-                  </th>
-                  <th className="px-5 py-3.5 text-left font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground">
-                    {t.services.nowBadge}
-                  </th>
-                  <th className="px-5 py-3.5 text-left font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground">
-                    {t.services.goalBadge}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.identRows.map((row, i) => (
-                  <tr key={i} className="border-b border-border last:border-0 bg-card odd:bg-background">
-                    <td className="px-5 py-4 font-medium text-foreground">{row.area}</td>
-                    <td className="px-5 py-4 text-muted-foreground">{row.now}</td>
-                    <td className="px-5 py-4 font-medium text-primary">{row.goal}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          {/* Mobile: stacked cards */}
-          <div className="flex flex-col gap-4 md:hidden">
-            {data.identRows.map((row, i) => (
-              <div key={i} className="rounded-xl border border-border bg-card p-5">
-                <p className="mb-3 font-sans font-semibold text-foreground">{row.area}</p>
-                <div className="flex flex-col gap-2 text-sm">
-                  <div className="flex items-start gap-2">
-                    <span className="mt-0.5 rounded bg-muted px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wide text-muted-foreground">
-                      {t.services.nowBadge}
-                    </span>
-                    <span className="text-muted-foreground">{row.now}</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <span className="mt-0.5 rounded bg-primary/10 px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wide text-primary">
-                      {t.services.goalBadge}
-                    </span>
-                    <span className="font-medium text-foreground">{row.goal}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-10">
-            <Link
-              href="/contact"
-              className="inline-flex items-center rounded-md bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-            >
-              {t.services.ctaSchedule}
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* 2. EMPATHY */}
-      <section className="border-b border-border bg-secondary py-20 md:py-28">
+      {/* 1. CHALLENGES — empathy (inner thoughts + toll + quote) */}
+      <section id="challenges" className="scroll-mt-28 border-b border-border bg-secondary py-20 md:py-28">
         <div className="mx-auto max-w-5xl px-4 md:px-6">
           <div className="mb-12 flex flex-col items-center gap-3 text-center">
             <SectionLabel>{t.services.empathyLabel}</SectionLabel>
@@ -148,30 +266,20 @@ export function ServicePage({ data }: { data: ServicePageData }) {
           </div>
 
           {/* Inner thoughts */}
-          <div className="mb-10 grid grid-cols-1 gap-4 md:grid-cols-3">
+          <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-3">
             {data.innerThoughts.map((quote, i) => (
-              <div
-                key={i}
-                className="flex flex-col gap-3 rounded-xl border border-border bg-card p-6"
-              >
-                <span
-                  className="font-serif text-4xl leading-none text-accent/30"
-                  aria-hidden="true"
-                >
-                  &ldquo;
-                </span>
-                <p className="font-serif text-base italic leading-relaxed text-muted-foreground">
-                  {quote}
-                </p>
+              <div key={i} className="flex flex-col gap-3 rounded-xl border border-border bg-card p-6">
+                <span className="font-serif text-4xl leading-none text-accent/30" aria-hidden="true">&ldquo;</span>
+                <p className="font-serif text-base italic leading-relaxed text-muted-foreground">{quote}</p>
               </div>
             ))}
           </div>
 
           {/* Emotional toll */}
-          <div className="mb-10 grid grid-cols-1 gap-4 md:grid-cols-3">
+          <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-3">
             {data.toll.map((item, i) => (
               <div key={i} className="flex flex-col gap-3 rounded-xl border border-border bg-card p-5">
-                <span className="rounded-full bg-accent/10 px-3 py-0.5 font-mono text-xs uppercase tracking-wide text-accent w-fit">
+                <span className="w-fit rounded-full bg-accent/10 px-3 py-0.5 font-mono text-xs uppercase tracking-wide text-accent">
                   {item.tag}
                 </span>
                 <p className="font-serif text-sm leading-relaxed text-muted-foreground">{item.line}</p>
@@ -181,15 +289,67 @@ export function ServicePage({ data }: { data: ServicePageData }) {
 
           {/* Authority quote */}
           <div className="rounded-xl border-l-4 border-accent bg-card px-6 py-6">
-            <p className="font-serif text-lg leading-relaxed text-foreground">
-              {data.authorityQuote}
-            </p>
+            <p className="font-serif text-lg leading-relaxed text-foreground">{data.authorityQuote}</p>
           </div>
         </div>
       </section>
 
-      {/* 3. HOPE */}
-      <section className="border-b border-border py-20 md:py-28">
+      {/* 2. BEFORE / AFTER — identification table as transformation pairs */}
+      <section id="before-after" className="scroll-mt-28 border-b border-border py-20 md:py-28">
+        <div className="mx-auto max-w-5xl px-4 md:px-6">
+          <div className="mb-10 flex flex-col gap-3">
+            <SectionLabel>{t.services.identificationLabel}</SectionLabel>
+            <h2 className="text-balance font-sans text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
+              {t.services.identificationTitle}
+            </h2>
+          </div>
+
+          {/* Before / After pairs */}
+          <div className="overflow-hidden rounded-xl border border-border">
+            {/* Header */}
+            <div className="hidden grid-cols-[1fr_48px_1fr] bg-secondary md:grid">
+              <div className="px-5 py-3 font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground">
+                Teraz
+              </div>
+              <div />
+              <div className="px-5 py-3 font-mono text-xs uppercase tracking-[0.15em] text-primary/60">
+                Po współpracy
+              </div>
+            </div>
+            {data.identRows.map((row, i) => (
+              <BeforeAfterRow key={i} {...row} index={i} />
+            ))}
+          </div>
+
+          <div className="mt-10 flex flex-wrap items-center gap-4">
+            <Link
+              href="/contact"
+              className="inline-flex items-center rounded-md bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            >
+              {t.services.ctaSchedule}
+            </Link>
+            <span className="font-serif text-sm text-muted-foreground">
+              {t.services.hopeTitle}
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. HOW IT WORKS — phase timeline */}
+      <section id="how-it-works" className="scroll-mt-28 border-b border-border bg-secondary py-20 md:py-28">
+        <div className="mx-auto max-w-4xl px-4 md:px-6">
+          <div className="mb-12 flex flex-col items-center gap-3 text-center">
+            <SectionLabel>{t.services.planLabel}</SectionLabel>
+            <h2 className="text-balance font-sans text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
+              {t.services.planTitle}
+            </h2>
+          </div>
+          <PhaseTimeline steps={data.steps} />
+        </div>
+      </section>
+
+      {/* 4. RESULTS — stats + case studies */}
+      <section id="results" className="scroll-mt-28 border-b border-border py-20 md:py-28">
         <div className="mx-auto max-w-6xl px-4 md:px-6">
           <div className="mb-12 flex flex-col items-center gap-3 text-center">
             <SectionLabel>{t.services.hopeLabel}</SectionLabel>
@@ -205,9 +365,7 @@ export function ServicePage({ data }: { data: ServicePageData }) {
                 <span className="font-sans text-3xl font-semibold tabular-nums tracking-tight text-foreground md:text-4xl">
                   {stat.value}
                 </span>
-                <span className="font-serif text-sm leading-snug text-muted-foreground">
-                  {stat.label}
-                </span>
+                <span className="font-serif text-sm leading-snug text-muted-foreground">{stat.label}</span>
               </div>
             ))}
           </div>
@@ -225,48 +383,11 @@ export function ServicePage({ data }: { data: ServicePageData }) {
                 <h3 className="font-sans text-lg font-semibold tracking-tight text-foreground">
                   {t.services.caseStudy} {i + 1}
                 </h3>
-                <p className="flex-1 font-serif text-sm leading-relaxed text-muted-foreground">
-                  {cs.result}
-                </p>
-                <span className="font-medium text-primary text-sm">
-                  {t.services.readStory}
-                </span>
+                <p className="flex-1 font-serif text-sm leading-relaxed text-muted-foreground">{cs.result}</p>
+                <span className="text-sm font-medium text-primary">{t.services.readStory}</span>
               </article>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* 4. THE PLAN */}
-      <section className="border-b border-border bg-secondary py-20 md:py-28">
-        <div className="mx-auto max-w-3xl px-4 md:px-6">
-          <div className="mb-12 flex flex-col items-center gap-3 text-center">
-            <SectionLabel>{t.services.planLabel}</SectionLabel>
-            <h2 className="text-balance font-sans text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
-              {t.services.planTitle}
-            </h2>
-          </div>
-
-          <ol className="relative flex flex-col gap-0 border-l border-border pl-8">
-            {data.steps.map((step, i) => (
-              <li key={i} className="relative pb-10 last:pb-0">
-                {/* Timeline dot */}
-                <span
-                  className="absolute -left-[calc(0.5rem+1px)] top-1 flex size-4 items-center justify-center rounded-full bg-accent ring-4 ring-secondary"
-                  aria-hidden="true"
-                />
-                <div className="flex flex-col gap-2">
-                  <span className="font-mono text-xs uppercase tracking-[0.15em] text-accent">
-                    {t.services.step} {i + 1}
-                  </span>
-                  <h3 className="font-sans text-lg font-semibold text-foreground">{step.title}</h3>
-                  <p className="font-serif text-base leading-relaxed text-muted-foreground">
-                    {step.body}
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ol>
         </div>
       </section>
 
@@ -293,7 +414,7 @@ export function ServicePage({ data }: { data: ServicePageData }) {
         </div>
       </section>
 
-      {/* 6. THRESHOLD */}
+      {/* 6. THRESHOLD — cost of inaction */}
       <section className="border-b border-border py-20 md:py-28">
         <div className="mx-auto max-w-5xl px-4 md:px-6">
           <div className="mb-10 flex flex-col gap-3">
@@ -318,7 +439,7 @@ export function ServicePage({ data }: { data: ServicePageData }) {
         </div>
       </section>
 
-      {/* 7. NOT READY YET — recent blog posts */}
+      {/* 7. NOT READY — recent blog posts */}
       <section className="border-b border-border bg-secondary py-20 md:py-28">
         <div className="mx-auto max-w-5xl px-4 md:px-6">
           <div className="mb-10 flex flex-col items-center gap-3 text-center">
@@ -344,9 +465,7 @@ export function ServicePage({ data }: { data: ServicePageData }) {
                     </span>
                   </div>
                   <h3 className="font-sans font-semibold text-foreground">{post.title}</h3>
-                  <p className="text-sm leading-relaxed text-muted-foreground line-clamp-2">
-                    {post.excerpt}
-                  </p>
+                  <p className="line-clamp-2 text-sm leading-relaxed text-muted-foreground">{post.excerpt}</p>
                 </div>
                 <span className="shrink-0 font-medium text-primary transition-transform group-hover:translate-x-0.5">
                   {t.services.readMore}
@@ -358,7 +477,9 @@ export function ServicePage({ data }: { data: ServicePageData }) {
       </section>
 
       {/* 8. FAQ */}
-      <HomeFaq />
+      <section id="faq" className="scroll-mt-28">
+        <HomeFaq />
+      </section>
     </SiteShell>
   )
 }

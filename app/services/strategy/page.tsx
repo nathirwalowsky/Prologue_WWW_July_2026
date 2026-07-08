@@ -80,19 +80,23 @@ export default function StrategyPage() {
         ],
         steps: [
           {
-            title: "[Diagnoza — zrozumienie sytuacji wyjściowej]",
+            title: "[Diagnoza]",
+            duration: "[1–2 tyg.]",
             body: "[Co robimy w tym kroku, jakie pytania zadajemy i co odkrywamy razem z klientem.]",
           },
           {
-            title: "[Warsztaty strategiczne — współtworzenie kierunku]",
+            title: "[Warsztaty strategiczne]",
+            duration: "[2–3 tyg.]",
             body: "[Opis sesji roboczych: kto bierze udział, jak długo trwają, co jest ich wynikiem.]",
           },
           {
-            title: "[Krystalizacja — spójny dokument strategiczny]",
+            title: "[Krystalizacja]",
+            duration: "[1–2 tyg.]",
             body: "[Jak przekształcamy wnioski warsztatowe w gotowy do użycia dokument strategiczny.]",
           },
           {
-            title: "[Aktywacja — uruchomienie strategii w organizacji]",
+            title: "[Aktywacja]",
+            duration: "[2–4 tyg.]",
             body: "[Jak pomagamy klientowi zakomunikować strategię i uruchomić pierwsze inicjatywy.]",
           },
         ],
