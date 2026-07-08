@@ -57,32 +57,13 @@ export function ServicePage({ data }: { data: ServicePageData }) {
 
   return (
     <SiteShell pageName={data.title}>
-      {/* PAGE HEADER */}
-      <PageHeader label={data.label} title={data.title} intro={data.intro} />
-
-      {/* PROBLEM LIST — visitor self-identification directly below the hero */}
-      <div className="border-b border-border bg-secondary">
-        <div className="mx-auto max-w-5xl px-4 py-10 md:px-6 md:py-12">
-          <p className="mb-6 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
-            {t.services.identificationLabel}
-          </p>
-          <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-            {data.problems.map((problem, i) => (
-              <li key={i} className="flex items-start gap-3">
-                <span
-                  className="mt-1 flex size-5 shrink-0 items-center justify-center rounded-full border border-accent/40 font-mono text-[10px] text-accent"
-                  aria-hidden="true"
-                >
-                  {i + 1}
-                </span>
-                <p className="font-serif text-base leading-relaxed text-muted-foreground">
-                  {problem}
-                </p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
+      {/* PAGE HEADER — problems list renders inside the hero zone */}
+      <PageHeader
+        label={data.label}
+        title={data.title}
+        intro={data.intro}
+        problems={data.problems}
+      />
 
       {/* 1. IDENTIFICATION */}
       <section className="border-b border-border py-20 md:py-28">

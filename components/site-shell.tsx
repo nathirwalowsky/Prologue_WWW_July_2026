@@ -146,14 +146,17 @@ export function PageHeader({
   label,
   title,
   intro,
+  problems,
 }: {
   label: string
   title: string
   intro?: string
+  /** Optional list of problem statements rendered as a numbered grid below the heading */
+  problems?: string[]
 }) {
   return (
     <section className="border-b border-border bg-secondary">
-      <div className="mx-auto flex max-w-4xl flex-col items-start gap-4 px-4 py-16 md:px-6 md:py-24">
+      <div className="mx-auto flex max-w-5xl flex-col items-start gap-4 px-4 py-16 md:px-6 md:py-24">
         <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">{label}</span>
         <h1 className="text-balance font-sans text-4xl font-semibold tracking-tight text-foreground md:text-5xl">
           {title}
@@ -162,6 +165,24 @@ export function PageHeader({
           <p className="max-w-2xl text-pretty font-serif text-lg leading-relaxed text-muted-foreground">
             {intro}
           </p>
+        ) : null}
+
+        {problems && problems.length > 0 ? (
+          <ul className="mt-6 grid w-full grid-cols-1 gap-3 border-t border-border pt-8 sm:grid-cols-2">
+            {problems.map((problem, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span
+                  className="mt-1 flex size-5 shrink-0 items-center justify-center rounded-full border border-accent/40 font-mono text-[10px] text-accent"
+                  aria-hidden="true"
+                >
+                  {i + 1}
+                </span>
+                <p className="font-serif text-base leading-relaxed text-muted-foreground">
+                  {problem}
+                </p>
+              </li>
+            ))}
+          </ul>
         ) : null}
       </div>
     </section>
