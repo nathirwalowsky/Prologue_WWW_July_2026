@@ -13,6 +13,14 @@ export default function KeyProjectsPage() {
         label: t.nav.servicesKeyProjects,
         title: t.pageHeader.keyProjects.title,
         intro: t.pageHeader.keyProjects.intro,
+        problems: [
+          "[Masz kluczową inicjatywę, która od miesięcy nie posuwa się do przodu — i wiesz, że tak nie powinno być.]",
+          "[Zakres projektu ciągle się rozrasta, terminy się przesuwają, a zespół jest coraz bardziej sfrustrowany.]",
+          "[Interesariusze mają różne oczekiwania co do wyników i nie ma nikogo, kto by to scalił w całość.]",
+          "[Projekt jest ważny, ale nie ma dedykowanego lidera z czasem i kompetencjami, by nim kierować.]",
+          "[Boisz się, że kolejna inicjatywa skończy się jak poprzednie — dużo energii, mało efektów.]",
+          "[Nie wiesz, jak mierzyć postęp — czy projekt idzie dobrze, czy właśnie dryfuje w złym kierunku.]",
+        ],
         identRows: [
           {
             area: "[Realizacja inicjatyw]",

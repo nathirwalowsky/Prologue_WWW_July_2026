@@ -13,6 +13,14 @@ export default function TransformationPage() {
         label: t.nav.servicesTransformation,
         title: t.pageHeader.transformation.title,
         intro: t.pageHeader.transformation.intro,
+        problems: [
+          "[Ogłosiłeś transformację — ale po roku organizacja wygląda i działa praktycznie tak samo jak wcześniej.]",
+          "[Widzisz opór: część ludzi entuzjastycznie przyjęła zmiany, ale większość czeka i obserwuje z dystansem.]",
+          "[Stare struktury i procesy blokują nowy kierunek — i nie wiesz, od czego zacząć ich przebudowę.]",
+          "[Martwisz się, że kolejna nieudana inicjatywa zmian tylko pogłębi cynizm w organizacji.]",
+          "[Masz wizję, gdzie chcesz być — ale nie masz mapy drogowej, jak tam doprowadzić całą organizację.]",
+          "[Rynek zmienia się szybciej niż Twoja organizacja jest w stanie się dostosować.]",
+        ],
         identRows: [
           {
             area: "[Zmiana kulturowa]",

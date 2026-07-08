@@ -13,6 +13,14 @@ export default function StrategyPage() {
         label: t.nav.servicesStrategy,
         title: t.pageHeader.strategy.title,
         intro: t.pageHeader.strategy.intro,
+        problems: [
+          "[Twój zespół pracuje ciężko, ale brakuje wspólnego kierunku — każdy ciągnie w inną stronę.]",
+          "[Masz trudność z uzasadnieniem, dlaczego klienci mają wybrać Ciebie, a nie konkurencję.]",
+          "[Decyzje strategiczne są odkładane albo podejmowane reaktywnie, pod presją bieżących zdarzeń.]",
+          "[Strategia istnieje na papierze, ale nikt w organizacji nie wie, jak przełożyć ją na codzienną pracę.]",
+          "[Wyniki są dobre, ale masz poczucie, że wzrost wyhamuje — i nie wiesz, jak go podtrzymać.]",
+          "[Zewnętrzny kontekst zmienił się i nie jesteś pewien, czy Twoja strategia jest nadal aktualna.]",
+        ],
         identRows: [
           {
             area: "[Kierunek biznesowy]",
