@@ -37,6 +37,7 @@ export function SiteShell({
     { href: "/product", label: t.nav.product },
     { href: "/vector", label: t.nav.vector },
     { href: "/about", label: t.nav.about },
+    { href: "/case-studies", label: t.nav.caseStudies },
     { href: "/blog", label: t.nav.blog },
     { href: "/contact", label: t.nav.contact },
   ]

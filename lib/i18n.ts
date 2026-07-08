@@ -15,6 +15,7 @@ export const translations = {
     viewAllServices: { pl: "Wszystkie usługi →",               en: "All services →" },
     vector:        { pl: "Vector",         en: "Vector" },
     about:         { pl: "O nas",          en: "About" },
+    caseStudies:   { pl: "Realizacje",     en: "Case studies" },
     blog:          { pl: "Blog",           en: "Blog" },
     contact:       { pl: "Kontakt",        en: "Contact" },
     viewAllProducts: { pl: "Zobacz wszystkie produkty →", en: "View all products →" },
@@ -358,6 +359,27 @@ export const translations = {
     formIntro:        { pl: "Pierwsze 30 minut jest bezpłatne. Bez zobowiązań — po prostu sprawdzimy, czy jesteśmy dla siebie właściwi.", en: "The first 30 minutes are free. No commitment — we simply check if we're right for each other." },
     formSubmit:       { pl: "Wyślij wiadomość",              en: "Send message" },
     thresholdIntro:   { pl: "Każdy miesiąc bez działania to miesiąc, w którym problem się utrwala, a okno możliwości się zawęża.", en: "Every month without action is a month the problem becomes more embedded — and the window of opportunity narrows." },
+  },
+
+  // ── Case studies ────────────────────────────────────────────────────────────
+  caseStudies: {
+    label:          { pl: "Realizacje",                              en: "Case studies" },
+    title:          { pl: "Wybrane projekty",                        en: "Selected work" },
+    intro:          { pl: "Przykłady projektów, które przeprowadziliśmy razem z klientami.", en: "Examples of projects we have run together with clients." },
+    challenge:      { pl: "Wyzwanie",                               en: "Challenge" },
+    approach:       { pl: "Podejście",                              en: "Approach" },
+    result:         { pl: "Rezultat",                               en: "Result" },
+    toc:            { pl: "Spis treści",                            en: "Table of contents" },
+    ctaSide:        { pl: "Widzisz podobne wyzwanie?",             en: "See a similar challenge?" },
+    ctaSideDesc:    { pl: "Porozmawiajmy — pierwsze 30 minut jest bezpłatne.", en: "Let's talk — the first 30 minutes are free." },
+    ctaSideBtn:     { pl: "Zaplanuj rozmowę",                      en: "Schedule a call" },
+    ctaEndLabel:    { pl: "Następny krok",                          en: "Next step" },
+    ctaEndTitle:    { pl: "Widzisz w tej historii swoje wyzwanie?", en: "Do you see your challenge in this story?" },
+    ctaEndDesc:     { pl: "Każda sytuacja jest inna — ale wzorce, które tutaj opisujemy, powtarzają się. Jeśli coś tu rezonuje, to dobry moment na rozmowę.", en: "Every situation is different — but the patterns we describe here repeat themselves. If something resonates, it's a good time to talk." },
+    ctaEndPrimary:  { pl: "Zaplanuj bezpłatną rozmowę",            en: "Schedule a free call" },
+    ctaEndSecondary:{ pl: "Dowiedz się więcej o usłudze →",        en: "Learn more about the service →" },
+    readMore:       { pl: "Przeczytaj realizację →",                en: "Read case study →" },
+    industry:       { pl: "Branża",                                 en: "Industry" },
   },
 } as const
 
