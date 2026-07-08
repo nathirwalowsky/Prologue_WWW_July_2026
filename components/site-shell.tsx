@@ -23,9 +23,12 @@ function Wordmark({ tone = "dark" }: { tone?: "dark" | "light" }) {
 export function SiteShell({
   children,
   pageName,
+  heroMode = false,
 }: {
   children: React.ReactNode
   pageName: string
+  /** When true the sticky header hides itself until the hero signals scroll */
+  heroMode?: boolean
 }) {
   const { t } = useLanguage()
 
@@ -34,19 +37,31 @@ export function SiteShell({
     { href: "/product", label: t.nav.product },
     { href: "/vector", label: t.nav.vector },
     { href: "/about", label: t.nav.about },
+    { href: "/case-studies", label: t.nav.caseStudies },
     { href: "/blog", label: t.nav.blog },
     { href: "/contact", label: t.nav.contact },
   ]
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
-      {/* Announcement bar */}
-      <div className="bg-primary px-4 py-2.5 text-center text-sm text-primary-foreground">
-        {t.announcement.text}
+      {/* Announcement bar — hidden in heroMode until scrolled */}
+      <div
+        className={`bg-primary px-4 py-2.5 text-center text-sm text-primary-foreground transition-all duration-500 ${
+          heroMode ? "hero-mode-announcement" : ""
+        }`}
+      >
+        <Link href="/vector" className="inline-flex items-center gap-2 hover:underline">
+          <span>{t.announcement.text}</span>
+          <span className="font-semibold">{t.announcement.cta}</span>
+        </Link>
       </div>
 
-      {/* Nav */}
-      <header className="sticky top-0 z-30 border-b border-border bg-background/80 backdrop-blur-md">
+      {/* Nav — in heroMode, starts invisible and slides in after scroll */}
+      <header
+        className={`sticky top-0 z-30 border-b border-border bg-background/80 backdrop-blur-md transition-all duration-500 ${
+          heroMode ? "hero-mode-header" : ""
+        }`}
+      >
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 md:px-6">
           <Link href="/" aria-label="Prologue Agency — home">
             <Wordmark />
@@ -132,14 +147,17 @@ export function PageHeader({
   label,
   title,
   intro,
+  problems,
 }: {
   label: string
   title: string
   intro?: string
+  /** Optional list of problem statements rendered as a numbered grid below the heading */
+  problems?: string[]
 }) {
   return (
     <section className="border-b border-border bg-secondary">
-      <div className="mx-auto flex max-w-4xl flex-col items-start gap-4 px-4 py-16 md:px-6 md:py-24">
+      <div className="mx-auto flex max-w-5xl flex-col items-start gap-4 px-4 py-16 md:px-6 md:py-24">
         <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">{label}</span>
         <h1 className="text-balance font-sans text-4xl font-semibold tracking-tight text-foreground md:text-5xl">
           {title}
@@ -148,6 +166,24 @@ export function PageHeader({
           <p className="max-w-2xl text-pretty font-serif text-lg leading-relaxed text-muted-foreground">
             {intro}
           </p>
+        ) : null}
+
+        {problems && problems.length > 0 ? (
+          <ul className="mt-6 grid w-full grid-cols-1 gap-3 border-t border-border pt-8 sm:grid-cols-2">
+            {problems.map((problem, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span
+                  className="mt-1 flex size-5 shrink-0 items-center justify-center rounded-full border border-accent/40 font-mono text-[10px] text-accent"
+                  aria-hidden="true"
+                >
+                  {i + 1}
+                </span>
+                <p className="font-serif text-base leading-relaxed text-muted-foreground">
+                  {problem}
+                </p>
+              </li>
+            ))}
+          </ul>
         ) : null}
       </div>
     </section>

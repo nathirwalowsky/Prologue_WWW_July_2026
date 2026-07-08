@@ -1,0 +1,129 @@
+"use client"
+
+import { ServicePage } from "@/components/service-page"
+import { useLanguage } from "@/contexts/language-context"
+
+export default function StrategyPage() {
+  const { t } = useLanguage()
+
+  return (
+    <ServicePage
+      data={{
+        slug: "strategy",
+        label: t.nav.servicesStrategy,
+        title: t.pageHeader.strategy.title,
+        intro: t.pageHeader.strategy.intro,
+        problems: [
+          "[Twój zespół pracuje ciężko, ale brakuje wspólnego kierunku — każdy ciągnie w inną stronę.]",
+          "[Masz trudność z uzasadnieniem, dlaczego klienci mają wybrać Ciebie, a nie konkurencję.]",
+          "[Decyzje strategiczne są odkładane albo podejmowane reaktywnie, pod presją bieżących zdarzeń.]",
+          "[Strategia istnieje na papierze, ale nikt w organizacji nie wie, jak przełożyć ją na codzienną pracę.]",
+          "[Wyniki są dobre, ale masz poczucie, że wzrost wyhamuje — i nie wiesz, jak go podtrzymać.]",
+          "[Zewnętrzny kontekst zmienił się i nie jesteś pewien, czy Twoja strategia jest nadal aktualna.]",
+        ],
+        identRows: [
+          {
+            area: "[Kierunek biznesowy]",
+            now: "[Zespół ma wiele równoległych priorytetów bez jasnego centrum ciężkości.]",
+            goal: "[Jedna klarowna strategia, którą każdy może wyjaśnić w dwóch zdaniach.]",
+          },
+          {
+            area: "[Przewaga konkurencyjna]",
+            now: "[Oferta jest podobna do konkurencji — trudno uzasadnić wyższą cenę.]",
+            goal: "[Wyraźne pozycjonowanie, które przyciąga właściwych klientów i odpycha złych.]",
+          },
+          {
+            area: "[Podejmowanie decyzji]",
+            now: "[Decyzje strategiczne są odkładane lub podejmowane w oparciu o intuicję.]",
+            goal: "[Ustrukturyzowany proces decyzyjny oparty na danych i jasnych kryteriach.]",
+          },
+          {
+            area: "[Zaangażowanie zespołu]",
+            now: "[Liderzy rozumieją strategię, ale reszta organizacji nie czuje się z nią związana.]",
+            goal: "[Strategia jest żywa — ludzie na każdym poziomie wiedzą, jak ich praca się do niej przyczynia.]",
+          },
+        ],
+        innerThoughts: [
+          '"Mamy świetny produkt, ale nie wiemy, jak go wyraźnie odróżnić od konkurencji."',
+          '"Zespół jest zmotywowany, ale każdy ciągnie w innym kierunku."',
+          '"Podejmuję decyzje strategiczne głównie w oparciu o przeczucie — to mnie niepokoi."',
+        ],
+        toll: [
+          { tag: "Energia", line: "[Ciągłe gaszenie pożarów zamiast budowania czegoś trwałego.]" },
+          { tag: "Pewność siebie", line: "[Wątpliwości, czy obrana droga jest właściwa — nawet gdy wyniki są dobre.]" },
+          { tag: "Czas", line: "[Tygodnie i miesiące mijają bez odczuwalnego strategicznego postępu.]" },
+        ],
+        authorityQuote:
+          '"Pracowaliśmy z dziesiątkami liderów, którzy dokładnie tak się czuli. Naszą rolą nie jest powiedzieć Ci, jaką masz strategię — ale pomóc Ci ją odkryć i skrystalizować razem z Twoim zespołem."',
+        stats: [
+          { value: "40+", label: "[Strategii zbudowanych z klientami]" },
+          { value: "3×", label: "[Średnie przyspieszenie tempa decyzji]" },
+          { value: "90%", label: "[Klientów wdraża strategię w ciągu 90 dni]" },
+          { value: "15+", label: "[Branż, w których pracowaliśmy]" },
+        ],
+        caseStudies: [
+          {
+            industry: "[Branża 1]",
+            client: "[Klient A]",
+            result: "[Przed → po. Kluczowy wynik osiągnięty w określonym czasie po wdrożeniu strategii.]",
+          },
+          {
+            industry: "[Branża 2]",
+            client: "[Klient B]",
+            result: "[Przed → po. Kluczowy wynik osiągnięty w określonym czasie po wdrożeniu strategii.]",
+          },
+          {
+            industry: "[Branża 3]",
+            client: "[Klient C]",
+            result: "[Przed → po. Kluczowy wynik osiągnięty w określonym czasie po wdrożeniu strategii.]",
+          },
+        ],
+        steps: [
+          {
+            title: "[Diagnoza]",
+            duration: "[1–2 tyg.]",
+            body: "[Co robimy w tym kroku, jakie pytania zadajemy i co odkrywamy razem z klientem.]",
+          },
+          {
+            title: "[Warsztaty strategiczne]",
+            duration: "[2–3 tyg.]",
+            body: "[Opis sesji roboczych: kto bierze udział, jak długo trwają, co jest ich wynikiem.]",
+          },
+          {
+            title: "[Krystalizacja]",
+            duration: "[1–2 tyg.]",
+            body: "[Jak przekształcamy wnioski warsztatowe w gotowy do użycia dokument strategiczny.]",
+          },
+          {
+            title: "[Aktywacja]",
+            duration: "[2–4 tyg.]",
+            body: "[Jak pomagamy klientowi zakomunikować strategię i uruchomić pierwsze inicjatywy.]",
+          },
+        ],
+        ctaTitle: t.services.ctaTitle.strategy,
+        blockers: [
+          {
+            question: "Jak sprawdzę, czy nowa strategia w ogóle działa?",
+            answer: "[Dobra strategia ma mierzalne wskaźniki sukcesu zdefiniowane na początku. Część naszej pracy to właśnie ustalenie: skąd za 6 miesięcy będziecie wiedzieć, że ta strategia działa — i co zrobicie, jeśli nie działa.]",
+          },
+          {
+            question: "Jak przekonam do tego resztę zarządu, skoro sam nie jestem pewien?",
+            answer: "[Właśnie dlatego prowadzimy strategię jako warsztat z zespołem, a nie jako projekt konsultanta. Kiedy ludzie współtworzą strategię, nie trzeba ich do niej przekonywać — bo jest już ich własnością.]",
+          },
+          {
+            question: "Czy to nie zajmie nam miesięcy i nie odciągnie ludzi od bieżącej pracy?",
+            answer: "[Nasz proces jest zaprojektowany tak, żeby trwać tygodnie, nie miesiące — i angażować właściwe osoby w skoncentrowanych sesjach, nie ciągłych spotkaniach. Cała praca jest zorganizowana tak, by minimalizować obciążenie operacyjne.]",
+          },
+          {
+            question: "A co, jeśli wypracujemy strategię i nic się nie zmieni?",
+            answer: "[To najczęstszy strach i całkowicie uzasadniony — bo wiele strategii kończy się na slajdach. Dlatego ostatni etap naszej pracy to aktywacja: razem uruchamiamy pierwsze inicjatywy strategiczne, zanim zakończymy współpracę.]",
+          },
+          {
+            question: "Mam już strategię — czy naprawdę potrzebuję zewnętrznego wsparcia?",
+            answer: "[Czasem tak, czasem nie. Zewnętrzna perspektywa jest wartościowa wtedy, gdy jesteś zbyt blisko problemu, żeby zobaczyć go wyraźnie — albo gdy potrzebujesz kogoś, kto powie głośno to, co wszyscy czują, ale nikt nie mówi.]",
+          },
+        ],
+      }}
+    />
+  )
+}
