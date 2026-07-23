@@ -2,138 +2,183 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { useEffect, useRef, useState, useCallback } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useLanguage } from "@/contexts/language-context"
 
 /**
  * HomeHero — Prologue agency full-viewport hero
  *
  * Phase 0 (initial):
- *   - Full-bleed kv-glow.jpg atmospheric background (red+indigo orb)
- *   - kv-transparent.png layered offset-right for depth
- *   - Large centred tagline: word-by-word entrance animation
- *   - Thin red scan-line sweeps once across the screen
- *   - Logo at top-left (signet + wordmark)
- *   - Scroll cue at bottom
+ *   - Pure black background
+ *   - kv-transparent.png (eclipse + mountain) centred, modest size
+ *   - Large tagline below it, word-by-word entrance
+ *   - Eyebrow label fades in first
+ *   - SCROLL cue at bottom
  *
- * Phase 1 (after first scroll or wheel event):
- *   - First wheel/scroll event is INTERCEPTED — document does NOT scroll down
- *   - Words cascade out upward, new condensed headline cascades in
- *   - Subtitle and 3 CTA cards rise in with stagger
- *   - After phase 1 fully renders, normal scrolling resumes
+ * Phase 1 (after first wheel/swipe — document does NOT scroll during transition):
+ *   - kv element shifts right and scales up smoothly
+ *   - Tagline morphs: "Strategic excellence" → "Strategic transformation"
+ *   - Subtitle + CTA cards rise in with stagger
+ *   - Site nav slides in from top via html.hero-scrolled class
+ *   - Normal scroll unlocked after 900 ms
  *
- * The sticky nav in SiteShell hides while phase === 0 via
- * html.hero-scrolled CSS class.
+ * Scroll intercept uses a ref-mirrored phase value to avoid stale closures.
  */
 
 export function HomeHero() {
   const { t } = useLanguage()
+
+  // Phase state + a ref that always mirrors it so event handlers never go stale
   const [phase, setPhase] = useState<0 | 1>(0)
+  const phaseRef = useRef<0 | 1>(0)
+
   const [scrollUnlocked, setScrollUnlocked] = useState(false)
+  const scrollUnlockedRef = useRef(false)
+
   const [cardsVisible, setCardsVisible] = useState(false)
-  const heroRef = useRef<HTMLElement>(null)
   const transitioningRef = useRef(false)
 
-  // Fire the phase transition (called by first wheel or touch-swipe)
-  const triggerPhase1 = useCallback(() => {
-    if (transitioningRef.current || phase === 1) return
+  // Sync refs to state
+  useEffect(() => { phaseRef.current = phase }, [phase])
+  useEffect(() => { scrollUnlockedRef.current = scrollUnlocked }, [scrollUnlocked])
+
+  const triggerPhase1 = () => {
+    if (transitioningRef.current || phaseRef.current === 1) return
     transitioningRef.current = true
+
     setPhase(1)
+    phaseRef.current = 1
     document.documentElement.classList.add("hero-scrolled")
 
-    // Cards enter with a slight extra delay
-    setTimeout(() => setCardsVisible(true), 350)
+    // Cards stagger in slightly after the headline
+    setTimeout(() => setCardsVisible(true), 400)
 
-    // Unlock normal scroll after the full animation settles
+    // Unlock normal scroll after animation settles
     setTimeout(() => {
       setScrollUnlocked(true)
+      scrollUnlockedRef.current = true
       transitioningRef.current = false
-    }, 900)
-  }, [phase])
+    }, 950)
+  }
 
-  // Intercept wheel: first wheel fires transition, subsequent ones scroll normally
+  // Wheel intercept — registered once, reads from refs (no stale closure)
   useEffect(() => {
-    if (phase === 1 && scrollUnlocked) return
-
     const onWheel = (e: WheelEvent) => {
-      if (phase === 0) {
+      if (phaseRef.current === 0) {
         e.preventDefault()
         if (e.deltaY > 0) triggerPhase1()
         return
       }
-      // Phase 1 but scroll not yet unlocked — hold
-      if (!scrollUnlocked) e.preventDefault()
+      // Phase 1 but still animating — hold scroll
+      if (!scrollUnlockedRef.current) {
+        e.preventDefault()
+      }
     }
 
     window.addEventListener("wheel", onWheel, { passive: false })
     return () => window.removeEventListener("wheel", onWheel)
-  }, [phase, scrollUnlocked, triggerPhase1])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []) // intentionally empty — reads via refs
 
-  // Touch support
+  // Touch swipe support
   useEffect(() => {
-    if (phase === 1 && scrollUnlocked) return
     let startY = 0
 
-    const onTouchStart = (e: TouchEvent) => {
-      startY = e.touches[0].clientY
-    }
+    const onTouchStart = (e: TouchEvent) => { startY = e.touches[0].clientY }
     const onTouchEnd = (e: TouchEvent) => {
       const delta = startY - e.changedTouches[0].clientY
-      if (delta > 40 && phase === 0) {
-        e.preventDefault()
+      if (delta > 40 && phaseRef.current === 0) {
         triggerPhase1()
       }
     }
 
     window.addEventListener("touchstart", onTouchStart, { passive: true })
-    window.addEventListener("touchend", onTouchEnd, { passive: false })
+    window.addEventListener("touchend", onTouchEnd, { passive: true })
     return () => {
       window.removeEventListener("touchstart", onTouchStart)
       window.removeEventListener("touchend", onTouchEnd)
     }
-  }, [phase, scrollUnlocked, triggerPhase1])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const isPhase1 = phase === 1
 
   return (
     <section
-      ref={heroRef}
       aria-label="Hero"
-      className="relative flex min-h-dvh flex-col overflow-hidden bg-[var(--color-prologue-black)] text-[var(--color-white)]"
+      className="relative flex min-h-dvh flex-col overflow-hidden bg-[var(--color-prologue-black)]"
     >
-      {/* ── Background layers ───────────────────────────────────────── */}
 
-      {/* Glow KV — the colorful red+indigo atmospheric element */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          src="/brand/kv-glow.jpg"
-          alt=""
-          fill
-          className="object-cover object-center"
-          style={{
-            animation: "kv-drift 18s ease-in-out infinite",
-            animationDelay: "0s",
-            opacity: phase === 0 ? 0.72 : 0.38,
-            transition: "opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1)",
-          }}
-          priority
-          aria-hidden
-        />
-        {/* Vignette — keeps text readable */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(ellipse 70% 70% at 50% 50%, transparent 20%, #0d0d0d 90%), linear-gradient(to bottom, #0d0d0d 0%, transparent 15%, transparent 75%, #0d0d0d 100%)",
-          }}
-          aria-hidden
-        />
+      {/* ── Top bar — brand indigo, white text ─────────────────────── */}
+      <div
+        className="absolute inset-x-0 top-0 z-30 flex items-center justify-between px-6 py-4 md:px-8"
+        style={{
+          backgroundColor: "var(--color-prologue-blue)",
+          opacity: isPhase1 ? 0 : 1,
+          transition: "opacity 0.4s ease",
+          pointerEvents: isPhase1 ? "none" : "auto",
+          animation: "hero-logo-drop 0.7s cubic-bezier(0.16,1,0.3,1) 0.2s both",
+        }}
+      >
+        {/* Logo */}
+        <div className="flex items-center gap-3">
+          <Image
+            src="/brand/logo-light-signet.png"
+            alt=""
+            width={28}
+            height={28}
+            className="h-7 w-auto"
+            aria-hidden
+            priority
+          />
+          <Image
+            src="/brand/logo-light-wordmark.png"
+            alt="PROLOGUE agency"
+            width={120}
+            height={32}
+            className="h-4 w-auto"
+            priority
+          />
+        </div>
+
+        {/* Nav links */}
+        <nav className="hidden items-center gap-8 md:flex" aria-label="Hero navigation">
+          {[
+            { href: "/services", label: t.nav.services },
+            { href: "/about",    label: t.nav.about },
+            { href: "/contact",  label: t.nav.contact },
+          ].map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              className="font-[family-name:var(--font-display)] text-[11px] font-semibold uppercase tracking-[0.15em] text-white/70 transition-colors hover:text-white"
+            >
+              {l.label}
+            </Link>
+          ))}
+        </nav>
       </div>
 
-      {/* Transparent KV — offset right for layered depth */}
+      {/* ── Branding element — kv-transparent (eclipse + mountain) ─── */}
+      {/*
+        Phase 0: centred, upper half of screen, generous size
+        Phase 1: shifts right + up, scales up, dims — becomes atmospheric backdrop
+      */}
       <div
-        className="pointer-events-none absolute right-[-5%] top-1/2 z-0 hidden w-[55%] -translate-y-1/2 md:block"
+        className="pointer-events-none absolute z-0"
         style={{
-          opacity: phase === 0 ? 0.18 : 0.08,
-          transition: "opacity 1.2s ease",
+          width:     isPhase1 ? "70%" : "46%",
+          top:       isPhase1 ? "-12%" : "4%",
+          left:      isPhase1 ? "54%"  : "50%",
+          transform: "translateX(-50%)",
+          opacity:   isPhase1 ? 0.20 : 0.88,
+          transition: [
+            "width 1.1s cubic-bezier(0.4,0,0.2,1)",
+            "top 1.1s cubic-bezier(0.4,0,0.2,1)",
+            "left 1.1s cubic-bezier(0.4,0,0.2,1)",
+            "opacity 1.1s cubic-bezier(0.4,0,0.2,1)",
+          ].join(", "),
+          animation: "hero-logo-drop 1.0s cubic-bezier(0.16,1,0.3,1) 0.1s both",
         }}
         aria-hidden
       >
@@ -147,283 +192,197 @@ export function HomeHero() {
         />
       </div>
 
-      {/* Scan line — single sweep on mount */}
-      <div
-        className="pointer-events-none absolute left-0 top-0 z-10 h-full w-px"
-        style={{
-          background:
-            "linear-gradient(to bottom, transparent 0%, #BD3B35 30%, #303E91 70%, transparent 100%)",
-          animation: "hero-scan 2.2s cubic-bezier(0.4, 0, 0.6, 1) 0.4s 1 forwards",
-          opacity: 0,
-        }}
-        aria-hidden
-      />
+      {/* ── Central content area ────────────────────────────────────── */}
+      <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 pb-32 pt-28 text-center md:px-12">
 
-      {/* ── Overlay nav (phase 0 only) ──────────────────────────────── */}
-      <div
-        className="absolute inset-x-0 top-0 z-20 flex items-center justify-between px-6 pt-6 md:px-8 md:pt-7"
-        style={{
-          opacity: phase === 0 ? 1 : 0,
-          pointerEvents: phase === 0 ? "auto" : "none",
-          transition: "opacity 0.5s ease",
-          animation: "hero-logo-drop 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both",
-        }}
-      >
-        {/* Full logo: signet + wordmark */}
-        <div className="flex items-center gap-3">
-          <Image
-            src="/brand/logo-light-signet.png"
-            alt=""
-            width={32}
-            height={32}
-            className="h-8 w-auto"
-            aria-hidden
-            priority
-          />
-          <Image
-            src="/brand/logo-light-wordmark.png"
-            alt="PROLOGUE agency"
-            width={130}
-            height={34}
-            className="h-[18px] w-auto"
-            priority
-          />
-        </div>
-
-        {/* Pre-scroll nav links */}
-        <nav className="hidden items-center gap-8 md:flex" aria-label="Hero navigation">
-          {[
-            { href: "/services", label: t.nav.services },
-            { href: "/about", label: t.nav.about },
-            { href: "/contact", label: t.nav.contact },
-          ].map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              className="font-[family-name:var(--font-display)] text-[11px] font-semibold tracking-[0.15em] uppercase text-[var(--color-grey)] transition-colors duration-200 hover:text-[var(--color-white)]"
-            >
-              {l.label}
-            </Link>
-          ))}
-        </nav>
-      </div>
-
-      {/* ── Central content ─────────────────────────────────────────── */}
-      <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 pb-36 pt-28 text-center md:px-12">
-
-        {/* ── PHASE 0: Full brand headline ── */}
+        {/* ── PHASE 0: Minimal centred headline ── */}
         <div
-          className="absolute flex flex-col items-center gap-5"
-          aria-hidden={phase === 1}
           style={{
-            pointerEvents: phase === 1 ? "none" : "auto",
-            visibility: phase === 1 ? "hidden" : "visible",
-            transition: "visibility 0s linear 0.5s",
+            position: "absolute",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "1.5rem",
+            pointerEvents: isPhase1 ? "none" : "auto",
+            // Slide up + fade out on transition
+            opacity:   isPhase1 ? 0 : 1,
+            transform: isPhase1 ? "translateY(-18px)" : "translateY(0)",
+            transition: isPhase1
+              ? "opacity 0.45s cubic-bezier(0.7,0,0.84,0), transform 0.45s cubic-bezier(0.7,0,0.84,0)"
+              : undefined,
+            // Hide after fade so it doesn't occlude phase 1
+            visibility: isPhase1 ? "hidden" : "visible",
+            transitionDelay: isPhase1 ? "0s, 0s, 0.5s" : "0s",
           }}
         >
-          {/* Eyebrow label */}
+          {/* Eyebrow */}
           <span
-            className="font-[family-name:var(--font-display)] text-[10px] font-semibold uppercase tracking-[0.25em] text-[var(--color-grey)]"
-            style={{
-              animation: "hero-sub-in 0.6s cubic-bezier(0.16,1,0.3,1) 0.6s both",
-              opacity: phase === 1 ? 0 : undefined,
-              transition: phase === 1 ? "opacity 0.3s ease" : undefined,
-            }}
+            className="font-[family-name:var(--font-display)] text-[10px] font-semibold uppercase tracking-[0.28em] text-white/45"
+            style={{ animation: "hero-sub-in 0.6s cubic-bezier(0.16,1,0.3,1) 0.5s both" }}
           >
             Strategy · Transformation · Growth
           </span>
 
-          {/* Main headline — word-split entrance */}
+          {/* Headline — word-split stagger */}
           <h1
-            className="font-[family-name:var(--font-display)] font-semibold leading-[1.05] tracking-tight"
-            style={{
-              fontSize: "clamp(3rem, 7vw, 6rem)",
-              opacity: phase === 1 ? 0 : 1,
-              transform: phase === 1 ? "translateY(-20px)" : "translateY(0)",
-              transition: phase === 1
-                ? "opacity 0.4s cubic-bezier(0.7,0,0.84,0), transform 0.4s cubic-bezier(0.7,0,0.84,0)"
-                : undefined,
-            }}
+            className="font-[family-name:var(--font-display)] font-semibold leading-[1.0] tracking-tight text-white"
+            style={{ fontSize: "clamp(2.8rem, 6.5vw, 5.5rem)" }}
           >
-            {/* Line 1: "Strategic excellence" */}
-            <span className="block">
+            {[
+              { text: "Strategic",    delay: "0.7s" },
+              { text: "excellence",   delay: "0.83s" },
+            ].map(({ text, delay }) => (
               <span
+                key={text}
                 className="hero-word hero-word-animate-in inline-block"
-                style={{ animationDelay: "0.75s" }}
+                style={{ animationDelay: delay, marginRight: "0.22em" }}
               >
-                Strategic&nbsp;
+                {text}
               </span>
-              <span
-                className="hero-word hero-word-animate-in inline-block"
-                style={{ animationDelay: "0.87s" }}
-              >
-                excellence
-              </span>
-            </span>
-            {/* Line 2: faded phrase */}
+            ))}
+            <br />
             <span
-              className="block"
               style={{
-                color: "var(--color-grey)",
-                opacity: 0.45,
-                fontSize: "0.68em",
-                marginTop: "0.15em",
+                display: "block",
+                fontSize: "0.62em",
+                color: "white",
+                opacity: 0.35,
+                marginTop: "0.2em",
               }}
             >
-              {["in an age of", "constant", "transformation"].map((word, i) => (
+              {[
+                { text: "in an age of",    delay: "1.0s" },
+                { text: "constant",        delay: "1.12s" },
+                { text: "transformation",  delay: "1.24s" },
+              ].map(({ text, delay }) => (
                 <span
-                  key={word}
+                  key={text}
                   className="hero-word hero-word-animate-in inline-block"
-                  style={{ animationDelay: `${1.0 + i * 0.13}s`, marginRight: "0.28em" }}
+                  style={{ animationDelay: delay, marginRight: "0.28em" }}
                 >
-                  {word}
+                  {text}
                 </span>
               ))}
             </span>
           </h1>
 
-          {/* Red/blue accent rule */}
+          {/* Thin brand rule: indigo then sand */}
           <div
-            className="mt-2 flex gap-0"
-            style={{
-              animation: "hero-sub-in 0.6s cubic-bezier(0.16,1,0.3,1) 1.4s both",
-              opacity: phase === 1 ? 0 : undefined,
-              transition: phase === 1 ? "opacity 0.3s ease" : undefined,
-            }}
+            className="flex"
+            style={{ animation: "hero-sub-in 0.6s cubic-bezier(0.16,1,0.3,1) 1.5s both" }}
             aria-hidden
           >
-            <div className="h-px w-12 bg-[var(--color-prologue-red)]" />
-            <div className="h-px w-6 bg-[var(--color-prologue-blue)]" />
+            <div style={{ height: 1, width: 48, backgroundColor: "var(--color-prologue-blue)" }} />
+            <div style={{ height: 1, width: 24, backgroundColor: "var(--color-prologue-sand)" }} />
           </div>
         </div>
 
         {/* ── PHASE 1: Condensed headline + sub + cards ── */}
         <div
           className="flex w-full max-w-4xl flex-col items-center gap-6"
-          aria-hidden={phase === 0}
           style={{
-            pointerEvents: phase === 0 ? "none" : "auto",
+            pointerEvents:  isPhase1 ? "auto" : "none",
+            visibility:     isPhase1 ? "visible" : "hidden",
           }}
         >
-          {/* Condensed headline */}
+          {/* Headline */}
           <h1
-            className="text-balance font-[family-name:var(--font-display)] font-semibold leading-[1.0] tracking-tight"
+            className="text-balance font-[family-name:var(--font-display)] font-semibold leading-[1.0] tracking-tight text-white"
             style={{
               fontSize: "clamp(2.6rem, 6.5vw, 5.5rem)",
-              opacity: phase === 0 ? 0 : 1,
-              transform: phase === 0 ? "translateY(28px)" : "translateY(0)",
-              transition:
-                "opacity 0.65s cubic-bezier(0.16,1,0.3,1) 0.05s, transform 0.65s cubic-bezier(0.16,1,0.3,1) 0.05s",
+              opacity:   isPhase1 ? 1 : 0,
+              transform: isPhase1 ? "translateY(0)" : "translateY(26px)",
+              transition: "opacity 0.7s cubic-bezier(0.16,1,0.3,1) 0.05s, transform 0.7s cubic-bezier(0.16,1,0.3,1) 0.05s",
             }}
           >
             Strategic{" "}
-            <span className="text-[var(--color-prologue-red)]">transformation</span>
+            <span style={{ color: "var(--color-prologue-blue)" }}>transformation</span>
           </h1>
 
           {/* Subtitle */}
           <p
-            className="max-w-xl text-pretty font-[family-name:var(--font-body)] text-lg leading-relaxed text-[var(--color-grey)] md:text-xl"
+            className="max-w-xl text-pretty font-[family-name:var(--font-body)] text-lg leading-relaxed md:text-xl"
             style={{
-              opacity: phase === 0 ? 0 : 1,
-              transform: phase === 0 ? "translateY(20px)" : "translateY(0)",
-              transition:
-                "opacity 0.65s cubic-bezier(0.16,1,0.3,1) 0.18s, transform 0.65s cubic-bezier(0.16,1,0.3,1) 0.18s",
+              color: "rgba(255,255,255,0.55)",
+              opacity:   isPhase1 ? 1 : 0,
+              transform: isPhase1 ? "translateY(0)" : "translateY(20px)",
+              transition: "opacity 0.7s cubic-bezier(0.16,1,0.3,1) 0.18s, transform 0.7s cubic-bezier(0.16,1,0.3,1) 0.18s",
             }}
           >
             {t.home.heroSub}
           </p>
 
           {/* CTA cards */}
-          <div className="mt-4 grid w-full grid-cols-1 gap-px bg-[var(--border-default)] sm:grid-cols-3">
+          <div className="mt-4 grid w-full grid-cols-1 gap-px sm:grid-cols-3"
+            style={{ backgroundColor: "rgba(255,255,255,0.08)" }}
+          >
             {[
-              {
-                href: "/vector",
-                tag: "Free",
-                title: "Vector Workshop",
-                desc: "The foundational tool for strategic clarity — yours at no cost.",
-                accent: true,
-              },
-              {
-                href: "/about",
-                tag: "Explore",
-                title: "Learn More",
-                desc: "Understand how we work before making any decision.",
-                accent: false,
-              },
-              {
-                href: "/contact",
-                tag: "Start",
-                title: "Schedule Intro Call",
-                desc: "A focused 30-minute conversation about your situation.",
-                accent: false,
-              },
+              { href: "/vector",  tag: "Free",    title: "Vector Workshop",    desc: "The foundational tool for strategic clarity — yours at no cost.", primary: true  },
+              { href: "/about",   tag: "Explore", title: "Learn More",          desc: "Understand how we work before making any decision.",              primary: false },
+              { href: "/contact", tag: "Start",   title: "Schedule Intro Call", desc: "A focused 30-minute conversation about your situation.",           primary: false },
             ].map((card, i) => (
-              <CtaCard
-                key={card.href}
-                {...card}
-                visible={cardsVisible}
-                delay={i * 90}
-              />
+              <CtaCard key={card.href} {...card} visible={cardsVisible} delay={i * 100} />
             ))}
           </div>
         </div>
       </div>
 
-      {/* Scroll cue — phase 0 only */}
+      {/* ── Scroll cue — phase 0 only ───────────────────────────────── */}
       <div
-        className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2"
+        className="absolute bottom-8 left-1/2 z-20 -translate-x-1/2"
         style={{
-          opacity: phase === 0 ? 0.6 : 0,
-          transition: "opacity 0.5s ease",
-          animation: phase === 0 ? "hero-sub-in 0.6s cubic-bezier(0.16,1,0.3,1) 1.6s both" : undefined,
-          pointerEvents: "none",
+          opacity:       isPhase1 ? 0 : 1,
+          pointerEvents: isPhase1 ? "none" : "auto",
+          transition:    "opacity 0.4s ease",
+          animation:     !isPhase1 ? "hero-sub-in 0.6s cubic-bezier(0.16,1,0.3,1) 1.7s both" : undefined,
         }}
-        aria-hidden
       >
         <button
           type="button"
-          onClick={() => triggerPhase1()}
-          className="flex flex-col items-center gap-2 cursor-pointer pointer-events-auto"
-          aria-label="Scroll to continue"
-          style={{ background: "none", border: "none", padding: 0 }}
+          onClick={triggerPhase1}
+          className="flex flex-col items-center gap-2"
+          aria-label="Scroll to reveal more"
+          style={{ background: "none", border: "none", padding: 0, cursor: "pointer" }}
         >
-          <span className="font-[family-name:var(--font-display)] text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--color-grey)]">
+          <span className="font-[family-name:var(--font-display)] text-[10px] font-semibold uppercase tracking-[0.25em] text-white/40">
             Scroll
           </span>
-          {/* Animated chevron */}
-          <svg
-            width="18"
-            height="10"
-            viewBox="0 0 18 10"
-            fill="none"
-            style={{ animation: "hero-scan 0s" }}
-          >
-            <path
-              d="M1 1L9 9L17 1"
-              stroke="var(--color-grey)"
-              strokeWidth="1.5"
-              strokeLinecap="square"
-              style={{
-                strokeDasharray: 24,
-                strokeDashoffset: 0,
-                animation: "hero-sub-in 0.8s ease infinite alternate",
-              }}
-            />
-          </svg>
+          <ScrollChevron />
         </button>
       </div>
+
     </section>
   )
 }
 
-/* ── CTA Card ─────────────────────────────────────────────────── */
+/* ── Animated chevron ───────────────────────────────────────────── */
+function ScrollChevron() {
+  return (
+    <svg
+      width="16"
+      height="9"
+      viewBox="0 0 16 9"
+      fill="none"
+      aria-hidden
+      style={{ animation: "chevron-bob 1.6s ease-in-out infinite" }}
+    >
+      <path
+        d="M1 1L8 8L15 1"
+        stroke="rgba(255,255,255,0.35)"
+        strokeWidth="1.5"
+        strokeLinecap="square"
+      />
+    </svg>
+  )
+}
 
+/* ── CTA Card ────────────────────────────────────────────────────── */
 function CtaCard({
   href,
   tag,
   title,
   desc,
-  accent = false,
+  primary = false,
   visible,
   delay,
 }: {
@@ -431,33 +390,35 @@ function CtaCard({
   tag: string
   title: string
   desc: string
-  accent?: boolean
+  primary?: boolean
   visible: boolean
   delay: number
 }) {
   return (
     <Link
       href={href}
-      className="group flex flex-col gap-3 bg-[rgba(13,13,13,0.85)] p-5 text-left backdrop-blur-sm transition-colors duration-200 hover:bg-[rgba(30,30,30,0.9)]"
+      className="group flex flex-col gap-3 p-5 text-left"
       style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(24px)",
-        transition: `opacity 0.6s cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform 0.6s cubic-bezier(0.16,1,0.3,1) ${delay}ms`,
-        borderTop: accent
-          ? "1px solid var(--color-prologue-red)"
-          : "1px solid var(--border-default)",
+        backgroundColor: "rgba(13,13,13,0.88)",
+        borderTop: primary
+          ? "1px solid var(--color-prologue-blue)"
+          : "1px solid rgba(255,255,255,0.08)",
+        opacity:   visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(22px)",
+        transition: `opacity 0.6s cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform 0.6s cubic-bezier(0.16,1,0.3,1) ${delay}ms, background-color 0.2s ease`,
+        backdropFilter: "blur(4px)",
       }}
     >
       <span
         className="font-[family-name:var(--font-display)] text-[10px] font-semibold uppercase tracking-[0.22em]"
-        style={{ color: accent ? "var(--color-prologue-red)" : "var(--color-grey)" }}
+        style={{ color: primary ? "var(--color-prologue-blue)" : "rgba(255,255,255,0.38)" }}
       >
         {tag}
       </span>
-      <p className="font-[family-name:var(--font-display)] text-sm font-semibold uppercase tracking-[0.08em] text-[var(--color-white)] transition-colors group-hover:text-[var(--color-grey)]">
+      <p className="font-[family-name:var(--font-display)] text-sm font-semibold uppercase tracking-[0.08em] text-white transition-colors group-hover:text-white/60">
         {title}
       </p>
-      <p className="font-[family-name:var(--font-body)] text-sm leading-relaxed text-[var(--color-grey)] opacity-70">
+      <p className="font-[family-name:var(--font-body)] text-sm leading-relaxed text-white/40">
         {desc}
       </p>
     </Link>

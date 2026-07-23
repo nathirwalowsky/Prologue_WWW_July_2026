@@ -251,6 +251,11 @@
   100% { transform: scale(1.04) translate(0px, 0px); }
 }
 
+@keyframes chevron-bob {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(4px); }
+}
+
 .hero-word { display: inline-block; }
 
 .hero-word-animate-in {
