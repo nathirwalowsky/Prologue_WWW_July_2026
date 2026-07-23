@@ -134,22 +134,22 @@ export function HomeHero() {
 
       {/* ── Branding element — kv-transparent (eclipse + mountain) ── */}
       {/*
-        Phase 0: centred, large, high opacity — the focal hero element
-        Phase 1: shifts right, grows, dims — becomes atmospheric backdrop
+        Phase 0: nearly full-width, top-centred — dominates the viewport
+        Phase 1: shifts right, shrinks, dims — atmospheric backdrop behind cards
       */}
       <div
         className="pointer-events-none absolute z-[1]"
         style={{
-          width:     isPhase1 ? "78%" : "68%",
-          top:       isPhase1 ? "-16%" : "-2%",
-          left:      isPhase1 ? "54%"  : "50%",
+          width:     isPhase1 ? "72%" : "90%",
+          top:       isPhase1 ? "-18%" : "-8%",
+          left:      isPhase1 ? "56%"  : "50%",
           transform: "translateX(-50%)",
-          opacity:   isPhase1 ? 0.16 : 1,
+          opacity:   isPhase1 ? 0.18 : 1,
           transition: [
-            "width   1.4s cubic-bezier(0.25,0,0.1,1)",
-            "top     1.4s cubic-bezier(0.25,0,0.1,1)",
-            "left    1.4s cubic-bezier(0.25,0,0.1,1)",
-            "opacity 1.6s cubic-bezier(0.25,0,0.1,1) 0.1s",
+            "width   1.5s cubic-bezier(0.25,0,0.1,1)",
+            "top     1.5s cubic-bezier(0.25,0,0.1,1)",
+            "left    1.5s cubic-bezier(0.25,0,0.1,1)",
+            "opacity 1.7s cubic-bezier(0.25,0,0.1,1) 0.05s",
           ].join(", "),
           animation: "hero-logo-drop 1.2s cubic-bezier(0.16,1,0.3,1) 0.1s both",
         }}
@@ -197,113 +197,103 @@ export function HomeHero() {
         </nav>
       </div>
 
-      {/* ── Central content ──────────────��──��────────────────────── */}
-      <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 pb-28 pt-24 text-center md:px-12">
-
-        {/* ── PHASE 0 ── */}
-        <div
-          style={{
-            position: "absolute",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "1.5rem",
-            pointerEvents: isPhase1 ? "none" : "auto",
-            opacity:    isPhase1 ? 0 : 1,
-            transform:  isPhase1 ? "translateY(-16px)" : "translateY(0)",
-            visibility: isPhase1 ? "hidden" : "visible",
-            transition: isPhase1
-              ? "opacity 0.65s cubic-bezier(0.4,0,0.8,0), transform 0.65s cubic-bezier(0.4,0,0.8,0), visibility 0s linear 0.7s"
-              : "opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1)",
-          }}
+      {/* ── Phase 0: text pinned to bottom ───────────────────────── */}
+      <div
+        className="absolute inset-x-0 bottom-24 z-10 flex flex-col items-center gap-4 px-6 text-center md:px-12"
+        style={{
+          pointerEvents: isPhase1 ? "none" : "auto",
+          opacity:       isPhase1 ? 0 : 1,
+          transform:     isPhase1 ? "translateY(-12px)" : "translateY(0)",
+          visibility:    isPhase1 ? "hidden" : "visible",
+          transition: isPhase1
+            ? "opacity 0.6s cubic-bezier(0.4,0,0.8,0), transform 0.6s cubic-bezier(0.4,0,0.8,0), visibility 0s linear 0.65s"
+            : "opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1)",
+        }}
+      >
+        <span
+          className="font-[family-name:var(--font-display)] text-[10px] font-semibold uppercase tracking-[0.28em]"
+          style={{ color: "rgba(255,255,255,0.42)", animation: "hero-sub-in 0.6s cubic-bezier(0.16,1,0.3,1) 0.5s both" }}
         >
-          <span
-            className="font-[family-name:var(--font-display)] text-[10px] font-semibold uppercase tracking-[0.28em]"
-            style={{ color: "rgba(255,255,255,0.42)", animation: "hero-sub-in 0.6s cubic-bezier(0.16,1,0.3,1) 0.5s both" }}
-          >
-            Strategy · Transformation · Growth
+          Strategy · Transformation · Growth
+        </span>
+
+        <h1
+          className="font-[family-name:var(--font-display)] font-semibold leading-none tracking-tight text-white"
+          style={{ fontSize: "clamp(2.8rem, 6.5vw, 5.5rem)" }}
+        >
+          <span className="block">
+            {[{ text: "Strategic", delay: "0.7s" }, { text: "excellence", delay: "0.83s" }].map(({ text, delay }) => (
+              <span key={text} className="hero-word hero-word-animate-in inline-block" style={{ animationDelay: delay, marginRight: "0.22em" }}>{text}</span>
+            ))}
           </span>
+          <span className="block" style={{ fontSize: "0.6em", color: "rgba(255,255,255,0.30)", marginTop: "0.22em" }}>
+            {[
+              { text: "in an age of", delay: "1.0s" },
+              { text: "constant",     delay: "1.12s" },
+              { text: "transformation", delay: "1.24s" },
+            ].map(({ text, delay }) => (
+              <span key={text} className="hero-word hero-word-animate-in inline-block" style={{ animationDelay: delay, marginRight: "0.28em" }}>{text}</span>
+            ))}
+          </span>
+        </h1>
 
-          <h1
-            className="font-[family-name:var(--font-display)] font-semibold leading-none tracking-tight text-white"
-            style={{ fontSize: "clamp(2.8rem, 6.5vw, 5.5rem)" }}
-          >
-            <span className="block">
-              {[{ text: "Strategic", delay: "0.7s" }, { text: "excellence", delay: "0.83s" }].map(({ text, delay }) => (
-                <span key={text} className="hero-word hero-word-animate-in inline-block" style={{ animationDelay: delay, marginRight: "0.22em" }}>{text}</span>
-              ))}
-            </span>
-            <span
-              className="block"
-              style={{ fontSize: "0.6em", color: "rgba(255,255,255,0.30)", marginTop: "0.22em" }}
-            >
-              {[
-                { text: "in an age of",   delay: "1.0s"  },
-                { text: "constant",       delay: "1.12s" },
-                { text: "transformation", delay: "1.24s" },
-              ].map(({ text, delay }) => (
-                <span key={text} className="hero-word hero-word-animate-in inline-block" style={{ animationDelay: delay, marginRight: "0.28em" }}>{text}</span>
-              ))}
-            </span>
-          </h1>
-
-          {/* Thin rule: indigo + sand */}
-          <div
-            className="flex"
-            style={{ animation: "hero-sub-in 0.6s cubic-bezier(0.16,1,0.3,1) 1.5s both" }}
-            aria-hidden
-          >
-            <div style={{ height: 1, width: 48, backgroundColor: "var(--color-prologue-blue, #303E91)" }} />
-            <div style={{ height: 1, width: 24, backgroundColor: "var(--color-prologue-sand, #90755F)" }} />
-          </div>
-        </div>
-
-        {/* ── PHASE 1 ── */}
+        {/* Thin rule: indigo + sand */}
         <div
-          className="flex w-full max-w-4xl flex-col items-center gap-6"
-          style={{
-            pointerEvents: isPhase1 ? "auto" : "none",
-            visibility:    isPhase1 ? "visible" : "hidden",
-          }}
+          className="flex"
+          style={{ animation: "hero-sub-in 0.6s cubic-bezier(0.16,1,0.3,1) 1.5s both" }}
+          aria-hidden
         >
+          <div style={{ height: 1, width: 48, backgroundColor: "var(--color-prologue-blue, #303E91)" }} />
+          <div style={{ height: 1, width: 24, backgroundColor: "var(--color-prologue-sand, #90755F)" }} />
+        </div>
+      </div>
+
+      {/* ── Phase 1: headline top-left + cards filling lower portion ─ */}
+      <div
+        className="relative z-10 flex min-h-dvh flex-col justify-between px-6 pb-0 pt-28 md:px-12"
+        style={{
+          pointerEvents: isPhase1 ? "auto" : "none",
+          visibility:    isPhase1 ? "visible" : "hidden",
+        }}
+      >
+        {/* Compact headline + sub at top */}
+        <div className="flex flex-col gap-3 max-w-lg">
           <h1
-            className="text-balance font-[family-name:var(--font-display)] font-semibold leading-none tracking-tight text-white"
+            className="font-[family-name:var(--font-display)] font-semibold leading-[1.05] tracking-tight text-white"
             style={{
-              fontSize:  "clamp(2.6rem, 6.5vw, 5.5rem)",
+              fontSize:  "clamp(2rem, 4vw, 3.6rem)",
               opacity:   isPhase1 ? 1 : 0,
-              transform: isPhase1 ? "translateY(0)" : "translateY(28px)",
-              transition: "opacity 0.8s cubic-bezier(0.16,1,0.3,1) 0.2s, transform 0.8s cubic-bezier(0.16,1,0.3,1) 0.2s",
+              transform: isPhase1 ? "translateY(0)" : "translateY(24px)",
+              transition: "opacity 0.85s cubic-bezier(0.16,1,0.3,1) 0.18s, transform 0.85s cubic-bezier(0.16,1,0.3,1) 0.18s",
             }}
           >
-            {/* "transformation" stays white — no colour override */}
-            Strategic{" "}transformation
+            Strategic transformation
           </h1>
-
           <p
-            className="max-w-xl text-pretty font-[family-name:var(--font-body)] text-lg leading-relaxed md:text-xl"
+            className="text-pretty font-[family-name:var(--font-body)] text-base leading-relaxed"
             style={{
-              color:     "rgba(255,255,255,0.50)",
+              color:     "rgba(255,255,255,0.48)",
               opacity:   isPhase1 ? 1 : 0,
-              transform: isPhase1 ? "translateY(0)" : "translateY(20px)",
-              transition: "opacity 0.8s cubic-bezier(0.16,1,0.3,1) 0.35s, transform 0.8s cubic-bezier(0.16,1,0.3,1) 0.35s",
+              transform: isPhase1 ? "translateY(0)" : "translateY(16px)",
+              transition: "opacity 0.85s cubic-bezier(0.16,1,0.3,1) 0.32s, transform 0.85s cubic-bezier(0.16,1,0.3,1) 0.32s",
             }}
           >
             {t.home.heroSub}
           </p>
+        </div>
 
-          {/* CTA cards */}
-          <div
-            className="mt-4 grid w-full grid-cols-1 gap-px sm:grid-cols-3"
-            style={{ backgroundColor: "rgba(255,255,255,0.07)" }}
-          >
-            {[
-              { href: "/vector",  tag: "Free",    title: "Vector Workshop",    desc: "The foundational tool for strategic clarity — yours at no cost.", primary: true  },
-              { href: "/about",   tag: "Explore", title: "Learn More",          desc: "Understand how we work before making any decision.",              primary: false },
-              { href: "/contact", tag: "Start",   title: "Schedule Intro Call", desc: "A focused 30-minute conversation about your situation.",           primary: false },
-            ].map((card, i) => (
-              <CtaCard key={card.href} {...card} visible={cardsVisible} delay={i * 100} />
-            ))}
-          </div>
+        {/* CTA cards — fill the bottom ~55% of viewport */}
+        <div
+          className="grid grid-cols-1 gap-px sm:grid-cols-3"
+          style={{ backgroundColor: "rgba(255,255,255,0.06)" }}
+        >
+          {[
+            { href: "/vector",  tag: "Free",    title: "Vector Workshop",    desc: "The foundational tool for strategic clarity — yours at no cost.", primary: true  },
+            { href: "/about",   tag: "Explore", title: "Learn More",         desc: "Understand how we work before making any decision.",              primary: false },
+            { href: "/contact", tag: "Start",   title: "Schedule Intro Call",desc: "A focused 30-minute conversation about your situation.",           primary: false },
+          ].map((card, i) => (
+            <CtaCard key={card.href} {...card} visible={cardsVisible} delay={i * 110} />
+          ))}
         </div>
       </div>
 
@@ -400,16 +390,17 @@ function CtaCard({
   return (
     <Link
       href={href}
-      className="group flex flex-col gap-3 p-5 text-left"
+      className="group flex flex-col gap-4 p-7 text-left"
       style={{
-        backgroundColor: "rgba(13,13,13,0.90)",
+        backgroundColor: "rgba(13,13,13,0.92)",
         borderTop: primary
-          ? "1px solid var(--color-prologue-blue, #303E91)"
+          ? "2px solid var(--color-prologue-blue, #303E91)"
           : "1px solid rgba(255,255,255,0.07)",
+        minHeight: "clamp(180px, 26vh, 260px)",
         opacity:    visible ? 1 : 0,
-        transform:  visible ? "translateY(0)" : "translateY(22px)",
-        transition: `opacity 0.6s cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform 0.6s cubic-bezier(0.16,1,0.3,1) ${delay}ms, background-color 0.2s ease`,
-        backdropFilter: "blur(6px)",
+        transform:  visible ? "translateY(0)" : "translateY(28px)",
+        transition: `opacity 0.7s cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform 0.7s cubic-bezier(0.16,1,0.3,1) ${delay}ms, background-color 0.2s ease`,
+        backdropFilter: "blur(8px)",
       }}
     >
       <span
