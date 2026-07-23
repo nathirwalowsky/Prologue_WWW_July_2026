@@ -45,7 +45,7 @@ export function HomeHero() {
     setPhase(1)
     phaseRef.current = 1
     document.documentElement.classList.add("hero-scrolled")
-    setTimeout(() => setCardsVisible(true), 420)
+    setTimeout(() => setCardsVisible(true), 560)
     setTimeout(() => {
       setScrollUnlocked(true)
       scrollUnlockedRef.current = true
@@ -140,18 +140,18 @@ export function HomeHero() {
       <div
         className="pointer-events-none absolute z-[1]"
         style={{
-          width:     isPhase1 ? "72%" : "50%",
-          top:       isPhase1 ? "-14%" : "2%",
-          left:      isPhase1 ? "52%"  : "50%",
+          width:     isPhase1 ? "78%" : "68%",
+          top:       isPhase1 ? "-16%" : "-2%",
+          left:      isPhase1 ? "54%"  : "50%",
           transform: "translateX(-50%)",
-          opacity:   isPhase1 ? 0.18 : 1,
+          opacity:   isPhase1 ? 0.16 : 1,
           transition: [
-            "width   1.15s cubic-bezier(0.4,0,0.2,1)",
-            "top     1.15s cubic-bezier(0.4,0,0.2,1)",
-            "left    1.15s cubic-bezier(0.4,0,0.2,1)",
-            "opacity 1.10s cubic-bezier(0.4,0,0.2,1)",
+            "width   1.4s cubic-bezier(0.25,0,0.1,1)",
+            "top     1.4s cubic-bezier(0.25,0,0.1,1)",
+            "left    1.4s cubic-bezier(0.25,0,0.1,1)",
+            "opacity 1.6s cubic-bezier(0.25,0,0.1,1) 0.1s",
           ].join(", "),
-          animation: "hero-logo-drop 1.0s cubic-bezier(0.16,1,0.3,1) 0.1s both",
+          animation: "hero-logo-drop 1.2s cubic-bezier(0.16,1,0.3,1) 0.1s both",
         }}
         aria-hidden
       >
@@ -197,7 +197,7 @@ export function HomeHero() {
         </nav>
       </div>
 
-      {/* ── Central content ─────────────────��────────────────────── */}
+      {/* ── Central content ──────────────��──��────────────────────── */}
       <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 pb-28 pt-24 text-center md:px-12">
 
         {/* ── PHASE 0 ── */}
@@ -210,11 +210,11 @@ export function HomeHero() {
             gap: "1.5rem",
             pointerEvents: isPhase1 ? "none" : "auto",
             opacity:    isPhase1 ? 0 : 1,
-            transform:  isPhase1 ? "translateY(-20px)" : "translateY(0)",
+            transform:  isPhase1 ? "translateY(-16px)" : "translateY(0)",
             visibility: isPhase1 ? "hidden" : "visible",
             transition: isPhase1
-              ? "opacity 0.4s cubic-bezier(0.7,0,0.84,0), transform 0.4s cubic-bezier(0.7,0,0.84,0), visibility 0s linear 0.45s"
-              : "opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1)",
+              ? "opacity 0.65s cubic-bezier(0.4,0,0.8,0), transform 0.65s cubic-bezier(0.4,0,0.8,0), visibility 0s linear 0.7s"
+              : "opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1)",
           }}
         >
           <span
@@ -272,7 +272,7 @@ export function HomeHero() {
               fontSize:  "clamp(2.6rem, 6.5vw, 5.5rem)",
               opacity:   isPhase1 ? 1 : 0,
               transform: isPhase1 ? "translateY(0)" : "translateY(28px)",
-              transition: "opacity 0.7s cubic-bezier(0.16,1,0.3,1) 0.05s, transform 0.7s cubic-bezier(0.16,1,0.3,1) 0.05s",
+              transition: "opacity 0.8s cubic-bezier(0.16,1,0.3,1) 0.2s, transform 0.8s cubic-bezier(0.16,1,0.3,1) 0.2s",
             }}
           >
             {/* "transformation" stays white — no colour override */}
@@ -285,7 +285,7 @@ export function HomeHero() {
               color:     "rgba(255,255,255,0.50)",
               opacity:   isPhase1 ? 1 : 0,
               transform: isPhase1 ? "translateY(0)" : "translateY(20px)",
-              transition: "opacity 0.7s cubic-bezier(0.16,1,0.3,1) 0.2s, transform 0.7s cubic-bezier(0.16,1,0.3,1) 0.2s",
+              transition: "opacity 0.8s cubic-bezier(0.16,1,0.3,1) 0.35s, transform 0.8s cubic-bezier(0.16,1,0.3,1) 0.35s",
             }}
           >
             {t.home.heroSub}
