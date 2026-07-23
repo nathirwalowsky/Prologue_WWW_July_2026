@@ -75,12 +75,12 @@ export function HomeHero() {
         if (e.deltaY > 0) triggerPhase1()
         return
       }
-      // Phase 1, still animating: hold
+      // Phase 1, still animating: hold page in place
       if (!scrollUnlockedRef.current) {
         e.preventDefault()
         return
       }
-      // Phase 1, scroll unlocked, scrolling UP at very top → reverse
+      // Phase 1 + scroll unlocked: if user is at top and scrolls up → reverse
       if (e.deltaY < 0 && window.scrollY === 0) {
         e.preventDefault()
         triggerPhase0()
@@ -88,6 +88,18 @@ export function HomeHero() {
     }
     window.addEventListener("wheel", onWheel, { passive: false })
     return () => window.removeEventListener("wheel", onWheel)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // ── Native scroll listener: auto-reverse when user scrolls back to top ──
+  useEffect(() => {
+    const onScroll = () => {
+      if (phaseRef.current === 1 && scrollUnlockedRef.current && window.scrollY === 0) {
+        triggerPhase0()
+      }
+    }
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
