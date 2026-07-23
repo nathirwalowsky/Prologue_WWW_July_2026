@@ -58,25 +58,40 @@ export function HomeHero() {
         }`}
       >
         {/* Wordmark — fades/moves once scrolled (the sticky header takes over) */}
-        <Image
-          src="/brand/prologue-wordmark.png"
-          alt="Prologue Agency"
-          width={160}
-          height={54}
-          className="brightness-0 invert"
-          priority
-        />
+        <div className="flex items-center gap-2.5">
+          <Image
+            src="/brand/logo-light-signet.png"
+            alt=""
+            width={28}
+            height={28}
+            className="h-7 w-auto"
+            aria-hidden="true"
+            priority
+          />
+          <Image
+            src="/brand/logo-light-wordmark.png"
+            alt="PROLOGUE agency"
+            width={120}
+            height={32}
+            className="h-5 w-auto hidden sm:block"
+            priority
+          />
+        </div>
         {/* Pre-scroll nav links */}
-        <nav className="hidden items-center gap-6 text-sm text-background/60 md:flex">
-          <Link href="/services" className="transition-colors hover:text-background">
-            {t.nav.services}
-          </Link>
-          <Link href="/about" className="transition-colors hover:text-background">
-            {t.nav.about}
-          </Link>
-          <Link href="/contact" className="transition-colors hover:text-background">
-            {t.nav.contact}
-          </Link>
+        <nav className="hidden items-center gap-7 md:flex">
+          {[
+            { href: "/services", label: t.nav.services },
+            { href: "/about",    label: t.nav.about },
+            { href: "/contact",  label: t.nav.contact },
+          ].map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              className="font-[family-name:var(--font-display)] text-xs font-semibold tracking-[0.12em] uppercase text-[var(--foreground)]/50 transition-colors hover:text-[var(--foreground)]"
+            >
+              {l.label}
+            </Link>
+          ))}
         </nav>
       </div>
 
@@ -92,11 +107,11 @@ export function HomeHero() {
           }`}
         >
           <Image
-            src="/brand/prologue-symbol.png"
+            src="/brand/logo-light-signet.png"
             alt=""
             aria-hidden="true"
             fill
-            className="object-contain brightness-0 invert"
+            className="object-contain"
             priority
           />
         </div>
@@ -106,15 +121,14 @@ export function HomeHero() {
 
           {/* Phase 0 — full tagline */}
           <h1
-            className={`absolute text-balance font-sans text-4xl font-semibold tracking-tight transition-all duration-600 ease-in-out md:text-6xl lg:text-7xl ${
+            className={`absolute text-balance font-[family-name:var(--font-display)] text-4xl font-semibold tracking-tight transition-all duration-600 ease-in-out md:text-6xl lg:text-7xl ${
               scrolled
                 ? "translate-y-4 opacity-0"
                 : "translate-y-0 opacity-100"
             }`}
           >
-            {/* "Strategic excellence" stays, "in an age of constant transformation" fades */}
             <span>Strategic excellence </span>
-            <span className="text-background/50">in an age of constant transformation</span>
+            <span className="text-[var(--foreground)]/40">in an age of constant transformation</span>
           </h1>
 
           {/* Phase 1 — condensed headline + subtitle */}
@@ -125,10 +139,10 @@ export function HomeHero() {
                 : "translate-y-6 opacity-0"
             }`}
           >
-            <h1 className="text-balance font-sans text-4xl font-semibold tracking-tight md:text-6xl lg:text-7xl">
+            <h1 className="text-balance font-[family-name:var(--font-display)] text-4xl font-semibold tracking-tight md:text-6xl lg:text-7xl">
               Strategic transformation
             </h1>
-            <p className="max-w-lg text-pretty font-serif text-lg leading-relaxed text-background/70 md:text-xl">
+            <p className="max-w-lg text-pretty font-[family-name:var(--font-body)] text-lg leading-relaxed text-[var(--foreground)]/60 md:text-xl">
               {t.home.heroSub}
             </p>
           </div>
@@ -172,7 +186,7 @@ export function HomeHero() {
         aria-hidden="true"
       >
         <div className="flex flex-col items-center gap-1.5">
-          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-background/50">
+          <span className="font-[family-name:var(--font-display)] text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--foreground)]/40">
             Scroll
           </span>
           <span className="animate-bounce text-background/40">↓</span>
@@ -200,19 +214,19 @@ function CtaCard({
   return (
     <Link
       href={href}
-      className={`group flex flex-col gap-3 rounded-lg border p-5 text-left transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg ${
+      className={`group flex flex-col gap-3 border p-5 text-left transition-colors duration-200 ${
         primary
-          ? "border-background/30 bg-background/10 hover:bg-background/15"
-          : "border-background/15 bg-background/5 hover:bg-background/10"
+          ? "border-[#BD3B35]/40 bg-[#BD3B35]/10 hover:bg-[#BD3B35]/15"
+          : "border-[var(--border)] bg-[var(--foreground)]/5 hover:bg-[var(--foreground)]/8"
       }`}
     >
-      <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-background/50">
+      <span className="font-[family-name:var(--font-display)] text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--foreground)]/40">
         {tag}
       </span>
-      <p className="font-sans text-base font-semibold text-background group-hover:text-background/90">
+      <p className="font-[family-name:var(--font-display)] text-sm font-semibold uppercase tracking-[0.08em] text-[var(--foreground)] transition-colors group-hover:text-[var(--foreground)]/80">
         {title}
       </p>
-      <p className="text-sm leading-relaxed text-background/55">{desc}</p>
+      <p className="font-[family-name:var(--font-body)] text-sm leading-relaxed text-[var(--foreground)]/50">{desc}</p>
     </Link>
   )
 }
