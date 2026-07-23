@@ -11,21 +11,21 @@ import { useLanguage } from "@/contexts/language-context"
  *  On light background use the dark logo. */
 function Wordmark({ tone = "dark" }: { tone?: "dark" | "light" }) {
   return (
-    <div className="flex items-center gap-2.5">
+    <div className="flex items-center gap-3">
       <Image
         src={tone === "dark" ? "/brand/logo-light-signet.png" : "/brand/logo-dark-signet.png"}
         alt=""
-        width={28}
-        height={28}
-        className="h-7 w-auto"
+        width={40}
+        height={40}
+        className="h-10 w-auto"
         aria-hidden="true"
       />
       <Image
         src={tone === "dark" ? "/brand/logo-light-wordmark.png" : "/brand/logo-dark-wordmark.png"}
         alt="PROLOGUE agency"
-        width={120}
-        height={32}
-        className="h-5 w-auto hidden sm:block"
+        width={160}
+        height={40}
+        className="h-7 w-auto hidden sm:block"
         priority
       />
     </div>
@@ -59,13 +59,13 @@ export function SiteShell({
     <div className="flex min-h-screen flex-col bg-[var(--background)]">
       {/* Announcement bar */}
       <div
-        className={`bg-[#BD3B35] px-4 py-2 text-center text-primary-foreground transition-all duration-500 ${
+        className={`bg-[#303E91] px-4 py-2 text-center text-white transition-all duration-500 ${
           heroMode ? "hero-mode-announcement" : ""
         }`}
       >
         <Link href="/vector" className="inline-flex items-center gap-2 font-[family-name:var(--font-display)] text-xs font-semibold tracking-[0.12em] uppercase hover:opacity-80 transition-opacity">
           <span>{t.announcement.text}</span>
-          <span className="text-[var(--foreground)]/60">→</span>
+          <span className="text-white/70">→</span>
           <span>{t.announcement.cta}</span>
         </Link>
       </div>
