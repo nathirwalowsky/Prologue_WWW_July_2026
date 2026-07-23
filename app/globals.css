@@ -206,6 +206,61 @@
   .tracking-caps    { letter-spacing: 0.08em; }
 }
 
+/* ── Hero entrance / word-split animations ───────────────────────────────── */
+
+@keyframes hero-word-in {
+  from { opacity: 0; transform: translateY(22px) skewY(1.5deg); }
+  to   { opacity: 1; transform: translateY(0)    skewY(0deg); }
+}
+
+@keyframes hero-word-out {
+  from { opacity: 1; transform: translateY(0)     skewY(0deg); }
+  to   { opacity: 0; transform: translateY(-20px) skewY(-1.5deg); }
+}
+
+@keyframes hero-sub-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes hero-card-in {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes hero-scan {
+  0%   { transform: translateX(-100%); opacity: 0; }
+  5%   { opacity: 1; }
+  95%  { opacity: 1; }
+  100% { transform: translateX(100vw); opacity: 0; }
+}
+
+@keyframes hero-glow-pulse {
+  0%, 100% { opacity: 0.55; }
+  50%       { opacity: 0.75; }
+}
+
+@keyframes hero-logo-drop {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes kv-drift {
+  0%   { transform: scale(1.04) translate(0px, 0px); }
+  50%  { transform: scale(1.07) translate(-12px, -8px); }
+  100% { transform: scale(1.04) translate(0px, 0px); }
+}
+
+.hero-word { display: inline-block; }
+
+.hero-word-animate-in {
+  animation: hero-word-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero-word-animate-out {
+  animation: hero-word-out 0.45s cubic-bezier(0.7, 0, 0.84, 0) both;
+}
+
 /* ── Hero scroll animation helpers ──────────────────────────────────────────
    HomeHero toggles [hero-scrolled] on <html>.
    In heroMode, announcement bar + nav header are hidden (no document flow)

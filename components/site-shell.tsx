@@ -72,8 +72,8 @@ export function SiteShell({
 
       {/* Nav */}
       <header
-        className={`sticky top-0 z-30 border-b border-[var(--border)] bg-[var(--background)]/90 backdrop-blur-md transition-all duration-500 ${
-          heroMode ? "hero-mode-header" : ""
+        className={`z-30 border-b border-[var(--border)] bg-[var(--background)]/90 backdrop-blur-md transition-all duration-500 ${
+          heroMode ? "hero-mode-header" : "sticky top-0"
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
