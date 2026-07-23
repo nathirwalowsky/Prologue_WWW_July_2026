@@ -49,7 +49,7 @@ export function HomeHero() {
       ref={heroRef}
       aria-label="Hero"
       /* 100dvh so the full intro is always in viewport */
-      className="relative flex min-h-dvh flex-col bg-foreground text-background"
+      className="relative flex min-h-dvh flex-col bg-[#0d0d0d] text-[#f0eeec]"
     >
       {/* ── Overlay nav (visible only while NOT scrolled) ── */}
       <div
@@ -87,7 +87,7 @@ export function HomeHero() {
             <Link
               key={l.href}
               href={l.href}
-              className="font-[family-name:var(--font-display)] text-xs font-semibold tracking-[0.12em] uppercase text-[var(--foreground)]/50 transition-colors hover:text-[var(--foreground)]"
+              className="font-[family-name:var(--font-display)] text-xs font-semibold tracking-[0.12em] uppercase text-[#f0eeec]/50 transition-colors hover:text-[#f0eeec]"
             >
               {l.label}
             </Link>
@@ -128,7 +128,7 @@ export function HomeHero() {
             }`}
           >
             <span>Strategic excellence </span>
-            <span className="text-[var(--foreground)]/40">in an age of constant transformation</span>
+            <span className="text-[#f0eeec]/35">in an age of constant transformation</span>
           </h1>
 
           {/* Phase 1 — condensed headline + subtitle */}
@@ -142,7 +142,7 @@ export function HomeHero() {
             <h1 className="text-balance font-[family-name:var(--font-display)] text-4xl font-semibold tracking-tight md:text-6xl lg:text-7xl">
               Strategic transformation
             </h1>
-            <p className="max-w-lg text-pretty font-[family-name:var(--font-body)] text-lg leading-relaxed text-[var(--foreground)]/60 md:text-xl">
+            <p className="max-w-lg text-pretty font-[family-name:var(--font-body)] text-lg leading-relaxed text-[#f0eeec]/55 md:text-xl">
               {t.home.heroSub}
             </p>
           </div>
@@ -186,10 +186,10 @@ export function HomeHero() {
         aria-hidden="true"
       >
         <div className="flex flex-col items-center gap-1.5">
-          <span className="font-[family-name:var(--font-display)] text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--foreground)]/40">
+          <span className="font-[family-name:var(--font-display)] text-[10px] font-semibold uppercase tracking-[0.2em] text-[#f0eeec]/40">
             Scroll
           </span>
-          <span className="animate-bounce text-background/40">↓</span>
+          <span className="animate-bounce text-[#f0eeec]/40">↓</span>
         </div>
       </div>
     </section>
@@ -216,17 +216,17 @@ function CtaCard({
       href={href}
       className={`group flex flex-col gap-3 border p-5 text-left transition-colors duration-200 ${
         primary
-          ? "border-[#BD3B35]/40 bg-[#BD3B35]/10 hover:bg-[#BD3B35]/15"
-          : "border-[var(--border)] bg-[var(--foreground)]/5 hover:bg-[var(--foreground)]/8"
+          ? "border-[#f0eeec]/20 bg-[#f0eeec]/5 hover:bg-[#f0eeec]/8"
+          : "border-[#f0eeec]/10 bg-transparent hover:bg-[#f0eeec]/5"
       }`}
     >
-      <span className="font-[family-name:var(--font-display)] text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--foreground)]/40">
+      <span className="font-[family-name:var(--font-display)] text-[10px] font-semibold uppercase tracking-[0.2em] text-[#f0eeec]/35">
         {tag}
       </span>
-      <p className="font-[family-name:var(--font-display)] text-sm font-semibold uppercase tracking-[0.08em] text-[var(--foreground)] transition-colors group-hover:text-[var(--foreground)]/80">
+      <p className="font-[family-name:var(--font-display)] text-sm font-semibold uppercase tracking-[0.08em] text-[#f0eeec] transition-colors group-hover:text-[#f0eeec]/80">
         {title}
       </p>
-      <p className="font-[family-name:var(--font-body)] text-sm leading-relaxed text-[var(--foreground)]/50">{desc}</p>
+      <p className="font-[family-name:var(--font-body)] text-sm leading-relaxed text-[#f0eeec]/45">{desc}</p>
     </Link>
   )
 }
