@@ -267,6 +267,19 @@
   animation: hero-word-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .hero-word-animate-in,
+  .hero-word-animate-out {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  @keyframes chevron-bob   { from, to { transform: none; } }
+  @keyframes ticker-scroll { from, to { transform: translateX(0); } }
+  @keyframes hero-logo-drop { from, to { opacity: 1; transform: none; } }
+  @keyframes kv-drift       { from, to { transform: none; } }
+}
+
 .hero-word-animate-out {
   animation: hero-word-out 0.45s cubic-bezier(0.7, 0, 0.84, 0) both;
 }

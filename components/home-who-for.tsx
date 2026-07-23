@@ -75,7 +75,7 @@ export function HomeWhoFor() {
               </p>
               <Link
                 href="/contact"
-                className="inline-flex w-fit items-center px-6 py-3 font-[family-name:var(--font-display)] text-xs font-semibold uppercase tracking-[0.1em] transition-opacity hover:opacity-80"
+                className="inline-flex w-fit items-center px-6 py-3 font-[family-name:var(--font-display)] text-xs font-semibold uppercase tracking-[0.1em] transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#303E91] focus-visible:ring-offset-2"
                 style={{ border: "1px solid #303E91", color: "#303E91" }}
               >
                 {t.home.whoCtaSchedule}
@@ -114,7 +114,7 @@ export function HomeWhoFor() {
 
             <Link
               href="/vector"
-              className="inline-flex w-full items-center justify-center px-5 py-2.5 font-[family-name:var(--font-display)] text-xs font-semibold uppercase tracking-[0.1em] text-[var(--foreground)] transition-opacity hover:opacity-70"
+              className="inline-flex w-full items-center justify-center px-5 py-2.5 font-[family-name:var(--font-display)] text-xs font-semibold uppercase tracking-[0.1em] text-[var(--foreground)] transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0d0d0d]"
               style={{ border: "1px solid rgba(255,255,255,0.15)" }}
             >
               {t.home.whoVectorCta}
@@ -125,7 +125,7 @@ export function HomeWhoFor() {
             <ul className="flex flex-col gap-5">
               {recentPosts.map((post) => (
                 <li key={post.id}>
-                  <Link href={`/blog/${post.id}`} className="group flex flex-col gap-1">
+                  <Link href={`/blog/${post.id}`} className="group flex flex-col gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-1 focus-visible:ring-offset-[#0d0d0d]">
                     <span className="font-[family-name:var(--font-display)] text-[10px] font-semibold uppercase tracking-[0.12em] text-[var(--muted-foreground)]/50">
                       {post.category} · {post.readTime}
                     </span>

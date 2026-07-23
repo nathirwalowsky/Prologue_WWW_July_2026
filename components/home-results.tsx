@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { useLanguage } from "@/contexts/language-context"
 
 const caseStudies = [
@@ -123,13 +124,13 @@ export function HomeResults() {
                 {t.home.resultsCaseStudiesTitle}
               </h3>
             </div>
-            <a
+            <Link
               href="/case-studies"
-              className="hidden font-[family-name:var(--font-display)] text-xs font-semibold uppercase tracking-[0.1em] transition-opacity hover:opacity-70 md:inline-block"
+              className="hidden font-[family-name:var(--font-display)] text-xs font-semibold uppercase tracking-[0.1em] transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#303E91] focus-visible:ring-offset-2 md:inline-block"
               style={{ color: "#303E91" }}
             >
               {t.home.resultsViewAll} →
-            </a>
+            </Link>
           </div>
 
           <div className="grid grid-cols-1 gap-px md:grid-cols-3" style={{ backgroundColor: "rgba(0,0,0,0.12)" }}>
@@ -173,7 +174,7 @@ export function HomeResults() {
                   <p className="font-[family-name:var(--font-body)] text-sm leading-relaxed flex-1" style={{ color: "#272727" }}>
                     {cs.outcome}
                   </p>
-                  <span className="mt-auto font-[family-name:var(--font-display)] text-[10px] font-semibold uppercase tracking-[0.12em] inline-flex items-center gap-1.5 transition-transform group-hover:translate-x-0.5" style={{ color: "#303E91" }}>
+                  <span className="mt-auto font-[family-name:var(--font-display)] text-[10px] font-semibold uppercase tracking-[0.12em] inline-flex items-center gap-1.5 transition-transform group-hover:translate-x-0.5 group-focus-visible:translate-x-0.5" style={{ color: "#303E91" }}>
                     Read case study →
                   </span>
                 </div>
@@ -181,13 +182,13 @@ export function HomeResults() {
             ))}
           </div>
 
-          <a
+          <Link
             href="/case-studies"
-            className="mt-2 font-[family-name:var(--font-display)] text-xs font-semibold uppercase tracking-[0.1em] md:hidden"
+            className="mt-2 font-[family-name:var(--font-display)] text-xs font-semibold uppercase tracking-[0.1em] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#303E91] focus-visible:ring-offset-2 md:hidden"
             style={{ color: "#303E91" }}
           >
             {t.home.resultsViewAll} →
-          </a>
+          </Link>
         </div>
 
       </div>

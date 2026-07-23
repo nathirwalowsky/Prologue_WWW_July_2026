@@ -180,7 +180,7 @@ export function HomeHero() {
             <Link
               key={l.href}
               href={l.href}
-              className="font-[family-name:var(--font-display)] text-[11px] font-semibold uppercase tracking-[0.15em] text-white/70 transition-colors hover:text-white"
+              className="font-[family-name:var(--font-display)] text-[11px] font-semibold uppercase tracking-[0.15em] text-white/70 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#303E91]"
             >
               {l.label}
             </Link>
@@ -389,7 +389,7 @@ function CtaCard({
   return (
     <Link
       href={href}
-      className="group flex flex-col gap-3 p-5 text-left"
+      className="group flex flex-col gap-3 p-5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#303E91] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0d0d0d]"
       style={{
         backgroundColor: "rgba(13,13,13,0.90)",
         borderTop: primary

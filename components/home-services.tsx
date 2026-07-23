@@ -163,7 +163,7 @@ export function HomeServices() {
                   {/* CTA */}
                   <Link
                     href={service.href}
-                    className="mt-1 inline-flex w-fit items-center gap-2 px-5 py-2.5 font-[family-name:var(--font-display)] text-xs font-semibold uppercase tracking-[0.1em] text-[var(--foreground)] transition-colors hover:border-[var(--foreground)]/40"
+                    className="mt-1 inline-flex w-fit items-center gap-2 px-5 py-2.5 font-[family-name:var(--font-display)] text-xs font-semibold uppercase tracking-[0.1em] text-[var(--foreground)] transition-colors hover:border-[var(--foreground)]/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#303E91] focus-visible:ring-offset-2"
                     style={{ border: "1px solid var(--border)" }}
                   >
                     {t.home.servicesLearnMore} →
