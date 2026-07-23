@@ -130,100 +130,7 @@ export function HomeHero() {
       style={{ background: "var(--color-prologue-black, #0d0d0d)" }}
     >
 
-      {/* ── Decorative background layers ─────────────────────────── */}
 
-      {/* Fine grid overlay — always visible, very subtle */}
-      <div
-        className="pointer-events-none absolute inset-0 z-0"
-        aria-hidden
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px)
-          `,
-          backgroundSize: "80px 80px",
-        }}
-      />
-
-      {/* Diagonal accent lines — top-left corner */}
-      <svg
-        className="pointer-events-none absolute left-0 top-0 z-0"
-        width="320" height="320"
-        aria-hidden
-        style={{
-          opacity: isPhase1 ? 0.12 : 0.22,
-          transition: "opacity 1.0s ease",
-        }}
-      >
-        {[0, 1, 2, 3, 4].map((i) => (
-          <line
-            key={i}
-            x1={-20 + i * 60}  y1="0"
-            x2="0"              y2={-20 + i * 60 + 60}
-            stroke="white"
-            strokeWidth="0.5"
-            strokeOpacity="0.5"
-          />
-        ))}
-      </svg>
-
-      {/* Diagonal accent lines — bottom-right corner */}
-      <svg
-        className="pointer-events-none absolute bottom-0 right-0 z-0"
-        width="280" height="280"
-        aria-hidden
-        style={{
-          opacity: isPhase1 ? 0.08 : 0.18,
-          transition: "opacity 1.0s ease",
-        }}
-      >
-        {[0, 1, 2, 3].map((i) => (
-          <line
-            key={i}
-            x1={280 - i * 70}  y1="280"
-            x2="280"            y2={280 - i * 70 - 70}
-            stroke="white"
-            strokeWidth="0.5"
-            strokeOpacity="0.5"
-          />
-        ))}
-      </svg>
-
-      {/* Floating stats — phase 0 only, scattered around the KV */}
-      {[
-        { label: "years",        value: "12+", x: "8%",  y: "25%",  delay: "1.4s" },
-        { label: "clients",      value: "80+", x: "82%", y: "68%",  delay: "1.6s" },
-        { label: "growth avg",   value: "3×",  x: "78%", y: "28%",  delay: "1.8s" },
-        { label: "NPS score",    value: "72",  x: "10%", y: "70%",  delay: "2.0s" },
-      ].map(({ label, value, x, y, delay }) => (
-        <div
-          key={label}
-          className="pointer-events-none absolute z-0"
-          style={{
-            left: x, top: y,
-            opacity: isPhase1 ? 0 : 1,
-            transition: `opacity ${isPhase1 ? "0.35s" : "0.6s"} ease`,
-            transitionDelay: isPhase1 ? "0s" : delay,
-            animation: !isPhase1 ? `hero-sub-in 0.6s cubic-bezier(0.16,1,0.3,1) ${delay} both` : undefined,
-          }}
-          aria-hidden
-        >
-          <div className="flex flex-col items-center gap-0.5">
-            <span
-              className="font-[family-name:var(--font-display)] font-semibold leading-none text-white"
-              style={{ fontSize: "clamp(1.4rem, 2.8vw, 2.4rem)" }}
-            >
-              {value}
-            </span>
-            <span
-              className="font-[family-name:var(--font-display)] text-[9px] font-semibold uppercase tracking-[0.2em]"
-              style={{ color: "rgba(255,255,255,0.35)" }}
-            >
-              {label}
-            </span>
-          </div>
-        </div>
-      ))}
 
       {/* ── Branding element — kv-transparent (eclipse + mountain) ── */}
       {/*
@@ -270,8 +177,8 @@ export function HomeHero() {
         }}
       >
         <div className="flex items-center gap-3">
-          <Image src="/brand/logo-light-signet.png" alt="" width={28} height={28} className="h-7 w-auto" aria-hidden priority />
-          <Image src="/brand/logo-light-wordmark.png" alt="PROLOGUE agency" width={120} height={32} className="h-4 w-auto" priority />
+          <Image src="/brand/logo-light-signet.png" alt="" width={44} height={44} className="h-11 w-auto" aria-hidden priority />
+          <Image src="/brand/logo-light-wordmark.png" alt="PROLOGUE agency" width={160} height={44} className="h-7 w-auto" priority />
         </div>
         <nav className="hidden items-center gap-8 md:flex" aria-label="Hero navigation">
           {[
