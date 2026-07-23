@@ -177,8 +177,8 @@ export function HomeHero() {
         }}
       >
         <div className="flex items-center gap-3">
-          <Image src="/brand/logo-light-signet.png" alt="" width={44} height={44} className="h-11 w-auto" aria-hidden priority />
-          <Image src="/brand/logo-light-wordmark.png" alt="PROLOGUE agency" width={160} height={44} className="h-7 w-auto" priority />
+          <Image src="/brand/logo-light-signet.png" alt="" width={66} height={66} className="h-[66px] w-auto" aria-hidden priority />
+          <Image src="/brand/logo-light-wordmark.png" alt="PROLOGUE agency" width={210} height={66} className="h-[42px] w-auto" priority />
         </div>
         <nav className="hidden items-center gap-8 md:flex" aria-label="Hero navigation">
           {[
@@ -197,7 +197,7 @@ export function HomeHero() {
         </nav>
       </div>
 
-      {/* ── Central content ──────────────────────────────────────── */}
+      {/* ── Central content ─────────────────��────────────────────── */}
       <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 pb-28 pt-24 text-center md:px-12">
 
         {/* ── PHASE 0 ── */}
