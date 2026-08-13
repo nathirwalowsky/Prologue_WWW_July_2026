@@ -20,12 +20,10 @@ export function MainNav() {
     { href: "/contact", label: t.nav.contact },
   ]
 
-  const navLinkCls = "font-[family-name:var(--font-display)] text-xs font-semibold tracking-[0.12em] uppercase text-[var(--muted-foreground)] transition-colors duration-150 hover:text-[var(--foreground)]"
-
   return (
-    <nav className="hidden items-center gap-7 md:flex">
+    <nav className="hidden items-center gap-7 text-sm text-muted-foreground md:flex">
       {/* Home */}
-      <Link href="/" className={navLinkCls}>
+      <Link href="/" className="transition-colors hover:text-foreground">
         {t.nav.home}
       </Link>
 
@@ -40,11 +38,11 @@ export function MainNav() {
           aria-haspopup="menu"
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
-          className={`flex items-center gap-1 ${navLinkCls}`}
+          className="flex items-center gap-1 transition-colors hover:text-foreground"
         >
           {t.nav.services}
           <span
-            className={`transition-transform duration-150 ${open ? "rotate-180" : ""}`}
+            className={`font-mono text-xs transition-transform duration-150 ${open ? "rotate-180" : ""}`}
             aria-hidden="true"
           >
             ▾
@@ -53,27 +51,29 @@ export function MainNav() {
 
         {open ? (
           <div role="menu" className="absolute left-0 top-full z-20 w-80 pt-3">
-            <div className="flex flex-col gap-0 border border-[var(--border)] bg-[var(--popover)] shadow-xl">
+            <div className="flex flex-col gap-1 rounded-lg border border-border bg-popover p-2 shadow-lg">
               {services.map((s) => (
                 <Link
                   key={s.href}
                   href={s.href}
                   role="menuitem"
                   onClick={() => setOpen(false)}
-                  className="flex flex-col border-b border-[var(--border)] px-4 py-3 transition-colors hover:bg-[var(--muted)] last:border-b-0"
+                  className="flex flex-col rounded-md px-3 py-2.5 transition-colors hover:bg-secondary"
                 >
-                  <span className="font-[family-name:var(--font-display)] text-xs font-semibold tracking-[0.12em] uppercase text-[var(--foreground)]">{s.label}</span>
-                  <span className="mt-0.5 font-[family-name:var(--font-body)] text-xs text-[var(--muted-foreground)]">{s.desc}</span>
+                  <span className="font-medium text-popover-foreground">{s.label}</span>
+                  <span className="text-xs text-muted-foreground">{s.desc}</span>
                 </Link>
               ))}
-              <Link
-                href="/services"
-                role="menuitem"
-                onClick={() => setOpen(false)}
-                className="block px-4 py-3 font-[family-name:var(--font-display)] text-[10px] font-semibold tracking-[0.15em] uppercase text-[#BD3B35] transition-colors hover:bg-[var(--muted)]"
-              >
-                {t.nav.viewAllServices} →
-              </Link>
+              <div className="mt-1 border-t border-border pt-1">
+                <Link
+                  href="/services"
+                  role="menuitem"
+                  onClick={() => setOpen(false)}
+                  className="block rounded-md px-3 py-2 text-xs font-medium text-primary transition-colors hover:bg-secondary"
+                >
+                  {t.nav.viewAllServices}
+                </Link>
+              </div>
             </div>
           </div>
         ) : null}
@@ -81,7 +81,7 @@ export function MainNav() {
 
       {/* Remaining links */}
       {restLinks.map((link) => (
-        <Link key={link.href} href={link.href} className={navLinkCls}>
+        <Link key={link.href} href={link.href} className="transition-colors hover:text-foreground">
           {link.label}
         </Link>
       ))}
@@ -128,7 +128,7 @@ export function MobileNav() {
         aria-label={open ? t.nav.closeMenu : t.nav.openMenu}
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
-        className="flex h-10 w-10 items-center justify-center border border-[var(--border)] text-[var(--foreground)] transition-colors hover:border-[var(--foreground)]/40"
+        className="flex h-10 w-10 items-center justify-center rounded-md border border-border text-foreground"
       >
         <span className="relative flex h-4 w-5 flex-col justify-between" aria-hidden="true">
           <span
@@ -158,22 +158,22 @@ export function MobileNav() {
           />
 
           {/* Panel */}
-          <div className="absolute inset-x-0 top-0 max-h-screen overflow-y-auto bg-[var(--background)] p-4 pb-8 shadow-xl border-b border-[var(--border)]">
-            <nav className="flex flex-col gap-0 text-[var(--foreground)]">
+          <div className="absolute inset-x-0 top-0 max-h-screen overflow-y-auto bg-background p-4 pb-8 shadow-xl">
+            <nav className="flex flex-col gap-1 text-base text-foreground">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="border-b border-[var(--border)] px-3 py-3.5 font-[family-name:var(--font-display)] text-xs font-semibold tracking-[0.12em] uppercase text-[var(--muted-foreground)] transition-colors hover:text-[var(--foreground)]"
+                  className="rounded-md px-3 py-3 font-medium transition-colors hover:bg-secondary"
                 >
                   {link.label}
                 </Link>
               ))}
 
               {/* Services group */}
-              <div className="mt-3 border-t border-[var(--border)] pt-3">
-                <p className="px-3 pb-2 font-[family-name:var(--font-display)] text-[10px] font-semibold uppercase tracking-[0.15em] text-[#BD3B35]">
+              <div className="mt-2 border-t border-border pt-3">
+                <p className="px-3 pb-1 text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground">
                   {t.nav.services}
                 </p>
                 {services.map((s) => (
@@ -181,18 +181,25 @@ export function MobileNav() {
                     key={s.href}
                     href={s.href}
                     onClick={() => setOpen(false)}
-                    className="flex flex-col border-b border-[var(--border)] px-3 py-3 transition-colors hover:bg-[var(--muted)]"
+                    className="flex flex-col rounded-md px-3 py-2.5 transition-colors hover:bg-secondary"
                   >
-                    <span className="font-[family-name:var(--font-display)] text-xs font-semibold tracking-[0.1em] uppercase text-[var(--foreground)]">{s.label}</span>
-                    <span className="mt-0.5 font-[family-name:var(--font-body)] text-xs text-[var(--muted-foreground)]">{s.desc}</span>
+                    <span className="font-medium">{s.label}</span>
+                    <span className="text-xs text-muted-foreground">{s.desc}</span>
                   </Link>
                 ))}
+                <Link
+                  href="/services"
+                  onClick={() => setOpen(false)}
+                  className="block px-3 py-2.5 text-sm font-medium text-primary transition-colors hover:bg-secondary"
+                >
+                  {t.nav.viewAllServices}
+                </Link>
               </div>
 
               <Link
                 href="/contact"
                 onClick={() => setOpen(false)}
-                className="mt-4 inline-flex items-center justify-center bg-[#BD3B35] px-5 py-3 font-[family-name:var(--font-display)] text-xs font-semibold tracking-[0.12em] uppercase text-[var(--foreground)] transition-colors hover:bg-[#a33230]"
+                className="mt-3 inline-flex items-center justify-center rounded-md bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
               >
                 {t.nav.cta}
               </Link>

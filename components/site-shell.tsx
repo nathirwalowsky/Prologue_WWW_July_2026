@@ -7,31 +7,18 @@ import { MainNav, MobileNav } from "@/components/main-nav"
 import { LanguageToggle } from "@/components/language-toggle"
 import { useLanguage } from "@/contexts/language-context"
 
-/** On dark background (default) use the light (white) logo.
- *  On light background use the dark logo. */
 function Wordmark({ tone = "dark" }: { tone?: "dark" | "light" }) {
   return (
-    <div className="flex items-center gap-3">
-      <Image
-        src={tone === "dark" ? "/brand/logo-light-signet.png" : "/brand/logo-dark-signet.png"}
-        alt=""
-        width={40}
-        height={40}
-        className="h-10 w-auto"
-        aria-hidden="true"
-      />
-      <Image
-        src={tone === "dark" ? "/brand/logo-light-wordmark.png" : "/brand/logo-dark-wordmark.png"}
-        alt="PROLOGUE agency"
-        width={160}
-        height={40}
-        className="h-7 w-auto hidden sm:block"
-        priority
-      />
-    </div>
+    <Image
+      src="/brand/prologue-wordmark.png"
+      alt="Prologue Agency"
+      width={180}
+      height={60}
+      className={tone === "light" ? "brightness-0 invert" : ""}
+      priority
+    />
   )
 }
-
 
 export function SiteShell({
   children,
@@ -56,36 +43,35 @@ export function SiteShell({
   ]
 
   return (
-    <div className="flex min-h-screen flex-col bg-[var(--background)]">
-      {/* Announcement bar */}
+    <div className="flex min-h-screen flex-col bg-background">
+      {/* Announcement bar — hidden in heroMode until scrolled */}
       <div
-        className={`bg-[#303E91] px-4 py-2 text-center text-white transition-all duration-500 ${
+        className={`bg-primary px-4 py-2.5 text-center text-sm text-primary-foreground transition-all duration-500 ${
           heroMode ? "hero-mode-announcement" : ""
         }`}
       >
-        <Link href="/vector" className="inline-flex items-center gap-2 font-[family-name:var(--font-display)] text-xs font-semibold tracking-[0.12em] uppercase hover:opacity-80 transition-opacity">
+        <Link href="/vector" className="inline-flex items-center gap-2 hover:underline">
           <span>{t.announcement.text}</span>
-          <span className="text-white/70">→</span>
-          <span>{t.announcement.cta}</span>
+          <span className="font-semibold">{t.announcement.cta}</span>
         </Link>
       </div>
 
-      {/* Nav */}
+      {/* Nav — in heroMode, starts invisible and slides in after scroll */}
       <header
-        className={`z-30 border-b border-[var(--border)] bg-[var(--background)]/90 backdrop-blur-md transition-all duration-500 ${
-          heroMode ? "hero-mode-header" : "sticky top-0"
+        className={`sticky top-0 z-30 border-b border-border bg-background/80 backdrop-blur-md transition-all duration-500 ${
+          heroMode ? "hero-mode-header" : ""
         }`}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
-          <Link href="/" aria-label="PROLOGUE agency — home">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 md:px-6">
+          <Link href="/" aria-label="Prologue Agency — home">
             <Wordmark />
           </Link>
           <MainNav />
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <LanguageToggle />
             <Link
               href="/contact"
-              className="hidden items-center bg-[#BD3B35] px-5 py-2.5 font-[family-name:var(--font-display)] text-xs font-semibold tracking-[0.12em] uppercase text-[var(--foreground)] transition-colors hover:bg-[#a33230] md:inline-flex"
+              className="hidden items-center rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 md:inline-flex"
             >
               {t.nav.cta}
             </Link>
@@ -97,12 +83,12 @@ export function SiteShell({
       <main className="flex-1">{children}</main>
 
       {/* Footer */}
-      <footer className="bg-[#0d0d0d] text-[var(--foreground)] border-t border-[var(--border)]">
-        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+      <footer className="bg-foreground text-background">
+        <div className="mx-auto max-w-6xl px-4 py-16 md:px-6">
           <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
-            <div className="col-span-2 flex flex-col gap-5 md:col-span-1">
-              <Wordmark tone="dark" />
-              <p className="max-w-xs font-[family-name:var(--font-body)] text-sm leading-relaxed text-[var(--muted-foreground)]">
+            <div className="col-span-2 flex flex-col gap-4 md:col-span-1">
+              <Wordmark tone="light" />
+              <p className="max-w-xs text-sm leading-relaxed text-background/60">
                 [Short tagline describing what Prologue Agency does and who it serves.]
               </p>
             </div>
@@ -123,15 +109,15 @@ export function SiteShell({
             </FooterColumn>
 
             <FooterColumn title={t.footer.connect}>
-              <FooterLink href="#">LinkedIn</FooterLink>
-              <FooterLink href="#">Twitter / X</FooterLink>
-              <FooterLink href="#">Newsletter</FooterLink>
+              <FooterLink href="#">[LinkedIn]</FooterLink>
+              <FooterLink href="#">[Twitter / X]</FooterLink>
+              <FooterLink href="#">[Newsletter]</FooterLink>
             </FooterColumn>
           </div>
 
-          <div className="mt-12 flex flex-col gap-2 border-t border-[var(--border)] pt-6 font-[family-name:var(--font-display)] text-xs tracking-[0.1em] uppercase text-[var(--muted-foreground)] md:flex-row md:items-center md:justify-between">
-            <span>© 2025 Prologue Agency. All rights reserved.</span>
-            <span>{pageName}</span>
+          <div className="mt-12 flex flex-col gap-2 border-t border-background/15 pt-6 text-xs text-background/50 md:flex-row md:items-center md:justify-between">
+            <span>[© Year Prologue Agency. All rights reserved.]</span>
+            <span className="font-mono uppercase tracking-wide">{pageName}</span>
           </div>
         </div>
       </footer>
@@ -142,15 +128,15 @@ export function SiteShell({
 function FooterColumn({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-3">
-      <p className="font-[family-name:var(--font-display)] text-xs font-semibold uppercase tracking-[0.15em] text-[var(--muted-foreground)]">{title}</p>
-      <nav className="flex flex-col gap-2.5 font-[family-name:var(--font-display)] text-xs tracking-[0.08em] uppercase text-[var(--foreground)]/60">{children}</nav>
+      <p className="text-xs font-semibold uppercase tracking-[0.15em] text-background/50">{title}</p>
+      <nav className="flex flex-col gap-2.5 text-sm text-background/75">{children}</nav>
     </div>
   )
 }
 
 function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
-    <Link href={href} className="w-fit transition-colors duration-150 hover:text-[var(--foreground)]">
+    <Link href={href} className="w-fit transition-colors hover:text-background">
       {children}
     </Link>
   )
@@ -170,29 +156,29 @@ export function PageHeader({
   problems?: string[]
 }) {
   return (
-    <section className="border-b border-[var(--border)] bg-[#161616]">
-      <div className="mx-auto flex max-w-6xl flex-col items-start gap-5 px-6 py-16 md:py-24 lg:px-8">
-        <span className="font-[family-name:var(--font-display)] text-xs font-semibold tracking-[0.2em] uppercase text-[#BD3B35]">{label}</span>
-        <h1 className="text-balance font-[family-name:var(--font-display)] text-4xl font-semibold tracking-tight text-[var(--foreground)] md:text-5xl">
+    <section className="border-b border-border bg-secondary">
+      <div className="mx-auto flex max-w-5xl flex-col items-start gap-4 px-4 py-16 md:px-6 md:py-24">
+        <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">{label}</span>
+        <h1 className="text-balance font-sans text-4xl font-semibold tracking-tight text-foreground md:text-5xl">
           {title}
         </h1>
         {intro ? (
-          <p className="max-w-2xl text-pretty font-[family-name:var(--font-body)] text-lg leading-relaxed text-[var(--muted-foreground)]">
+          <p className="max-w-2xl text-pretty font-serif text-lg leading-relaxed text-muted-foreground">
             {intro}
           </p>
         ) : null}
 
         {problems && problems.length > 0 ? (
-          <ul className="mt-4 grid w-full grid-cols-1 gap-3 border-t border-[var(--border)] pt-8 sm:grid-cols-2">
+          <ul className="mt-6 grid w-full grid-cols-1 gap-3 border-t border-border pt-8 sm:grid-cols-2">
             {problems.map((problem, i) => (
               <li key={i} className="flex items-start gap-3">
                 <span
-                  className="mt-1 flex size-5 shrink-0 items-center justify-center border border-[#BD3B35]/40 font-[family-name:var(--font-display)] text-[10px] font-semibold text-[#BD3B35]"
+                  className="mt-1 flex size-5 shrink-0 items-center justify-center rounded-full border border-accent/40 font-mono text-[10px] text-accent"
                   aria-hidden="true"
                 >
                   {i + 1}
                 </span>
-                <p className="font-[family-name:var(--font-body)] text-base leading-relaxed text-[var(--muted-foreground)]">
+                <p className="font-serif text-base leading-relaxed text-muted-foreground">
                   {problem}
                 </p>
               </li>

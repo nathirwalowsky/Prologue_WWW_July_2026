@@ -4,21 +4,14 @@ import { Geist_Mono, Jost, Spectral } from 'next/font/google'
 import { LanguageProvider } from '@/contexts/language-context'
 import './globals.css'
 
-// Jost — geometric sans for headings, UI, labels, buttons
-// Explicitly load 400 + 600 (SemiBold) so font-semibold renders the real cut
-const jost = Jost({
-  variable: '--font-jost',
-  subsets: ['latin', 'latin-ext'],
-  weight: ['400', '500', '600', '700'],
-  display: 'swap',
-})
-// Spectral — old-style serif for body copy and editorial text
+// Jost ≈ Century Gothic (geometric sans) for headings/UI
+const jost = Jost({ variable: '--font-jost', subsets: ['latin'] })
+// Spectral ≈ Bookman Old Style (old-style serif) for body copy
 const spectral = Spectral({
   variable: '--font-spectral',
-  subsets: ['latin', 'latin-ext'],
-  weight: ['300', '400', '500', '600', '700'],
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
   style: ['normal', 'italic'],
-  display: 'swap',
 })
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
@@ -55,7 +48,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pl" className={`${jost.variable} ${spectral.variable} ${geistMono.variable} bg-background`}>
-      <body className="font-[family-name:var(--font-body)] antialiased">
+      <body className="font-sans antialiased">
         <LanguageProvider>
           {children}
         </LanguageProvider>

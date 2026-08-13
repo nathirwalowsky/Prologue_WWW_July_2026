@@ -1,6 +1,5 @@
 "use client"
 
-import Link from "next/link"
 import { useLanguage } from "@/contexts/language-context"
 
 const caseStudies = [
@@ -30,37 +29,6 @@ const caseStudies = [
   },
 ]
 
-// Mini sparkline bars — purely decorative, different heights per stat
-const sparklines = [
-  [30, 42, 38, 55, 48, 70, 65, 80],
-  [20, 35, 30, 45, 55, 50, 68, 75],
-  [40, 38, 50, 45, 60, 58, 72, 78],
-  [25, 40, 52, 48, 65, 70, 75, 95],
-]
-
-function Sparkline({ bars }: { bars: number[] }) {
-  return (
-    <svg
-      width="48" height="22"
-      viewBox="0 0 48 22"
-      aria-hidden
-      className="shrink-0"
-    >
-      {bars.map((h, i) => (
-        <rect
-          key={i}
-          x={i * 6}
-          y={22 - h * 0.22}
-          width="4"
-          height={h * 0.22}
-          fill="#303E91"
-          opacity={0.5 + i * 0.06}
-        />
-      ))}
-    </svg>
-  )
-}
-
 export function HomeResults() {
   const { t } = useLanguage()
 
@@ -72,43 +40,37 @@ export function HomeResults() {
   ]
 
   return (
-    <section className="py-20 md:py-28" style={{ backgroundColor: "#BDBCBC" }}>
-      <div className="mx-auto max-w-6xl px-6 lg:px-8">
+    <section className="bg-background py-20 md:py-28">
+      <div className="mx-auto max-w-6xl px-4 md:px-6">
 
         {/* Header */}
         <div className="mb-14 flex flex-col gap-3">
-          <span className="font-[family-name:var(--font-display)] text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: "#303E91" }}>
+          <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
             {t.home.resultsLabel}
           </span>
           <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-            <h2 className="text-balance font-[family-name:var(--font-display)] text-3xl font-semibold tracking-tight md:text-4xl" style={{ color: "#0d0d0d" }}>
+            <h2 className="text-balance font-sans text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
               {t.home.resultsTitle}
             </h2>
-            <p className="max-w-sm text-pretty font-[family-name:var(--font-body)] text-base leading-relaxed md:text-right" style={{ color: "#272727" }}>
+            <p className="max-w-sm text-pretty font-serif text-base leading-relaxed text-muted-foreground md:text-right">
               {t.home.resultsSub}
             </p>
           </div>
         </div>
 
         {/* Stats grid */}
-        <div className="mb-16 grid grid-cols-2 gap-px md:grid-cols-4" style={{ backgroundColor: "rgba(0,0,0,0.12)" }}>
-          {stats.map((stat, i) => (
+        <div className="mb-16 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-border bg-border md:grid-cols-4">
+          {stats.map((stat) => (
             <div
               key={stat.label}
-              className="flex flex-col gap-3 px-6 py-8 md:px-8 md:py-10"
-              style={{ backgroundColor: "#BDBCBC" }}
+              className="flex flex-col items-start gap-1.5 bg-background px-6 py-8 md:px-8 md:py-10"
             >
-              <div className="flex items-end justify-between">
-                <span className="font-[family-name:var(--font-display)] text-4xl font-semibold tracking-tight md:text-5xl" style={{ color: "#0d0d0d" }}>
-                  {stat.value}
-                </span>
-                <Sparkline bars={sparklines[i]} />
-              </div>
-              <span className="font-[family-name:var(--font-display)] text-[10px] font-semibold uppercase tracking-[0.15em]" style={{ color: "#272727" }}>
+              <span className="font-sans text-4xl font-semibold tracking-tight text-foreground md:text-5xl">
+                {stat.value}
+              </span>
+              <span className="font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground">
                 {stat.label}
               </span>
-              {/* Thin indigo rule underneath label */}
-              <div style={{ height: 1, width: 28, backgroundColor: "#303E91", opacity: 0.6 }} />
             </div>
           ))}
         </div>
@@ -117,78 +79,67 @@ export function HomeResults() {
         <div className="flex flex-col gap-4">
           <div className="mb-6 flex items-end justify-between">
             <div className="flex flex-col gap-1.5">
-              <span className="font-[family-name:var(--font-display)] text-[10px] font-semibold uppercase tracking-[0.2em]" style={{ color: "#272727" }}>
+              <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
                 {t.home.resultsCaseStudiesLabel}
               </span>
-              <h3 className="font-[family-name:var(--font-display)] text-2xl font-semibold tracking-tight" style={{ color: "#0d0d0d" }}>
+              <h3 className="font-sans text-2xl font-semibold tracking-tight text-foreground">
                 {t.home.resultsCaseStudiesTitle}
               </h3>
             </div>
-            <Link
-              href="/case-studies"
-              className="hidden font-[family-name:var(--font-display)] text-xs font-semibold uppercase tracking-[0.1em] transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#303E91] focus-visible:ring-offset-2 md:inline-block"
-              style={{ color: "#303E91" }}
+            <a
+              href="/blog"
+              className="hidden font-medium text-primary hover:underline md:inline-block"
             >
-              {t.home.resultsViewAll} →
-            </Link>
+              {t.home.resultsViewAll}
+            </a>
           </div>
 
-          <div className="grid grid-cols-1 gap-px md:grid-cols-3" style={{ backgroundColor: "rgba(0,0,0,0.12)" }}>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             {caseStudies.map((cs, i) => (
               <article
                 key={i}
-                className="group flex flex-col"
-                style={{ backgroundColor: "#BDBCBC" }}
+                className="group flex flex-col rounded-xl border border-border bg-card overflow-hidden transition-colors hover:border-primary/30"
               >
-                {/* Big metric — with indigo left accent */}
-                <div className="flex flex-col gap-1 px-6 py-7" style={{ borderBottom: "1px solid rgba(0,0,0,0.10)", borderLeft: i === 0 ? "3px solid #303E91" : "3px solid transparent" }}>
-                  <div className="flex items-start gap-3">
-                    {/* Up-arrow icon */}
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden className="mt-2 shrink-0">
-                      <path d="M8 13V3M3 8l5-5 5 5" stroke="#303E91" strokeWidth="1.5" strokeLinecap="square"/>
-                    </svg>
-                    <div>
-                      <span className="font-[family-name:var(--font-display)] text-5xl font-semibold tracking-tight leading-none" style={{ color: "#0d0d0d" }}>
-                        {cs.metric}
-                      </span>
-                      <p className="font-[family-name:var(--font-body)] text-sm leading-snug mt-1" style={{ color: "#272727" }}>
-                        {cs.metricLabel}
-                      </p>
-                    </div>
-                  </div>
+                {/* Big metric — top accent band */}
+                <div className="flex flex-col gap-1 border-b border-border bg-secondary px-6 py-7">
+                  <span className="font-sans text-5xl font-semibold tracking-tight text-foreground leading-none">
+                    {cs.metric}
+                  </span>
+                  <span className="font-serif text-sm text-muted-foreground leading-snug">
+                    {cs.metricLabel}
+                  </span>
                 </div>
 
                 {/* Card body */}
                 <div className="flex flex-1 flex-col gap-4 p-6">
                   <div className="flex items-center justify-between">
-                    <span className="font-[family-name:var(--font-display)] text-[10px] font-semibold uppercase tracking-[0.15em]" style={{ color: "#272727" }}>
+                    <span className="font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground">
                       {cs.industry}
                     </span>
-                    <span className="px-2.5 py-0.5 font-[family-name:var(--font-display)] text-[10px] font-semibold uppercase tracking-wide" style={{ border: "1px solid rgba(0,0,0,0.15)", color: "#272727" }}>
+                    <span className="rounded-full bg-accent/10 px-2.5 py-0.5 font-mono text-xs uppercase tracking-wide text-accent">
                       {cs.tag}
                     </span>
                   </div>
-                  <h4 className="font-[family-name:var(--font-display)] text-sm font-semibold uppercase tracking-[0.05em] leading-snug" style={{ color: "#0d0d0d" }}>
+                  <h4 className="font-sans text-base font-semibold text-foreground leading-snug">
                     {cs.title}
                   </h4>
-                  <p className="font-[family-name:var(--font-body)] text-sm leading-relaxed flex-1" style={{ color: "#272727" }}>
+                  <p className="font-serif text-sm leading-relaxed text-muted-foreground flex-1">
                     {cs.outcome}
                   </p>
-                  <span className="mt-auto font-[family-name:var(--font-display)] text-[10px] font-semibold uppercase tracking-[0.12em] inline-flex items-center gap-1.5 transition-transform group-hover:translate-x-0.5 group-focus-visible:translate-x-0.5" style={{ color: "#303E91" }}>
-                    Read case study →
+                  <span className="mt-auto font-medium text-primary text-sm transition-transform group-hover:translate-x-0.5 inline-flex items-center gap-1.5">
+                    [Read case study] <span aria-hidden="true">→</span>
                   </span>
                 </div>
               </article>
             ))}
           </div>
 
-          <Link
-            href="/case-studies"
-            className="mt-2 font-[family-name:var(--font-display)] text-xs font-semibold uppercase tracking-[0.1em] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#303E91] focus-visible:ring-offset-2 md:hidden"
-            style={{ color: "#303E91" }}
+          <a
+            href="/blog"
+            className="mt-2 font-medium text-primary hover:underline md:hidden"
           >
-            {t.home.resultsViewAll} →
-          </Link>
+            {t.home.resultsViewAll}
+          </a>
         </div>
 
       </div>

@@ -6,413 +6,213 @@ import { useEffect, useRef, useState } from "react"
 import { useLanguage } from "@/contexts/language-context"
 
 /**
- * HomeHero — Prologue agency full-viewport hero
+ * HomeHero
  *
- * Phase 0 (initial):
- *   - kv-transparent.png centred, large, colorful
- *   - Large tagline, word-by-word entrance
- *   - Ticker strip at bottom
- *   - SCROLL cue at bottom
+ * Phase 0 (scrollY = 0):
+ *   - Full-viewport dark panel
+ *   - Prologue symbol + wordmark centred
+ *   - Full tagline: "Strategic excellence in an age of constant transformation"
  *
- * Phase 1 (after first downward scroll):
- *   - kv element shifts right, dims
- *   - "Strategic excellence" → "Strategic transformation" (all white)
- *   - Subtitle + three CTA cards rise in
- *   - Site nav slides in from top
+ * Phase 1 (scrollY > triggerPx):
+ *   - Logo shrinks to top-left (mimics the sticky nav wordmark position)
+ *   - Tagline morphs: accent phrase fades/slides out, "Strategic transformation"
+ *     remains centred with a subtitle sliding in below
+ *   - 3 CTA cards rise up beneath the headline
  *
- * Scroll UP from the very top of the page (scrollY === 0) reverses back to phase 0.
- *
- * Scroll intercept uses ref-mirrored state to avoid stale closures.
+ * The sticky nav in SiteShell is told to hide while phase === 0 via
+ * a CSS class toggled on <html> — no prop drilling needed.
  */
+
+const TRIGGER_PX = 80
 
 export function HomeHero() {
   const { t } = useLanguage()
+  const [scrolled, setScrolled] = useState(false)
+  const heroRef = useRef<HTMLElement>(null)
 
-  const [phase, setPhase]                   = useState<0 | 1>(0)
-  const phaseRef                            = useRef<0 | 1>(0)
-  const [scrollUnlocked, setScrollUnlocked] = useState(false)
-  const scrollUnlockedRef                   = useRef(false)
-  const [cardsVisible, setCardsVisible]     = useState(false)
-  const transitioningRef                    = useRef(false)
-
-  useEffect(() => { phaseRef.current = phase }, [phase])
-  useEffect(() => { scrollUnlockedRef.current = scrollUnlocked }, [scrollUnlocked])
-
-  // ── Forward: phase 0 → 1 ─────────────────────────────────────────
-  const triggerPhase1 = () => {
-    if (transitioningRef.current || phaseRef.current === 1) return
-    transitioningRef.current = true
-    setPhase(1)
-    phaseRef.current = 1
-    document.documentElement.classList.add("hero-scrolled")
-    setTimeout(() => setCardsVisible(true), 560)
-    setTimeout(() => {
-      setScrollUnlocked(true)
-      scrollUnlockedRef.current = true
-      transitioningRef.current  = false
-    }, 960)
-  }
-
-  // ── Reverse: phase 1 → 0 (only when at very top of page) ─────────
-  const triggerPhase0 = () => {
-    if (transitioningRef.current || phaseRef.current === 0) return
-    transitioningRef.current = true
-    setCardsVisible(false)
-    setScrollUnlocked(false)
-    scrollUnlockedRef.current = false
-    setPhase(0)
-    phaseRef.current = 0
-    document.documentElement.classList.remove("hero-scrolled")
-    setTimeout(() => { transitioningRef.current = false }, 960)
-  }
-
-  // ── Wheel intercept ───────────────────────────────────────────────
-  useEffect(() => {
-    const onWheel = (e: WheelEvent) => {
-      if (phaseRef.current === 0) {
-        e.preventDefault()
-        if (e.deltaY > 0) triggerPhase1()
-        return
-      }
-      if (!scrollUnlockedRef.current) {
-        e.preventDefault()
-        return
-      }
-      if (e.deltaY < 0 && window.scrollY === 0) {
-        e.preventDefault()
-        triggerPhase0()
-      }
-    }
-    window.addEventListener("wheel", onWheel, { passive: false })
-    return () => window.removeEventListener("wheel", onWheel)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  // ── Native scroll listener: auto-reverse when user scrolls back to top ──
   useEffect(() => {
     const onScroll = () => {
-      if (phaseRef.current === 1 && scrollUnlockedRef.current && window.scrollY === 0) {
-        triggerPhase0()
-      }
+      setScrolled(window.scrollY >= TRIGGER_PX)
     }
     window.addEventListener("scroll", onScroll, { passive: true })
+    onScroll()
     return () => window.removeEventListener("scroll", onScroll)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // ── Touch support ─────────────────────────────────────────────────
+  // Tell the sticky header (SiteShell) whether to show itself
   useEffect(() => {
-    let startY = 0
-    const onTouchStart = (e: TouchEvent) => { startY = e.touches[0].clientY }
-    const onTouchEnd   = (e: TouchEvent) => {
-      const delta = startY - e.changedTouches[0].clientY
-      if (delta > 40  && phaseRef.current === 0) { triggerPhase1() }
-      if (delta < -40 && phaseRef.current === 1 && window.scrollY === 0) { triggerPhase0() }
-    }
-    window.addEventListener("touchstart", onTouchStart, { passive: true })
-    window.addEventListener("touchend",   onTouchEnd,   { passive: true })
-    return () => {
-      window.removeEventListener("touchstart", onTouchStart)
-      window.removeEventListener("touchend",   onTouchEnd)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const isPhase1 = phase === 1
+    document.documentElement.classList.toggle("hero-scrolled", scrolled)
+  }, [scrolled])
 
   return (
     <section
+      ref={heroRef}
       aria-label="Hero"
-      className="relative flex min-h-dvh flex-col overflow-hidden"
-      style={{ background: "var(--color-prologue-black, #0d0d0d)" }}
+      /* 100dvh so the full intro is always in viewport */
+      className="relative flex min-h-dvh flex-col bg-foreground text-background"
     >
-
-      {/* ── Branding element — kv-transparent (eclipse + mountain) ── */}
+      {/* ── Overlay nav (visible only while NOT scrolled) ── */}
       <div
-        className="pointer-events-none absolute z-[1]"
-        style={{
-          width:     isPhase1 ? "78%" : "68%",
-          top:       isPhase1 ? "-16%" : "-2%",
-          left:      isPhase1 ? "54%"  : "50%",
-          transform: "translateX(-50%)",
-          opacity:   isPhase1 ? 0.16 : 1,
-          transition: [
-            "width   1.4s cubic-bezier(0.25,0,0.1,1)",
-            "top     1.4s cubic-bezier(0.25,0,0.1,1)",
-            "left    1.4s cubic-bezier(0.25,0,0.1,1)",
-            "opacity 1.6s cubic-bezier(0.25,0,0.1,1) 0.1s",
-          ].join(", "),
-          animation: "hero-logo-drop 1.2s cubic-bezier(0.16,1,0.3,1) 0.1s both",
-        }}
-        aria-hidden
+        className={`absolute inset-x-0 top-0 z-20 flex items-center justify-between px-6 pt-5 transition-opacity duration-500 md:px-8 ${
+          scrolled ? "pointer-events-none opacity-0" : "opacity-100"
+        }`}
       >
+        {/* Wordmark — fades/moves once scrolled (the sticky header takes over) */}
         <Image
-          src="/brand/kv-transparent.png"
-          alt=""
-          width={900}
-          height={900}
-          className="h-auto w-full object-contain"
+          src="/brand/prologue-wordmark.png"
+          alt="Prologue Agency"
+          width={160}
+          height={54}
+          className="brightness-0 invert"
           priority
         />
-      </div>
-
-      {/* ── Top bar — brand indigo, white text ───────────────────── */}
-      <div
-        className="absolute inset-x-0 top-0 z-30 flex items-center justify-between px-6 py-4 md:px-8"
-        style={{
-          backgroundColor: "var(--color-prologue-blue, #303E91)",
-          opacity:    isPhase1 ? 0 : 1,
-          transition: "opacity 0.4s ease",
-          pointerEvents: isPhase1 ? "none" : "auto",
-          animation: "hero-logo-drop 0.7s cubic-bezier(0.16,1,0.3,1) 0.2s both",
-        }}
-      >
-        <div className="flex items-center gap-3">
-          <Image src="/brand/logo-light-signet.png" alt="" width={66} height={66} className="h-[66px] w-auto" aria-hidden priority />
-          <Image src="/brand/logo-light-wordmark.png" alt="PROLOGUE agency" width={210} height={66} className="h-[42px] w-auto" priority />
-        </div>
-        <nav className="hidden items-center gap-8 md:flex" aria-label="Hero navigation">
-          {[
-            { href: "/services", label: t.nav.services },
-            { href: "/about",    label: t.nav.about    },
-            { href: "/contact",  label: t.nav.contact  },
-          ].map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              className="font-[family-name:var(--font-display)] text-[11px] font-semibold uppercase tracking-[0.15em] text-white/70 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#303E91]"
-            >
-              {l.label}
-            </Link>
-          ))}
+        {/* Pre-scroll nav links */}
+        <nav className="hidden items-center gap-6 text-sm text-background/60 md:flex">
+          <Link href="/services" className="transition-colors hover:text-background">
+            {t.nav.services}
+          </Link>
+          <Link href="/about" className="transition-colors hover:text-background">
+            {t.nav.about}
+          </Link>
+          <Link href="/contact" className="transition-colors hover:text-background">
+            {t.nav.contact}
+          </Link>
         </nav>
       </div>
 
-      {/* ── Central content ────────────────────────────────────────── */}
-      <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 pb-28 pt-24 text-center md:px-12">
+      {/* ── Central content ── */}
+      <div className="flex flex-1 flex-col items-center justify-center px-4 pb-32 pt-24 text-center md:px-8">
 
-        {/* ── PHASE 0 ── */}
+        {/* Logo / symbol — shrinks and moves to top-left on scroll */}
         <div
-          style={{
-            position: "absolute",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "1.5rem",
-            pointerEvents: isPhase1 ? "none" : "auto",
-            opacity:    isPhase1 ? 0 : 1,
-            transform:  isPhase1 ? "translateY(-16px)" : "translateY(0)",
-            visibility: isPhase1 ? "hidden" : "visible",
-            transition: isPhase1
-              ? "opacity 0.65s cubic-bezier(0.4,0,0.8,0), transform 0.65s cubic-bezier(0.4,0,0.8,0), visibility 0s linear 0.7s"
-              : "opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1)",
-          }}
+          className={`mb-8 transition-all duration-700 ease-in-out ${
+            scrolled
+              ? "absolute left-5 top-4 h-10 w-auto opacity-0 md:left-7"
+              : "relative h-20 w-20 opacity-100 md:h-28 md:w-28"
+          }`}
         >
-          <span
-            className="font-[family-name:var(--font-display)] text-[10px] font-semibold uppercase tracking-[0.28em]"
-            style={{ color: "rgba(255,255,255,0.42)", animation: "hero-sub-in 0.6s cubic-bezier(0.16,1,0.3,1) 0.5s both" }}
-          >
-            Strategy · Transformation · Growth
-          </span>
+          <Image
+            src="/brand/prologue-symbol.png"
+            alt=""
+            aria-hidden="true"
+            fill
+            className="object-contain brightness-0 invert"
+            priority
+          />
+        </div>
 
+        {/* ── Tagline — two-phase morph ── */}
+        <div className="relative flex min-h-[8rem] flex-col items-center justify-center gap-2 md:min-h-[10rem]">
+
+          {/* Phase 0 — full tagline */}
           <h1
-            className="font-[family-name:var(--font-display)] font-semibold leading-none tracking-tight text-white"
-            style={{ fontSize: "clamp(2.8rem, 6.5vw, 5.5rem)" }}
+            className={`absolute text-balance font-sans text-4xl font-semibold tracking-tight transition-all duration-600 ease-in-out md:text-6xl lg:text-7xl ${
+              scrolled
+                ? "translate-y-4 opacity-0"
+                : "translate-y-0 opacity-100"
+            }`}
           >
-            <span className="block">
-              {[{ text: "Strategic", delay: "0.7s" }, { text: "excellence", delay: "0.83s" }].map(({ text, delay }) => (
-                <span key={text} className="hero-word hero-word-animate-in inline-block" style={{ animationDelay: delay, marginRight: "0.22em" }}>{text}</span>
-              ))}
-            </span>
-            <span
-              className="block"
-              style={{ fontSize: "0.6em", color: "rgba(255,255,255,0.30)", marginTop: "0.22em" }}
-            >
-              {[
-                { text: "in an age of",   delay: "1.0s"  },
-                { text: "constant",       delay: "1.12s" },
-                { text: "transformation", delay: "1.24s" },
-              ].map(({ text, delay }) => (
-                <span key={text} className="hero-word hero-word-animate-in inline-block" style={{ animationDelay: delay, marginRight: "0.28em" }}>{text}</span>
-              ))}
-            </span>
+            {/* "Strategic excellence" stays, "in an age of constant transformation" fades */}
+            <span>Strategic excellence </span>
+            <span className="text-background/50">in an age of constant transformation</span>
           </h1>
 
-          {/* Thin rule: indigo + sand */}
+          {/* Phase 1 — condensed headline + subtitle */}
           <div
-            className="flex"
-            style={{ animation: "hero-sub-in 0.6s cubic-bezier(0.16,1,0.3,1) 1.5s both" }}
-            aria-hidden
+            className={`flex flex-col items-center gap-4 transition-all duration-600 ease-in-out ${
+              scrolled
+                ? "translate-y-0 opacity-100"
+                : "translate-y-6 opacity-0"
+            }`}
           >
-            <div style={{ height: 1, width: 48, backgroundColor: "var(--color-prologue-blue, #303E91)" }} />
-            <div style={{ height: 1, width: 24, backgroundColor: "var(--color-prologue-sand, #90755F)" }} />
+            <h1 className="text-balance font-sans text-4xl font-semibold tracking-tight md:text-6xl lg:text-7xl">
+              Strategic transformation
+            </h1>
+            <p className="max-w-lg text-pretty font-serif text-lg leading-relaxed text-background/70 md:text-xl">
+              {t.home.heroSub}
+            </p>
           </div>
         </div>
 
-        {/* ── PHASE 1 ── */}
+        {/* ── 3 CTA cards — fade in after scroll ── */}
         <div
-          className="flex w-full max-w-4xl flex-col items-center gap-6"
-          style={{
-            pointerEvents: isPhase1 ? "auto" : "none",
-            visibility:    isPhase1 ? "visible" : "hidden",
-          }}
+          className={`mt-12 grid w-full max-w-3xl grid-cols-1 gap-3 transition-all duration-700 ease-in-out sm:grid-cols-3 ${
+            scrolled
+              ? "translate-y-0 opacity-100"
+              : "translate-y-8 opacity-0"
+          }`}
         >
-          <h1
-            className="text-balance font-[family-name:var(--font-display)] font-semibold leading-none tracking-tight text-white"
-            style={{
-              fontSize:  "clamp(2.6rem, 6.5vw, 5.5rem)",
-              opacity:   isPhase1 ? 1 : 0,
-              transform: isPhase1 ? "translateY(0)" : "translateY(28px)",
-              transition: "opacity 0.8s cubic-bezier(0.16,1,0.3,1) 0.2s, transform 0.8s cubic-bezier(0.16,1,0.3,1) 0.2s",
-            }}
-          >
-            Strategic{" "}transformation
-          </h1>
-
-          <p
-            className="max-w-xl text-pretty font-[family-name:var(--font-body)] text-lg leading-relaxed md:text-xl"
-            style={{
-              color:     "rgba(255,255,255,0.50)",
-              opacity:   isPhase1 ? 1 : 0,
-              transform: isPhase1 ? "translateY(0)" : "translateY(20px)",
-              transition: "opacity 0.8s cubic-bezier(0.16,1,0.3,1) 0.35s, transform 0.8s cubic-bezier(0.16,1,0.3,1) 0.35s",
-            }}
-          >
-            {t.home.heroSub}
-          </p>
-
-          {/* CTA cards */}
-          <div
-            className="mt-4 grid w-full grid-cols-1 gap-px sm:grid-cols-3"
-            style={{ backgroundColor: "rgba(255,255,255,0.07)" }}
-          >
-            {[
-              { href: "/vector",  tag: "Free",    title: "Vector Workshop",    desc: "The foundational tool for strategic clarity — yours at no cost.", primary: true  },
-              { href: "/about",   tag: "Explore", title: "Learn More",         desc: "Understand how we work before making any decision.",              primary: false },
-              { href: "/contact", tag: "Start",   title: "Schedule Intro Call",desc: "A focused 30-minute conversation about your situation.",           primary: false },
-            ].map((card, i) => (
-              <CtaCard key={card.href} {...card} visible={cardsVisible} delay={i * 100} />
-            ))}
-          </div>
+          <CtaCard
+            href="/vector"
+            tag="Free"
+            title="Vector Workshop"
+            desc="The foundational tool for strategic clarity — yours at no cost."
+            primary
+          />
+          <CtaCard
+            href="/about"
+            tag="Explore"
+            title="Learn More"
+            desc="Understand how we work before making any decision."
+          />
+          <CtaCard
+            href="/contact"
+            tag="Start"
+            title="Schedule Intro Call"
+            desc="A focused 30-minute conversation about your situation."
+          />
         </div>
       </div>
 
-      {/* ── Ticker strip — horizontal brand words ───────────────── */}
+      {/* Scroll cue — fades out after scroll */}
       <div
-        className="absolute bottom-20 left-0 right-0 z-10 overflow-hidden"
-        style={{
-          opacity:       isPhase1 ? 0 : 1,
-          transition:    "opacity 0.4s ease",
-          pointerEvents: "none",
-        }}
-        aria-hidden
+        className={`absolute bottom-8 left-1/2 -translate-x-1/2 transition-opacity duration-500 ${
+          scrolled ? "opacity-0" : "opacity-60"
+        }`}
+        aria-hidden="true"
       >
-        <div
-          className="flex whitespace-nowrap"
-          style={{ animation: "ticker-scroll 24s linear infinite" }}
-        >
-          {[0, 1].map((n) => (
-            <span key={n} className="flex shrink-0 items-center gap-6 pr-6">
-              {[
-                "Strategy", "·", "Leadership", "·", "Transformation",
-                "·", "Growth", "·", "Clarity", "·", "Execution",
-                "·", "Vision", "·", "Results", "·",
-              ].map((word, i) => (
-                <span
-                  key={`${n}-${i}`}
-                  className="font-[family-name:var(--font-display)] text-[10px] font-semibold uppercase tracking-[0.22em]"
-                  style={{
-                    color: word === "·"
-                      ? "rgba(255,255,255,0.15)"
-                      : "rgba(255,255,255,0.18)",
-                  }}
-                >
-                  {word}
-                </span>
-              ))}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {/* ── Scroll cue ───────────────────────────────────────────── */}
-      <div
-        className="absolute bottom-7 left-1/2 z-20 -translate-x-1/2"
-        style={{
-          opacity:       isPhase1 ? 0 : 1,
-          pointerEvents: isPhase1 ? "none" : "auto",
-          transition:    "opacity 0.4s ease",
-          animation:     !isPhase1 ? "hero-sub-in 0.6s cubic-bezier(0.16,1,0.3,1) 1.7s both" : undefined,
-        }}
-      >
-        <button
-          type="button"
-          onClick={triggerPhase1}
-          className="flex flex-col items-center gap-2"
-          aria-label="Scroll to reveal more"
-          style={{ background: "none", border: "none", padding: 0, cursor: "pointer" }}
-        >
-          <span
-            className="font-[family-name:var(--font-display)] text-[10px] font-semibold uppercase tracking-[0.25em]"
-            style={{ color: "rgba(255,255,255,0.38)" }}
-          >
+        <div className="flex flex-col items-center gap-1.5">
+          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-background/50">
             Scroll
           </span>
-          <ScrollChevron />
-        </button>
+          <span className="animate-bounce text-background/40">↓</span>
+        </div>
       </div>
-
     </section>
   )
 }
 
-/* ── Animated scroll chevron ─────────────────────────────────── */
-function ScrollChevron() {
-  return (
-    <svg
-      width="16" height="9" viewBox="0 0 16 9"
-      fill="none" aria-hidden
-      style={{ animation: "chevron-bob 1.6s ease-in-out infinite" }}
-    >
-      <path d="M1 1L8 8L15 1" stroke="rgba(255,255,255,0.35)" strokeWidth="1.5" strokeLinecap="square" />
-    </svg>
-  )
-}
+/* ── CTA Card ─────────────────────────────────────────────────── */
 
-/* ── CTA Card ────────────────────────────────────────────────── */
 function CtaCard({
-  href, tag, title, desc, primary = false, visible, delay,
+  href,
+  tag,
+  title,
+  desc,
+  primary = false,
 }: {
-  href: string; tag: string; title: string; desc: string
-  primary?: boolean; visible: boolean; delay: number
+  href: string
+  tag: string
+  title: string
+  desc: string
+  primary?: boolean
 }) {
   return (
     <Link
       href={href}
-      className="group flex flex-col gap-3 p-5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#303E91] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0d0d0d]"
-      style={{
-        backgroundColor: "rgba(13,13,13,0.90)",
-        borderTop: primary
-          ? "1px solid var(--color-prologue-blue, #303E91)"
-          : "1px solid rgba(255,255,255,0.07)",
-        opacity:    visible ? 1 : 0,
-        transform:  visible ? "translateY(0)" : "translateY(22px)",
-        transition: `opacity 0.6s cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform 0.6s cubic-bezier(0.16,1,0.3,1) ${delay}ms, background-color 0.2s ease`,
-        backdropFilter: "blur(6px)",
-      }}
+      className={`group flex flex-col gap-3 rounded-lg border p-5 text-left transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg ${
+        primary
+          ? "border-background/30 bg-background/10 hover:bg-background/15"
+          : "border-background/15 bg-background/5 hover:bg-background/10"
+      }`}
     >
-      <span
-        className="font-[family-name:var(--font-display)] text-[10px] font-semibold uppercase tracking-[0.22em]"
-        style={{ color: primary ? "var(--color-prologue-blue, #303E91)" : "rgba(255,255,255,0.36)" }}
-      >
+      <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-background/50">
         {tag}
       </span>
-      <p className="font-[family-name:var(--font-display)] text-sm font-semibold uppercase tracking-[0.08em] text-white transition-colors group-hover:text-white/60">
+      <p className="font-sans text-base font-semibold text-background group-hover:text-background/90">
         {title}
       </p>
-      <p className="font-[family-name:var(--font-body)] text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.38)" }}>
-        {desc}
-      </p>
+      <p className="text-sm leading-relaxed text-background/55">{desc}</p>
     </Link>
   )
 }
