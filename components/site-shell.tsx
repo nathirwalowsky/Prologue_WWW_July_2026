@@ -148,12 +148,15 @@ export function PageHeader({
   title,
   intro,
   problems,
+  actions,
 }: {
   label: string
   title: string
   intro?: string
   /** Optional list of problem statements rendered as a numbered grid below the heading */
   problems?: string[]
+  /** Optional actions (e.g. CTA buttons) rendered below the intro */
+  actions?: React.ReactNode
 }) {
   return (
     <section className="border-b border-border bg-secondary">
@@ -167,6 +170,8 @@ export function PageHeader({
             {intro}
           </p>
         ) : null}
+
+        {actions ? <div className="mt-2">{actions}</div> : null}
 
         {problems && problems.length > 0 ? (
           <ul className="mt-6 grid w-full grid-cols-1 gap-3 border-t border-border pt-8 sm:grid-cols-2">

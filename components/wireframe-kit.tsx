@@ -120,7 +120,15 @@ export function WireButton({
 }
 
 // Reusable FAQ wireframe block.
-export function WireFAQ({ count = 5 }: { count?: number }) {
+export function WireFAQ({
+  count = 5,
+  questions,
+}: {
+  count?: number
+  /** Optional list of specific question labels. Overrides `count` when provided. */
+  questions?: string[]
+}) {
+  const labels = questions ?? Array.from({ length: count }).map((_, i) => `Question ${i + 1}: [FAQ question text]`)
   return (
     <section className="py-16 md:py-24">
       <div className="mx-auto max-w-3xl px-4">
@@ -129,14 +137,12 @@ export function WireFAQ({ count = 5 }: { count?: number }) {
           <WireHeading level={2}>Frequently Asked Questions</WireHeading>
         </div>
         <div className="flex flex-col gap-3">
-          {Array.from({ length: count }).map((_, i) => (
+          {labels.map((label, i) => (
             <div
               key={i}
               className="flex items-center justify-between gap-4 rounded-md border-2 border-dashed border-neutral-300 bg-neutral-50 px-5 py-4"
             >
-              <p className="font-semibold text-neutral-800">
-                {"Question " + (i + 1) + ": [FAQ question text]"}
-              </p>
+              <p className="font-semibold text-neutral-800">{label}</p>
               <span className="font-mono text-xl text-neutral-400" aria-hidden="true">
                 +
               </span>

@@ -227,10 +227,48 @@ export const translations = {
     openTemplate: { pl: "Otwórz szablon",         en: "Open template" },
     makeCopy:     { pl: "Utwórz kopię",           en: "Make a copy" },
     duplicate:    { pl: "Duplikuj",               en: "Duplicate" },
-    pageLabel:    { pl: "Warsztaty Vector",        en: "Vector Workshop" },
+    pageLabel:    { pl: "Warsztat Vector",        en: "Vector Workshop" },
     tabOutcome:   { pl: "Wynik",                  en: "The Outcome" },
     tabMethod:    { pl: "Metoda",                 en: "The Method" },
     tabForWhom:   { pl: "Dla kogo",               en: "Who It's For" },
+
+    // Hero actions
+    heroSchedule:      { pl: "Umów sesję z konsultantem", en: "[Book a session with a consultant]" },
+    heroDownload:      { pl: "Pobierz pakiet Vector",      en: "[Get the Vector package]" },
+    heroDownloadNote:  { pl: "[Jedna linia mikrokopii pod przyciskiem pobierania.]", en: "[One line of microcopy under the download button.]" },
+
+    // Proof section
+    proofLabel: { pl: "Dowód", en: "Proof" },
+    proofLead:  { pl: "[Jedno zdanie z liczbą przeprowadzonych sesji.]", en: "[One sentence with the number of sessions run.]" },
+    proofQuote: { pl: "[Cytat uczestnika warsztatu.]", en: "[Participant quote about the workshop.]" },
+    proofQuoteAttribution: { pl: "[Imię, rola, firma]", en: "[Name, role, company]" },
+
+    // Agenda meta
+    agendaMeta: { pl: "2 do 3 godzin, zależnie od wielkości grupy · 5 etapów", en: "[2 to 3 hours, depending on group size · 5 stages]" },
+    commonMistake: { pl: "Najczęstszy błąd", en: "[Most Common Mistake]" },
+    doneWhen: { pl: "Po czym poznasz, że etap jest skończony", en: "[How You Know the Stage Is Done]" },
+
+    // Run it online (merged section)
+    onlineLabel: { pl: "Online", en: "Online" },
+    onlineTitle: { pl: "Przeprowadź Vector online", en: "[Run Vector Online]" },
+    onlineLead:  { pl: "[Jedno zdanie o tym, jak przeprowadzić warsztat zdalnie.]", en: "[One sentence on running the workshop remotely.]" },
+    onlineFormatsNote: { pl: "[Informacja o dostępnych formatach — plansze PNG do wgrania na dowolną tablicę online.]", en: "[Note on available formats — PNG boards you can upload to any online whiteboard.]" },
+
+    // Download section
+    downloadFilesLabel: { pl: "Pliki do pobrania", en: "[Files to Download]" },
+    downloadAiLabel:    { pl: "Narzędzia AI",       en: "[AI Tools]" },
+    buyPackage:      { pl: "Kup gotowy pakiet warsztatowy", en: "[Buy the Ready-Made Workshop Package]" },
+    buyPackageNote:  { pl: "[Jedno zdanie opisujące, co zawiera gotowy pakiet warsztatowy.]", en: "[One sentence describing what the ready-made workshop package includes.]" },
+    comingSoon: { pl: "Wkrótce", en: "[Soon]" },
+
+    // Final CTA — two paths
+    ctaPath1Title: { pl: "Umów rozmowę", en: "[Book a Call]" },
+    ctaPath1Desc:  { pl: "[Jedno zdanie opisujące pierwszą ścieżkę.]", en: "[One sentence describing the first path.]" },
+    ctaPath2Title: { pl: "Zapytaj o trening", en: "[Ask About Training]" },
+    ctaPath2Desc:  { pl: "[Jedno zdanie opisujące drugą ścieżkę.]", en: "[One sentence describing the second path.]" },
+
+    // Checklist lead
+    checklistLead: { pl: "[Jedno zdanie leadu nad checklistą.]", en: "[One lead sentence above the checklist.]" },
   },
 
   // ── Contact page ─────────────────────────────────────────────────────────────
