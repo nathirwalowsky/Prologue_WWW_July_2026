@@ -18,6 +18,8 @@ const CHECKLIST: ChecklistGroup[] = [
       "[Watch the facilitator walkthrough videos]",
       "[Pick a date and book the room or call]",
       "[Invite participants with a clear agenda]",
+      "Osoba decyzyjna przy stole",
+      "Wysyłka Kart Celu przed spotkaniem",
     ],
   },
   {
@@ -32,8 +34,10 @@ const CHECKLIST: ChecklistGroup[] = [
     title: "On the day",
     items: [
       "[Arrive early and set up the space]",
-      "[Open with the framing from Phase 1]",
+      "[Open with the framing from Stage 1]",
       "[Assign a note-taker for decisions and owners]",
+      "Osoba zapisująca decyzje",
+      "Data spotkania kontrolnego",
     ],
   },
 ]
