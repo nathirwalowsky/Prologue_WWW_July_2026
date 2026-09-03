@@ -220,7 +220,7 @@ export const translations = {
     notesTitle:   { pl: "Notatki, wskazówki i instrukcje", en: "Notes, Tips and Instructions" },
     prepLabel:    { pl: "Przygotowanie",           en: "Preparation" },
     prepTitle:    { pl: "Przygotuj się do facylitacji", en: "Get Ready to Facilitate" },
-    ctaTitle:     { pl: "Gotowy, by pójść głębiej?", en: "Ready to Go Deeper?" },
+    ctaTitle:     { pl: "Chcesz pójść głębiej?", en: "[Want to Go Deeper?]" },
     schedule:     { pl: "Zaplanuj sesję konsultacyjną", en: "Schedule a Consulting Session" },
     buyWorkshop:  { pl: "Kup pełne warsztaty",    en: "Buy Full Workshop" },
     download:     { pl: "Pobierz",                en: "Download" },
@@ -235,7 +235,7 @@ export const translations = {
     // Hero actions
     heroSchedule:      { pl: "Umów sesję z konsultantem", en: "[Book a session with a consultant]" },
     heroDownload:      { pl: "Pobierz pakiet Vector",      en: "[Get the Vector package]" },
-    heroDownloadNote:  { pl: "[Jedna linia mikrokopii pod przyciskiem pobierania.]", en: "[One line of microcopy under the download button.]" },
+    heroDownloadNote:  { pl: "Bez opłat. Materiały, instrukcja i filmy instruktażowe.", en: "[Free of charge. Materials, instructions and walkthrough videos.]" },
 
     // Proof section
     proofLabel: { pl: "Dowód", en: "Proof" },
@@ -251,24 +251,29 @@ export const translations = {
     // Run it online (merged section)
     onlineLabel: { pl: "Online", en: "Online" },
     onlineTitle: { pl: "Przeprowadź Vector online", en: "[Run Vector Online]" },
-    onlineLead:  { pl: "[Jedno zdanie o tym, jak przeprowadzić warsztat zdalnie.]", en: "[One sentence on running the workshop remotely.]" },
-    onlineFormatsNote: { pl: "[Informacja o dostępnych formatach — plansze PNG do wgrania na dowolną tablicę online.]", en: "[Note on available formats — PNG boards you can upload to any online whiteboard.]" },
+    onlineLead:  { pl: "Plansze Vectora działają wszędzie tam, gdzie możesz wrzucić obrazek: Miro, FigJam, Mural, tablica w Teams. Pobierz je, przeciągnij na tablicę i zaproś zespół do pracy na karteczkach, tak samo jak przy stole.", en: "[Vector's boards work anywhere you can drop in an image: Miro, FigJam, Mural, a Teams whiteboard. Download them, drag them onto the board and invite your team to work on sticky notes, just like at the table.]" },
+    onlineFormatsNote: { pl: "Formaty: PNG w wysokiej rozdzielczości do tablic online, PDF do druku.", en: "[Formats: high-resolution PNG for online whiteboards, PDF for print.]" },
 
     // Download section
     downloadFilesLabel: { pl: "Pliki do pobrania", en: "[Files to Download]" },
     downloadAiLabel:    { pl: "Narzędzia AI",       en: "[AI Tools]" },
     buyPackage:      { pl: "Kup gotowy pakiet warsztatowy", en: "[Buy the Ready-Made Workshop Package]" },
-    buyPackageNote:  { pl: "[Jedno zdanie opisujące, co zawiera gotowy pakiet warsztatowy.]", en: "[One sentence describing what the ready-made workshop package includes.]" },
+    buyPackageNote:  { pl: "Wydrukowane arkusze, Karty Celu i materiały w pudełku, gotowe do wyjęcia na stół.", en: "[Printed worksheets, Goal Cards and materials in a box, ready to put on the table.]" },
     comingSoon: { pl: "Wkrótce", en: "[Soon]" },
 
     // Final CTA — two paths
-    ctaPath1Title: { pl: "Umów rozmowę", en: "[Book a Call]" },
-    ctaPath1Desc:  { pl: "[Jedno zdanie opisujące pierwszą ścieżkę.]", en: "[One sentence describing the first path.]" },
-    ctaPath2Title: { pl: "Zapytaj o trening", en: "[Ask About Training]" },
-    ctaPath2Desc:  { pl: "[Jedno zdanie opisujące drugą ścieżkę.]", en: "[One sentence describing the second path.]" },
+    ctaIntro:      { pl: "Vector poprowadzisz sam. Są jednak sytuacje, w których warto mieć kogoś z zewnątrz przy stole.", en: "[You can run Vector on your own. Some situations, though, are better with someone from outside at the table.]" },
+    ctaPath1Title: { pl: "Warsztat z konsultantem Prologue", en: "[Workshop with a Prologue Consultant]" },
+    ctaPath1Desc:  { pl: "Konsultant prowadzi sesję u Was, Wy pracujecie nad treścią. Ma sens, kiedy temat jest zapalny, kiedy chcesz sam być uczestnikiem, a nie prowadzącym, albo kiedy przy stole siedzi zarząd i potrzebujecie kogoś bez interesu w wyniku. Po sesji dostajecie spisane wyniki i kolejne kroki.", en: "[A consultant runs the session for you, you work on the content. Makes sense when the topic is sensitive, when you want to be a participant rather than the facilitator, or when the board is at the table and you need someone with no stake in the outcome. After the session you get the results and next steps written up.]" },
+    ctaPath1Button:{ pl: "Umów rozmowę", en: "[Book a Call]" },
+    ctaPath2Title: { pl: "Trening z facylitacji", en: "[Facilitation Training]" },
+    ctaPath2Desc:  { pl: "Dla zespołów i konsultantów, którzy chcą prowadzić Vector regularnie, u siebie albo u swoich klientów. Uczysz się prowadzenia sesji na własnym przypadku, z informacją zwrotną po każdym etapie.", en: "[For teams and consultants who want to run Vector regularly, in-house or with their own clients. You learn to facilitate on your own case, with feedback after every stage.]" },
+    ctaPath2Button:{ pl: "Zapytaj o trening", en: "[Ask About Training]" },
 
     // Checklist lead
-    checklistLead: { pl: "[Jedno zdanie leadu nad checklistą.]", en: "[One lead sentence above the checklist.]" },
+    checklistLead: { pl: "Obok znajdziesz listę, według której najlepiej przygotować się do warsztatu. Możesz pobrać ją w pliku PDF oraz w Markdown, którym zasilisz swoje AI.", en: "[Below you'll find the list we recommend to get ready for the workshop. You can download it as a PDF or as Markdown to feed your own AI.]" },
+    checklistLead2: { pl: "Przejdź tę listę dzień przed sesją. Wszystko, czego nie przygotujesz wcześniej, zabierze Wam czas z ćwiczeń.", en: "[Go through this list the day before the session. Anything you don't prepare in advance eats into time meant for the exercises.]" },
+    checklistOfflineNote: { pl: "Jeśli chcesz przeprowadzić warsztat offline w swojej siedzibie i zamówić gotowy pakiet, napisz do nas bezpośrednio. Mamy gotowe, wydrukowane pakiety, w których znajdziesz wszystko do rozpoczęcia warsztatu: Karty Celu, wydrukowane szablony, materiały edukacyjne i notatniki.", en: "[If you want to run the workshop offline at your own site and order a ready-made package, write to us directly. We have printed packages with everything you need to start: Goal Cards, printed templates, learning materials and notebooks.]" },
   },
 
   // ── Contact page ─────────────────────────────────────────────────────────────
@@ -344,8 +349,8 @@ export const translations = {
       intro: { pl: "[Krótka linia opisująca rodzaj treści, które czytelnik tu znajdzie.]", en: "[A short line describing the kind of content readers will find here.]" },
     },
     vector: {
-      title: { pl: "[Warsztaty Vector — przeprowadź je samodzielnie z naszym frameworkiem]", en: "[Vector Workshop — facilitate it yourself with our framework]" },
-      intro: { pl: "[Jedno zdanie o tym, czym są Warsztaty Vector i dla kogo są przeznaczone.]", en: "[One line on what the Vector workshop is and who it's for.]" },
+      title: { pl: "Warsztat Vector: zobacz pełny obraz i zbuduj rdzeń swojej strategii", en: "Vector Workshop: see the big picture and build the kernel of your strategy" },
+      intro: { pl: "Modułowy warsztat strategiczny zbudowany na dziesięciu latach sesji z zarządami i zespołami. Wychodzi od celu, kończy się listą decyzji z właścicielami. Pobierz pakiet i poprowadź go sam albo zaproś konsultanta Prologue Agency, żeby poprowadził go u Was.", en: "[A modular strategy workshop built on ten years of sessions with boards and teams. It starts from a goal and ends with a list of decisions with owners. Download the package and run it yourself, or invite a Prologue Agency consultant to run it for you.]" },
     },
     contact: {
       title: { pl: "[Kontakt — zacznijmy rozmowę]", en: "[Contact — let's start a conversation]" },

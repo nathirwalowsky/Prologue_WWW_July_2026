@@ -8,36 +8,38 @@ type ChecklistGroup = {
   items: string[]
 }
 
-const CHECKLIST_TITLE = "Vector Workshop — Facilitator Checklist"
+const CHECKLIST_TITLE = "Warsztat Vector — Checklista dla Facylitatora"
 
 const CHECKLIST: ChecklistGroup[] = [
   {
-    title: "Before the session",
+    title: "Przed sesją",
     items: [
-      "[Read through the full framework]",
-      "[Watch the facilitator walkthrough videos]",
-      "[Pick a date and book the room or call]",
-      "[Invite participants with a clear agenda]",
-      "Osoba decyzyjna przy stole",
-      "Wysyłka Kart Celu przed spotkaniem",
+      "Przeczytaj wszystkie materiały w pakiecie warsztatowym Vector",
+      "Zobacz filmy instruktażowe",
+      "Upewnij się, że przy stole będzie osoba, która może podjąć decyzję",
+      "Wyślij uczestnikom Karty Celu do wypełnienia przed spotkaniem",
+      "(Opcjonalnie) Umów warsztat z konsultantem Prologue Agency",
+      "Wybierz datę i zabookuj salę lub spotkanie online z zespołem",
+      "Zaproś uczestników na warsztat z agendą (treść zaproszenia znajdziesz w pakiecie warsztatowym)",
     ],
   },
   {
-    title: "Materials to prepare",
+    title: "Materiały do przygotowania",
     items: [
-      "[Print or share the worksheet template]",
-      "[Prepare sticky notes / whiteboard / digital board]",
-      "[Have the timer and agenda visible]",
+      "Wydruki szablonu lub przygotowana tablica Miro/FigJam",
+      "Markery, długopisy i karteczki samoprzylepne",
+      "Widoczny zegar i wydruk agendy",
+      "(Opcjonalnie) Dostęp do napojów i przekąsek",
     ],
   },
   {
-    title: "On the day",
+    title: "Dzień warsztatu",
     items: [
-      "[Arrive early and set up the space]",
-      "[Open with the framing from Stage 1]",
-      "[Assign a note-taker for decisions and owners]",
-      "Osoba zapisująca decyzje",
-      "Data spotkania kontrolnego",
+      "Bądź na sali przed wszystkimi i przygotuj przestrzeń",
+      "Zacznij warsztat, omawiając raz jeszcze jego cel i format",
+      "Ustal najważniejsze zasady wypowiedzi, dyskusji i zachowania podczas warsztatu",
+      "Wyznacz osobę, która zapisuje decyzje i właścicieli działań",
+      "Ustal datę spotkania kontrolnego, zanim wszyscy wyjdą z sali",
     ],
   },
 ]
