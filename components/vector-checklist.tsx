@@ -119,20 +119,22 @@ export function VectorChecklist() {
       </div>
 
       {CHECKLIST.map((group, gi) => (
-        <div key={gi} className="flex flex-col gap-2">
-          <p className="text-sm font-semibold uppercase tracking-wide text-neutral-500">{group.title}</p>
-          {group.items.map((item, ii) => (
-            <div
-              key={ii}
-              className="flex items-start gap-3 rounded-md border-2 border-dashed border-neutral-300 bg-white px-4 py-3"
-            >
-              <span
-                className="mt-0.5 size-4 shrink-0 rounded border-2 border-neutral-300"
-                aria-hidden="true"
-              />
-              <span className="text-sm text-neutral-700">{item}</span>
-            </div>
-          ))}
+        <div key={gi} className="flex flex-col gap-1">
+          <p className="mb-1 text-sm font-semibold uppercase tracking-wide text-neutral-500">{group.title}</p>
+          <div className="grid grid-cols-1 gap-x-8 md:grid-cols-2">
+            {group.items.map((item, ii) => (
+              <div
+                key={ii}
+                className="flex items-start gap-3 border-b border-neutral-200 py-2.5 last:border-b-0 md:[&:nth-last-child(-n+2)]:border-b-0"
+              >
+                <span
+                  className="mt-0.5 size-4 shrink-0 rounded border-2 border-neutral-300"
+                  aria-hidden="true"
+                />
+                <span className="text-sm text-neutral-700">{item}</span>
+              </div>
+            ))}
+          </div>
         </div>
       ))}
     </div>

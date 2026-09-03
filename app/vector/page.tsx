@@ -415,16 +415,16 @@ export default function VectorWireframeV2() {
 
       {/* HOW TO PREPARE — downloadable facilitator checklist */}
       <section className="border-b border-neutral-200 py-16 md:py-24">
-        <div className="mx-auto grid max-w-6xl grid-cols-1 items-start gap-10 px-4 md:grid-cols-2">
-          <div className="flex flex-col items-start gap-5">
-            <WireLabel>{t.vector.prepLabel}</WireLabel>
-            <WireHeading level={2}>{t.vector.prepTitle}</WireHeading>
-            <WireText className="max-w-md">{t.vector.checklistLead}</WireText>
-            <WireText className="max-w-md">
-              [A simple checklist to run through before your session. Download it as a PDF to print,
-              or as Markdown to drop into your own notes.]
-            </WireText>
-          </div>
+        <div className="mx-auto flex max-w-4xl flex-col items-start gap-3 px-4">
+          <WireLabel>{t.vector.prepLabel}</WireLabel>
+          <WireHeading level={2}>{t.vector.prepTitle}</WireHeading>
+          <WireText className="max-w-2xl">{t.vector.checklistLead}</WireText>
+          <WireText className="max-w-2xl">
+            [A simple checklist to run through before your session. Download it as a PDF to print,
+            or as Markdown to drop into your own notes.]
+          </WireText>
+        </div>
+        <div className="mx-auto mt-10 max-w-4xl px-4">
           <VectorChecklist />
         </div>
       </section>
